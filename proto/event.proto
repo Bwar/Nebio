@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+package nebio;
+
+message Event
+{
+    string event_id             = 1;
+    string event_type           = 2;
+    uint64 time                 = 3;
+    string page                 = 4;
+    string referer              = 5;
+    string session_id           = 6;
+    string user_id              = 7;
+    string device_id            = 8;
+    string plat                 = 9;
+    string explorer             = 10;
+    string client_ip            = 11;
+    uint32 app_id               = 12;
+
+    // add by analyse
+    string tag                  = 13;
+    string tourist_id           = 14;
+    string next_page            = 15;
+    uint32 vv                   = 16;
+    uint32 exit_vv              = 17;
+    uint32 bounce_vv            = 18;
+    uint64 event_length         = 19;       // 事件时长（单位：S）
+    uint64 page_length          = 20;
+    uint64 session_length       = 21;
+}
+
+message Result
+{
+    uint32 app_id               = 1;
+    string date                 = 2;
+    string channel              = 3;
+    string tag                  = 4;
+    
+    string key1                 = 5;
+    string key2                 = 6;
+    string key3                 = 7;
+    string key4                 = 8;
+    uint32 key5                 = 9;
+    uint32 key6                 = 10;
+
+    // value
+    uint32 pv                   = 11;
+    uint32 uv                   = 12;
+    uint32 vv                   = 13;
+    uint32 iv                   = 14;
+    uint64 length               = 15;
+    uint32 exit_vv              = 16;
+    uint32 bounce_vv            = 17;
+}
+

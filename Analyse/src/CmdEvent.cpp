@@ -1,0 +1,78 @@
+/*******************************************************************************
+ * Project:  Nebio
+ * @file     CmdEvent.cpp
+ * @brief    事件入口
+ * @author   Bwar
+ * @date:    2018年4月21日
+ * @note     
+ * Modify history:
+ ******************************************************************************/
+
+#include <sstream>
+#include "CmdEvent.hpp"
+
+namespace nebio
+{
+
+CmdEvent::CmdEvent(int32 iCmd)
+   : neb::Cmd(iCmd)
+{
+}
+
+CmdEvent::~CmdEvent()
+{
+}
+
+bool CmdEvent::Init()
+{
+    neb::CJsonObject oJsonConf = GetCustomConf();
+    m_strChannelSummary = oJsonConf["analyse"]("channel_summary");
+    m_strTagSummary = oJsonConf["analyse"]("tag_summary");
+    return(true);
+}
+
+bool CmdEvent::AnyMessage(
+        std::shared_ptr<neb::SocketChannel> pChannel, 
+        const MsgHead& oMsgHead, const MsgBody& oMsgBody)
+{
+    Event oEvent;
+    if (oEvent.ParseFromString(oMsgBody.data()))
+    {
+        Stat(m_strChannelSummary, m_strTagSummary, oEvent);
+        Stat(oEvent.referer(), oEvent.tag(), oEvent);
+        Stat(oEvent.referer(), m_strTagSummary, oEvent);
+        return(true);
+    }
+    else
+    {
+        LOG4_ERROR("nebio::Event failed to parse MsgBody.data()!");
+        return(false);
+    }
+}
+
+bool CmdEvent::Stat(const std::string& strChannel, const std::string& strTag, const Event& oEvent)
+{
+    if (strChannel.length() == 0 || strTag.length() == 0)
+    {
+        return(true);
+    }
+    
+    std::ostringstream oss;
+    oss << oEvent.app_id() << "-" << strChannel << "-" << strTag << "-" << oEvent.event_id();
+    std::string strSessionId = oss.str();
+    auto pSession = GetSession(strSessionId, "nebio::SessionEvent");
+    if (pSession == nullptr)
+    {
+        pSession = MakeSharedSession("nebio::SessionEvent", strSessionId, strChannel, strTag, 10.0);
+    }
+    if (pSession == nullptr)
+    {
+        return(false);
+    }
+
+    std::shared_ptr<SessionEvent> pSessionSession = std::dynamic_pointer_cast<SessionEvent>(pSession);
+    pSessionSession->AddEvent(oEvent);
+    return(true);
+}
+
+}
