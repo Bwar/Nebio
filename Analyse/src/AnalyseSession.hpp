@@ -17,8 +17,8 @@ namespace nebio
 class AnalyseSession : public neb::Session
 {
 public:
-    AnalyseSession(const std::string& strSessionId, ev_tstamp dSessionTimeout, const std::string& strSessionClass)
-        : neb::Session(strSessionId, dSessionTimeout, strSessionClass)
+    AnalyseSession(const std::string& strSessionId, ev_tstamp dSessionTimeout)
+        : neb::Session(strSessionId, dSessionTimeout)
     {        
     }
 

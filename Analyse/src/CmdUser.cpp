@@ -59,9 +59,9 @@ bool CmdUser::Stat(const std::string& strChannel, const std::string& strTag, con
     }
     
     std::ostringstream oss;
-    oss << oEvent.app_id() << "-" << strChannel << "-" << strTag << "-" << oEvent.event_id();
+    oss << "SessionUser-" + oEvent.app_id() << "-" << strChannel << "-" << strTag << "-" << oEvent.event_id();
     std::string strSessionId = oss.str();
-    auto pSession = GetSession(strSessionId, "nebio::SessionUser");
+    auto pSession = GetSession(strSessionId);
     if (pSession == nullptr)
     {
         uint64 ullStatDate = neb::GetBeginTimeOfTheDay(time(NULL));

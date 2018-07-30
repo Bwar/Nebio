@@ -58,9 +58,9 @@ bool CmdPage::Stat(const std::string& strChannel, const std::string& strTag, con
     }
     
     std::ostringstream oss;
-    oss << oEvent.app_id() << "-" << strChannel << "-" << strTag << "-" << oEvent.event_id();
+    oss << "SessionPage-" + oEvent.app_id() << "-" << strChannel << "-" << strTag << "-" << oEvent.event_id();
     std::string strSessionId = oss.str();
-    auto pSession = GetSession(strSessionId, "nebio::SessionPage");
+    auto pSession = GetSession(strSessionId);
     if (pSession == nullptr)
     {
         pSession = MakeSharedSession("nebio::SessionPage", strSessionId, strChannel, strTag, 10.0);

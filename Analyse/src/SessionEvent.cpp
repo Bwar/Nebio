@@ -15,7 +15,7 @@ namespace nebio
 
 SessionEvent::SessionEvent(const std::string& strSessionId,
     const std::string& strChannel, const std::string& strTag, ev_tstamp dSessionTimeout)
-    : AnalyseSession(strSessionId, dSessionTimeout, "nebio::SessionEvent"),
+    : AnalyseSession(strSessionId, dSessionTimeout),
       m_uiAppId(0), m_strChannel(strChannel), m_strTag(strTag), m_uiPv(0), m_uiVv(0), m_ullEventLength(0)
 {
 }

@@ -15,7 +15,7 @@ namespace nebio
 
 SessionPage::SessionPage(const std::string& strSessionId,
     const std::string& strChannel, const std::string& strTag, ev_tstamp dSessionTimeout)
-    : AnalyseSession(strSessionId, dSessionTimeout, "nebio::SessionPage"),
+    : AnalyseSession(strSessionId, dSessionTimeout),
       m_uiAppId(0), m_strChannel(strChannel), m_strTag(strTag), m_uiPv(0), m_uiVv(0),
       m_uiExitVv(0), m_uiBounceVv(0), m_ullPageLength(0)
 {

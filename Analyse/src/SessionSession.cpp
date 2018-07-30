@@ -14,7 +14,7 @@ namespace nebio
 {
 
 SessionSession::SessionSession(const std::string& strSessionId, ev_tstamp dSessionTimeout)
-    : AnalyseSession(strSessionId, dSessionTimeout, "nebio::SessionSession"),
+    : AnalyseSession(strSessionId, dSessionTimeout),
       m_bTourist2User(false)
 {
 }

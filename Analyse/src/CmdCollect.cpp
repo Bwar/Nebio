@@ -34,8 +34,8 @@ bool CmdCollect::AnyMessage(
     Event oEvent;
     if (oEvent.ParseFromString(oMsgBody.data()))
     {
-        std::string strSessionId = std::to_string(oEvent.app_id()) + oEvent.event_id();
-        auto pSession = GetSession(strSessionId, "nebio::SessionSession");
+        std::string strSessionId = std::string("SessionSession-") + std::to_string(oEvent.app_id()) + "-" + oEvent.event_id();
+        auto pSession = GetSession(strSessionId);
         if (pSession == nullptr)
         {
             pSession = MakeSharedSession("nebio::SessionSession", strSessionId);
