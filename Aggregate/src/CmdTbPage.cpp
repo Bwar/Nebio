@@ -1,7 +1,7 @@
 /*******************************************************************************
  * Project:  Nebio
- * @file     CmdTbEvent.cpp
- * @brief    事件入口
+ * @file     CmdTbPage.cpp
+ * @brief    页面统计结果
  * @author   Bwar
  * @date:    2018年4月21日
  * @note     
@@ -9,26 +9,26 @@
  ******************************************************************************/
 
 #include <sstream>
-#include "CmdTbEvent.hpp"
+#include "CmdTbPage.hpp"
 
 namespace nebio
 {
 
-CmdTbEvent::CmdTbEvent(int32 iCmd)
+CmdTbPage::CmdTbPage(int32 iCmd)
    : neb::Cmd(iCmd)
 {
 }
 
-CmdTbEvent::~CmdTbEvent()
+CmdTbPage::~CmdTbPage()
 {
 }
 
-bool CmdTbEvent::Init()
+bool CmdTbPage::Init()
 {
     return(true);
 }
 
-bool CmdTbEvent::AnyMessage(
+bool CmdTbPage::AnyMessage(
         std::shared_ptr<neb::SocketChannel> pChannel, 
         const MsgHead& oMsgHead, const MsgBody& oMsgBody)
 {
@@ -36,20 +36,20 @@ bool CmdTbEvent::AnyMessage(
     if (oResult.ParseFromString(oMsgBody.data()))
     {
         std::ostringstream oss;
-        oss << "SessionTbEvent-" + oResult.app_id() << "-" << oResult.channel() << "-" << oResult.tag() << "-" << oResult.key1();
+        oss << "SessionTbPage-" + oResult.app_id() << "-" << oResult.channel() << "-" << oResult.tag() << "-" << oResult.key1();
         std::string strSessionId = oss.str();
         auto pSession = GetSession(strSessionId);
         if (pSession == nullptr)
         {
-            pSession = MakeSharedSession("nebio::SessionTbEvent", strSessionId, 10.0);
+            pSession = MakeSharedSession("nebio::SessionTbPage", strSessionId, 10.0);
         }
         if (pSession == nullptr)
         {
             return(false);
         }
 
-        std::shared_ptr<SessionTbEvent> pSessionTbEvent = std::dynamic_pointer_cast<SessionTbEvent>(pSession);
-        pSessionTbEvent->AddResult(oResult);
+        std::shared_ptr<SessionTbPage> pSessionTbPage = std::dynamic_pointer_cast<SessionTbPage>(pSession);
+        pSessionTbPage->AddResult(oResult);
         return(true);
     }
     else

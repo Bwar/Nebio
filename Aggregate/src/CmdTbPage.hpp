@@ -1,31 +1,31 @@
 /*******************************************************************************
  * Project:  Nebio
- * @file     CmdTbEvent.hpp
- * @brief    事件入口
+ * @file     CmdTbPage.hpp
+ * @brief    页面统计结果
  * @author   Bwar
  * @date:    2018年4月21日
  * @note     
  * Modify history:
  ******************************************************************************/
 
-#ifndef NEBIO_CMDTBEVENT_HPP
-#define NEBIO_CMDTBEVENT_HPP
+#ifndef NEBIO_CMDTBPAGE_HPP
+#define NEBIO_CMDTBPAGE_HPP
 
 #include <string>
 #include <unordered_map>
 #include <util/json/CJsonObject.hpp>
 #include <actor/cmd/Cmd.hpp>
 #include "event.pb.h"
-#include "SessionTbEvent.hpp"
+#include "SessionTbPage.hpp"
 
 namespace nebio
 {
 
-class CmdTbEvent : public neb::Cmd, public neb::DynamicCreator<CmdTbEvent, int32>
+class CmdTbPage : public neb::Cmd, public neb::DynamicCreator<CmdTbPage, int32>
 {
 public:
-    CmdTbEvent(int32 iCmd);
-    virtual ~CmdTbEvent();
+    CmdTbPage(int32 iCmd);
+    virtual ~CmdTbPage();
 
     virtual bool Init();
 
@@ -37,5 +37,5 @@ public:
 
 }
 
-#endif // NEBIO_CMD_EVENT_HPP
+#endif // NEBIO_CMDTBPAGE_HPP
 
