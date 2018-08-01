@@ -33,6 +33,10 @@ public:
                     std::shared_ptr<neb::SocketChannel> pChannel, 
                     const MsgHead& oMsgHead,
                     const MsgBody& oMsgBody);
+private:
+    std::string m_strChannelSummary;
+    std::string m_strTagSummary;
+    std::string m_strDirectAccess;
 };
 
 }  //namespace nebio 

@@ -76,7 +76,7 @@ bool ModuleCollect::AnyMessage(
                 } 
                 else 
                 {
-                    std::time_t event_time = std::mktime(&tm);
+                    event_time = std::mktime(&tm);
                 }
                 oEvent.set_time((uint64)event_time);
 
@@ -154,7 +154,7 @@ void ModuleCollect::ResponseOptions(
     pHeader->set_header_value("*");
     pHeader = oHttpOutMsg.add_headers();
     pHeader->set_header_name("Access-Control-Allow-Headers");
-    pHeader->set_header_value("Origin, Content-Type, Cookie, Accept, multipart/form-data, text/plain, application/json, token,x-token,Access-Token,X-CSRF-TOKEN, Accept, Authorization, X-XSRF-TOKEN");
+    pHeader->set_header_value("Origin, Content-Type, Cookie, Accept");
     pHeader = oHttpOutMsg.add_headers();
     pHeader->set_header_name("Access-Control-Allow-Methods");
     pHeader->set_header_value("GET, POST");

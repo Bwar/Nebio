@@ -37,15 +37,11 @@
     "refresh_interval":60,    
     "dynamic_loading":[
         {
-            "so_path":"plugins/Analyse.so", "load":true, "version":1,
+            "so_path":"plugins/Collect.so", "load":true, "version":1,
             "cmd":[
-                {"cmd":1001, "class":"nebio::CmdDataLand"},
-                {"cmd":1003, "class":"nebio::CmdCollect"},
-                {"cmd":1005, "class":"nebio::CmdEvent"},
-                {"cmd":1007, "class":"nebio::CmdUser"},
-                {"cmd":1009, "class":"nebio::CmdPage"}
             ],
             "module":[
+                {"path":"/collect", "class":"nebio::ModuleCollect"}
             ]
         }
     ],

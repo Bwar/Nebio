@@ -43,7 +43,10 @@
                 {"cmd":1003, "class":"nebio::CmdCollect"},
                 {"cmd":1005, "class":"nebio::CmdEvent"},
                 {"cmd":1007, "class":"nebio::CmdUser"},
-                {"cmd":1009, "class":"nebio::CmdPage"}
+                {"cmd":1009, "class":"nebio::CmdPage"},
+                {"cmd":1025, "class":"nebio::CmdTbEvent"},
+                {"cmd":1027, "class":"nebio::CmdTbUser"},
+                {"cmd":1029, "class":"nebio::CmdTbPage"}
             ],
             "module":[
             ]

@@ -20,9 +20,9 @@ enum E_CMD_WORD
     CMD_EVENT               = 1005,
     CMD_USER                = 1007,
     CMD_PAGE                = 1009,
-    CMD_TB_EVENT            = 1021,
-    CMD_TB_PAGE             = 1023,
-    CMD_TB_USER             = 1025,
+    CMD_TB_EVENT            = 1025,
+    CMD_TB_USER             = 1027,
+    CMD_TB_PAGE             = 1029,
 };
 
 }

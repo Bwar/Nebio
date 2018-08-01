@@ -12,13 +12,15 @@
 #include <chrono>
 #include <iomanip>
 #include <sstream>
+#include "UnixTime.hpp"
 #include "CmdDataLand.hpp"
 
 namespace nebio
 {
 
 CmdDataLand::CmdDataLand(int32 iCmd)
-    : neb::Cmd(iCmd)
+    : neb::Cmd(iCmd),
+      m_iFileDate(0), m_iLogMaxFileSize(65535)
 {
 }
 
@@ -45,6 +47,7 @@ bool CmdDataLand::Init()
         }
     }
     LOG4_DEBUG("collect_data_path = %s", m_strLogDataPath.c_str());
+    m_iFileDate = atoi(neb::time_t2TimeStr((time_t)GetNowTime(), "YYYYMMDD").c_str());
 
     return(OpenDataFile());
 }
@@ -84,7 +87,8 @@ bool CmdDataLand::OpenDataFile()
 {
     if (m_ofs.is_open())
     {
-        if (m_ofs.tellp() < m_iLogMaxFileSize)
+        int32 iFileDate = atoi(neb::time_t2TimeStr((time_t)GetNowTime(), "YYYYMMDD").c_str());
+        if (m_ofs.tellp() < m_iLogMaxFileSize && iFileDate <= m_iFileDate)
         {
             return(true);
         }

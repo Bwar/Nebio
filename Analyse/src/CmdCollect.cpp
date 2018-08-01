@@ -24,6 +24,10 @@ CmdCollect::~CmdCollect()
 
 bool CmdCollect::Init()
 {
+    neb::CJsonObject oJsonConf = GetCustomConf();
+    m_strChannelSummary = oJsonConf["analyse"]("channel_summary");
+    m_strTagSummary = oJsonConf["analyse"]("tag_summary");
+    m_strDirectAccess = oJsonConf["analyse"]("direct_access"); 
     return(true);
 }
 
