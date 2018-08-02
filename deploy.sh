@@ -285,7 +285,7 @@ else                # deploy remote
     tar -zcvf neb_depend.tar.gz lib*.so lib*.so.* 
     mv neb_depend.tar.gz ${DEPLOY_PATH}/lib/
     cd ${DEPLOY_PATH}/lib
-    rm -r lib* >> /dev/null
+    rm -r lib* >> /dev/null 2>&1
     tar -zxvf neb_depend.tar.gz
     rm neb_depend.tar.gz
 fi
@@ -467,15 +467,22 @@ else
 fi
 if [ -d ${BUILD_PATH}/Nebio ]
 then
-    for nebio_server in Collect Analyse Aggregate
+    for nebio in Collect Analyse Aggregate
     do
-        cd ${BUILD_PATH}/Nebio/${part}/src/
+        cd ${BUILD_PATH}/Nebio/proto
+        ${BUILD_PATH}/NebulaDepend/bin/protoc *.proto --cpp_out=${BUILD_PATH}/Nebio/${nebio}/src
+        if [ $? -ne 0 ]
+        then
+             echo "failed, teminated!" >&2
+             exit 2
+        fi
+        cd ${BUILD_PATH}/Nebio/${nebio}/src/
         sed -i 's/gcc-6/gcc/g' Makefile
         sed -i 's/g++-6/g++/g' Makefile
         make clean; make
-        cp ${nebio_server} ${DEPLOY_PATH}/bin/ >> /dev/null
-        cd ${BUILD_PATH}/Nebio/${nebio_server}/conf/
-        cp ${nebio_server}.json ${DEPLOY_PATH}/conf/
+        cp Nebio${nebio} ${DEPLOY_PATH}/bin/ >> /dev/null
+        cd ${BUILD_PATH}/Nebio/${nebio}/conf/
+        cp Nebio${nebio}.json ${DEPLOY_PATH}/conf/
     done
 fi
 cd ${BUILD_PATH}

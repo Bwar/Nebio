@@ -10,7 +10,7 @@ cd Nebio
 mkdir build
 cd build
 wget https://github.com/Bwar/Nebio/archive/master.zip
-unzip master.zip; rm master.zip mv Nebio-master Nebio
+unzip master.zip; rm master.zip; mv Nebio-master Nebio
 cd ..
 cp build/Nebio/deploy.sh ./
 chmod u+x deploy.sh

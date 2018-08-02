@@ -1,5 +1,5 @@
 {
-    "node_type":"LOGIC",
+    "node_type":"ANALYSE",
     "//host":"系统内各Server之间通信绑定的IP（Server to Server）",
     "host":"192.168.157.130",
     "//port":"系统内各Server之间通信监听的端口",

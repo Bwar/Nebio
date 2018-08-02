@@ -1,9 +1,9 @@
 {
-    "node_type":"LOGIC",
+    "node_type":"AGGREGATE",
     "//host":"系统内各Server之间通信绑定的IP（Server to Server）",
     "host":"192.168.157.130",
     "//port":"系统内各Server之间通信监听的端口",
-    "port":16005,
+    "port":16007,
     "//server_name":"异步事件驱动Server",
     "server_name":"neb_Aggregate",
     "//process_num":"进程数量",
