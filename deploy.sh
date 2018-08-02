@@ -4,7 +4,7 @@ DEPLOY_PATH="."
 cd $DEPLOY_PATH
 DEPLOY_PATH=`pwd`
 BUILD_PATH="${DEPLOY_PATH}/build"
-NEBULA_BOOTSTRAP="NebulaBeacon NebulaInterface NebulaLogic NebulaDbAgent"
+NEBULA_BOOTSTRAP="NebulaBeacon NebulaDbAgent"
 chmod u+x *.sh
 
 mkdir -p ${DEPLOY_PATH}/lib >> /dev/null 2>&1
@@ -467,20 +467,17 @@ else
 fi
 if [ -d ${BUILD_PATH}/Nebio ]
 then
-    for part in Collect Analyse Aggregate
+    for nebio_server in Collect Analyse Aggregate
     do
         cd ${BUILD_PATH}/Nebio/${part}/src/
         sed -i 's/gcc-6/gcc/g' Makefile
         sed -i 's/g++-6/g++/g' Makefile
         make clean; make
-        cp *.so ${DEPLOY_PATH}/plugins/ >> /dev/null
-        #cd ${BUILD_PATH}/Nebio/${part}/conf/
-        #cp Nebio${part}.json ${DEPLOY_PATH}/conf/
+        cp ${nebio_server} ${DEPLOY_PATH}/bin/ >> /dev/null
+        cd ${BUILD_PATH}/Nebio/${nebio_server}/conf/
+        cp ${nebio_server}.json ${DEPLOY_PATH}/conf/
     done
 fi
-#mv ${DEPLOY_PATH}/bin/NebulaInterface ${DEPLOY_PATH}/bin/NebioCollect
-#cp ${DEPLOY_PATH}/bin/NebulaLogic ${DEPLOY_PATH}/bin/NebioAnalyse
-#mv ${DEPLOY_PATH}/bin/NebulaLogic ${DEPLOY_PATH}/bin/NebioAggregate
 cd ${BUILD_PATH}
 
 

@@ -5,7 +5,7 @@
     "//port":"系统内各Server之间通信监听的端口",
     "port":16005,
     "//server_name":"异步事件驱动Server",
-    "server_name":"neb_Analyse",
+    "server_name":"neb_Collect",
     "//process_num":"进程数量",
     "process_num":1,
     "//worker_capacity":"子进程最大工作负荷",
@@ -31,19 +31,13 @@
     ],
     "boot_load":{
         "cmd":[],
-        "module":[]
+        "module":[
+            {"path":"/collect", "class":"nebio::ModuleCollect"}
+        ]
     },
     "//refresh_interval":"刷新Server配置，检查、加载插件动态库时间周期（周期时间长短视服务器忙闲而定）",
     "refresh_interval":60,    
     "dynamic_loading":[
-        {
-            "so_path":"plugins/Collect.so", "load":true, "version":1,
-            "cmd":[
-            ],
-            "module":[
-                {"path":"/collect", "class":"nebio::ModuleCollect"}
-            ]
-        }
     ],
     "//custom":"自定义配置，用于通过框架层带给业务",
     "custom":{

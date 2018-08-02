@@ -1,7 +1,8 @@
 CC = gcc
 CXX = g++
-CFLAGS = -g -O2 -fPIC
-CXXFLAG =  -std=c++14 -O2 -Wall -ggdb -m64 -D_GNU_SOURCE=1 -D_REENTRANT -D__GUNC__ -fPIC -DNODE_BEAT=10.0
+CFLAGS = -g -O2 -fPIC 
+cplusplus_version=$(shell g++ --version | grep "^g++" | awk '{if ($$NF > 5.0) print "c++14"; else print "c++11";}')
+CXXFLAG =  -std=$(cplusplus_version) -g2 -O3 -Wall -m64 -Wl,--export-dynamic -D_GNU_SOURCE=1 -D_REENTRANT -D__GUNC__ -fPIC -DNODE_BEAT=10.0 
 
 ARCH:=$(shell uname -m)
 
@@ -15,9 +16,9 @@ SYSTEM_LIB_PATH:=/usr/lib
 endif
 LIB3RD_PATH = ../../../NebulaDepend
 NEBULA_PATH = ../../../Nebula
-PLUGIN_PATH = ../../
+NEBIO_PATH = ..
 
-VPATH = .
+VPATH = $(NEBIO_PATH)/src
 SUB_DIRS := $(foreach dir, $(VPATH), $(shell find $(dir) -maxdepth 5 -type d))
 DIRS := $(SUB_DIRS)
 
@@ -25,7 +26,7 @@ DIRS := $(SUB_DIRS)
 INC := $(INC) \
        -I $(LIB3RD_PATH)/include \
        -I $(NEBULA_PATH)/include \
-       -I $(PLUGIN_PATH)/src
+       -I $(NEBIO_PATH)/src 
 
 
 LDFLAGS := $(LDFLAGS) -D_LINUX_OS_ \
@@ -41,22 +42,23 @@ CC_SRCS = $(foreach dir, $(DIRS), $(wildcard $(dir)/*.cc))
 C_SRCS = $(foreach dir, $(DIRS), $(wildcard $(dir)/*.c))
 OBJS = $(patsubst %.cpp,%.o,$(CPP_SRCS)) $(patsubst %.c,%.o,$(C_SRCS)) $(patsubst %.cc,%.o,$(CC_SRCS))
 
-
-TARGET = Analyse.so
+TARGET = NebioAnalyse
 
 all: $(TARGET)
-
-Analyse.so:$(OBJS)
-	$(CXX) -fPIE -rdynamic -shared -g -o $@ $^ $(LDFLAGS)
+	
+NebioAnalyse: $(OBJS)
+	$(CXX) $(CXXFLAG) $(DEFINE_SERVER) -o $@ $(OBJS) $(LDFLAGS) $(INC)
+	mkdir -p $(NEBIO_PATH)/bin	
+	cp -f $@ $(NEBIO_PATH)/bin/
 
 %.o:%.cpp
-	$(CXX) $(INC) $(CXXFLAG) -c -o $@ $< $(LDFLAGS)
+	$(CXX) $(INC) $(CXXFLAG) $(CFLAGS) $(DEFINE_SERVER) -c -o $@ $< $(LDFLAGS)
 %.o:%.cc
 	$(CXX) $(INC) $(CXXFLAG) -c -o $@ $< $(LDFLAGS)
 %.o:%.c
-	$(CC) $(INC) $(CXXFLAG) -c -o $@ $< $(LDFLAGS)
+	$(CC) $(INC) $(CFLAGS) -c -o $@ $< $(LDFLAGS)
 clean:
 	rm -f $(OBJS)
 	rm -f $(TARGET)
-        
-        
+	rm -rf $(NEBIO_PATH)/bin
+

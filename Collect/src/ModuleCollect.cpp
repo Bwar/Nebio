@@ -107,6 +107,7 @@ bool ModuleCollect::AnyMessage(
                 oMsgBody.mutable_req_target()->set_route(oEvent.session_id());
                 SendOriented("ANALYSE", 1001, GetSequence(), oMsgBody);
                 SendOriented("ANALYSE", 1003, GetSequence(), oMsgBody);
+                Response(pChannel, oHttpMsg, neb::ERR_OK, "success");
             }
         }
         else

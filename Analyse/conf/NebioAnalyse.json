@@ -30,24 +30,20 @@
         {"host":"192.168.157.130","port":16000}
     ],
     "boot_load":{
-        "cmd":[],
-        "module":[]
+        "so_path":"plugins/Analyse.so", "load":true, "version":1,
+        "cmd":[
+            {"cmd":1001, "class":"nebio::CmdDataLand"},
+            {"cmd":1003, "class":"nebio::CmdCollect"},
+            {"cmd":1005, "class":"nebio::CmdEvent"},
+            {"cmd":1007, "class":"nebio::CmdUser"},
+            {"cmd":1009, "class":"nebio::CmdPage"}
+        ],
+        "module":[
+        ]
     },
     "//refresh_interval":"刷新Server配置，检查、加载插件动态库时间周期（周期时间长短视服务器忙闲而定）",
     "refresh_interval":60,    
     "dynamic_loading":[
-        {
-            "so_path":"plugins/Analyse.so", "load":true, "version":1,
-            "cmd":[
-                {"cmd":1001, "class":"nebio::CmdDataLand"},
-                {"cmd":1003, "class":"nebio::CmdCollect"},
-                {"cmd":1005, "class":"nebio::CmdEvent"},
-                {"cmd":1007, "class":"nebio::CmdUser"},
-                {"cmd":1009, "class":"nebio::CmdPage"}
-            ],
-            "module":[
-            ]
-        }
     ],
     "//custom":"自定义配置，用于通过框架层带给业务",
     "custom":{
