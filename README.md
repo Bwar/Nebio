@@ -5,8 +5,8 @@ nebio是一个基于nebula网络框架的数据实时统计分析应用。nebio�
 Getting Start
 ``` bash
 wget https://github.com/Bwar/NebulaBootstrap/archive/master.zip
-unzip master.zip; rm master.zip; mv NebulaBootstrap-master NebulaBootstrap
-cd NebulaBootstrap
+unzip master.zip; rm master.zip; mv NebulaBootstrap-master Nebio
+cd Nebio
 mkdir build
 cd build
 wget https://github.com/Bwar/Nebio/archive/master.zip
