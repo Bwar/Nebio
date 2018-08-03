@@ -196,6 +196,7 @@ void SessionUser::Stat()
     oResult.set_iv(m_uiActivityUserIv);
     oResult.set_length(m_ullActivityUserSessionLength);
     oMsgBody.set_data(oResult.SerializeAsString());
+    oMsgBody.mutable_req_target()->set_route_id(m_uiAppId);
     SendOriented("AGGREGATE", CMD_TB_USER, GetSequence(), oMsgBody);
 
     oResult.set_key5(USER_NEW);
@@ -205,6 +206,7 @@ void SessionUser::Stat()
     oResult.set_iv(m_uiNewUserIv);
     oResult.set_length(m_ullNewUserSessionLength);
     oMsgBody.set_data(oResult.SerializeAsString());
+    oMsgBody.mutable_req_target()->set_route_id(m_uiAppId);
     SendOriented("AGGREGATE", CMD_TB_USER, GetSequence(), oMsgBody);
 
     oResult.set_key5(USER_HISTORY);
@@ -214,6 +216,7 @@ void SessionUser::Stat()
     oResult.set_iv(m_uiHistoryUserIv);
     oResult.set_length(m_ullHistoryUserSessionLength);
     oMsgBody.set_data(oResult.SerializeAsString());
+    oMsgBody.mutable_req_target()->set_route_id(m_uiAppId);
     SendOriented("AGGREGATE", CMD_TB_USER, GetSequence(), oMsgBody);
 
     oResult.set_key5(USER_TOURIST);
@@ -223,6 +226,7 @@ void SessionUser::Stat()
     oResult.set_iv(m_uiTouristIv);
     oResult.set_length(m_ullTouristSessionLength);
     oMsgBody.set_data(oResult.SerializeAsString());
+    oMsgBody.mutable_req_target()->set_route_id(m_uiAppId);
     SendOriented("AGGREGATE", CMD_TB_USER, GetSequence(), oMsgBody);
 }
 

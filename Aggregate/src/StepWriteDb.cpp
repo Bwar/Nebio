@@ -26,6 +26,7 @@ neb::E_CMD_STATUS StepWriteDb::Emit(int iErrno, const std::string& strErrMsg, vo
     LOG4_DEBUG("%s()", __FUNCTION__);
     MsgBody oMsgBody;
     oMsgBody.set_data(((neb::Mydis*)data)->SerializeAsString());
+    oMsgBody.mutable_req_target()->set_route(((neb::Mydis*)data)->db_operate().table_name());
     SendOriented("DBAGENT", neb::CMD_REQ_STORATE, GetSequence(), oMsgBody);
     return(neb::CMD_STATUS_RUNNING);
 }
