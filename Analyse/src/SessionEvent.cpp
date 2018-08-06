@@ -34,6 +34,7 @@ neb::E_CMD_STATUS SessionEvent::Timeout()
 
 void SessionEvent::AddEvent(const Event& oEvent)
 {
+    LOG4_DEBUG("%s", oEvent.DebugString().c_str());
     if (m_strEventId.size() == 0)
     {
         m_uiAppId = oEvent.app_id();

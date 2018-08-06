@@ -47,6 +47,10 @@
     "refresh_interval":60,    
     "dynamic_loading":[
     ],
+    "permission":{
+        "addr_permit":{"stat_interval":60.0, "permit_num":10000000},
+             "uin_permit":{"stat_interval":60.0, "permit_num":60000000}
+        },
     "//custom":"自定义配置，用于通过框架层带给业务",
     "custom":{
         "collect":{

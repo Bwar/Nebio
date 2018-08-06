@@ -51,6 +51,7 @@ protected:
 
 private:
     bool m_bTourist2User;                // 是否从游客转为注册用户
+    uint32 m_uiAppId;
     std::string m_strUserSessionId;      // GetSessionId()获得的是 appid-session_id的组合
     std::string m_strUserId;
     std::string m_strTouristId;
@@ -58,6 +59,7 @@ private:
     std::string m_strPlat;
     std::string m_strReferer;
     std::string m_strExplorer;
+    std::string m_strClientIp;
     std::list<T_EVENT> m_listEvent;
     std::list<T_PAGE> m_listPage;
     std::unordered_set<std::string> m_setEventVv;

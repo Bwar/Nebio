@@ -18,7 +18,7 @@ namespace nebio
 
 SessionTbUser::SessionTbUser(const std::string& strSessionId, ev_tstamp dSessionTimeout)
     : AggregateSession(strSessionId, dSessionTimeout),
-      m_uiUserType(0), m_uiUv(0), m_uiPv(0), m_uiVv(0), m_uiIv(0), m_ullSessionLength(0)
+      m_uiAppId(0), m_uiUserType(0), m_uiUv(0), m_uiPv(0), m_uiVv(0), m_uiIv(0), m_ullSessionLength(0)
 {
 }
 
@@ -34,6 +34,7 @@ neb::E_CMD_STATUS SessionTbUser::Timeout()
 
 void SessionTbUser::AddResult(const Result& oResult)
 {
+    LOG4_DEBUG("%s", oResult.DebugString().c_str());
     if (0 == m_uiAppId)
     {
         m_uiAppId = oResult.app_id();
@@ -50,7 +51,7 @@ void SessionTbUser::AddResult(const Result& oResult)
 
 void SessionTbUser::FlushOut()
 {
-    neb::DbOperator oDbOper(0, "tb_user", neb::Mydis::DbOperate::REPLACE);
+    neb::DbOperator oDbOper(1, "tb_user", neb::Mydis::DbOperate::REPLACE, 1);
     oDbOper.AddDbField("stat_date", neb::time_t2TimeStr((time_t)GetNowTime(), "%Y-%m-%d"));
     oDbOper.AddDbField("app_id", m_uiAppId);
     oDbOper.AddDbField("channel", m_strChannel);
@@ -60,7 +61,7 @@ void SessionTbUser::FlushOut()
     oDbOper.AddDbField("pv", m_uiPv);
     oDbOper.AddDbField("vv", m_uiVv);
     oDbOper.AddDbField("iv", m_uiIv);
-    oDbOper.AddDbField("session_length", m_ullSessionLength);
+    oDbOper.AddDbField("session_len", m_ullSessionLength);
     auto pStep = MakeSharedStep("nebio::StepWriteDb");
     pStep->Emit(neb::ERR_OK, "", (void*)(oDbOper.MakeMemOperate()));
     m_uiUv = 0;

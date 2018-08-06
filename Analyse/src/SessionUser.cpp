@@ -17,10 +17,12 @@ SessionUser::SessionUser(const std::string& strSessionId,
     const std::string& strChannel, const std::string& strTag, uint64 ullStatDate, ev_tstamp dSessionTimeout)
     : AnalyseSession(strSessionId, dSessionTimeout),
       m_ullStatDate(ullStatDate), m_uiAppId(0), m_strChannel(strChannel), m_strTag(strTag),
-      m_uiActivityUserUv(0), m_uiActivityUserPv(0), m_uiActivityUserVv(0), m_uiActivityUserIv(0),
-      m_uiNewUserUv(0), m_uiNewUserPv(0), m_uiNewUserVv(0), m_uiNewUserIv(0),
-      m_uiHistoryUserUv(0), m_uiHistoryUserPv(0), m_uiHistoryUserVv(0), m_uiHistoryUserIv(0),
-      m_uiTouristUv(0), m_uiTouristPv(0), m_uiTouristVv(0), m_uiTouristIv(0)
+      m_uiActivityUserUv(0), m_uiNewUserUv(0), m_uiHistoryUserUv(0), m_uiTouristUv(0),
+      m_uiActivityUserPv(0), m_uiNewUserPv(0), m_uiHistoryUserPv(0), m_uiTouristPv(0),
+      m_uiActivityUserVv(0), m_uiNewUserVv(0), m_uiHistoryUserVv(0), m_uiTouristVv(0),
+      m_uiActivityUserIv(0), m_uiNewUserIv(0), m_uiHistoryUserIv(0), m_uiTouristIv(0),
+      m_ullActivityUserSessionLength(0), m_ullNewUserSessionLength(0),
+      m_ullHistoryUserSessionLength(0), m_ullTouristSessionLength(0)
 {
 }
 
@@ -38,6 +40,7 @@ neb::E_CMD_STATUS SessionUser::Timeout()
 
 void SessionUser::AddEvent(const Event& oEvent)
 {
+    LOG4_DEBUG("%s", oEvent.DebugString().c_str());
     if (m_uiAppId == 0)
     {
         m_uiAppId = oEvent.app_id();
@@ -89,7 +92,7 @@ void SessionUser::AddUser(const Event& oEvent)
         ++m_uiActivityUserUv;
     }
     auto ip_iter = m_setIp.find(oEvent.client_ip());
-    if (ip_iter == m_setIp.end())
+    if (ip_iter == m_setIp.end() && oEvent.client_ip().length() > 0)
     {
         m_setIp.insert(oEvent.client_ip());
         ++m_uiActivityUserIv;
@@ -104,7 +107,7 @@ void SessionUser::AddUser(const Event& oEvent)
         {
             ++m_uiNewUserUv;
         }
-        if (ip_iter == m_setIp.end())
+        if (ip_iter == m_setIp.end() && oEvent.client_ip().length() > 0)
         {
             ++m_uiNewUserIv;
         }
@@ -118,7 +121,7 @@ void SessionUser::AddUser(const Event& oEvent)
         {
             ++m_uiHistoryUserUv;
         }
-        if (ip_iter == m_setIp.end())
+        if (ip_iter == m_setIp.end() && oEvent.client_ip().length() > 0)
         {
             ++m_uiHistoryUserIv;
         }
@@ -141,7 +144,7 @@ void SessionUser::AddTourist(const Event& oEvent)
         ++m_uiTouristUv;
     }
     auto ip_iter = m_setIp.find(oEvent.client_ip());
-    if (ip_iter == m_setIp.end())
+    if (ip_iter == m_setIp.end() && oEvent.client_ip().length() > 0)
     {
         m_setIp.insert(oEvent.client_ip());
         ++m_uiActivityUserIv;

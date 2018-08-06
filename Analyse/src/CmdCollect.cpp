@@ -42,7 +42,7 @@ bool CmdCollect::AnyMessage(
         auto pSession = GetSession(strSessionId);
         if (pSession == nullptr)
         {
-            pSession = MakeSharedSession("nebio::SessionSession", strSessionId, (ev_tstamp)10.0);
+            pSession = MakeSharedSession("nebio::SessionSession", strSessionId, (ev_tstamp)1200.0);
         }
         if (pSession == nullptr)
         {

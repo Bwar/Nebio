@@ -14,6 +14,7 @@
 #include <iomanip>
 #include <algorithm>
 #include <util/json/CJsonObject.hpp>
+#include <util/http/http_parser.h>
 #include "event.pb.h"
 #include "ModuleCollect.hpp"
 
@@ -58,8 +59,8 @@ bool ModuleCollect::AnyMessage(
                 nebio::Event oEvent;
                 oEvent.set_event_id(oJsonEvent[i]("event_id"));
                 oEvent.set_event_type(oJsonEvent[i]("event_type"));
-                oEvent.set_page(oJsonEvent[i]("page"));
-                oEvent.set_referer(oJsonEvent[i]("referer"));
+                oEvent.set_page(oJsonEvent[i]("page").substr(0, oJsonEvent[i]("page").find_first_of('?')));
+                oEvent.set_referer(oJsonEvent[i]("referer").substr(0, oJsonEvent[i]("referer").find_first_of('?')));
                 oEvent.set_session_id(oJsonEvent[i]("session_id"));
                 oEvent.set_user_id(oJsonEvent[i]("user_id"));
                 oEvent.set_device_id(oJsonEvent[i]("device_id"));
@@ -137,7 +138,7 @@ void ModuleCollect::Response(
     oResponseData.Add("code", iErrno);
     oResponseData.Add("msg", strErrMsg);
     oHttpOutMsg.set_body(oResponseData.ToFormattedString());
-    SendTo(pChannel, oHttpMsg);
+    SendTo(pChannel, oHttpOutMsg);
 }
 
 void ModuleCollect::ResponseOptions(
@@ -162,7 +163,7 @@ void ModuleCollect::ResponseOptions(
     pHeader = oHttpOutMsg.add_headers();
     pHeader->set_header_name("Access-Control-Allow-Credentials");
     pHeader->set_header_value("true");
-    SendTo(pChannel, oHttpMsg);
+    SendTo(pChannel, oHttpOutMsg);
 }
 
 }   // namespace nebio

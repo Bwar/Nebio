@@ -15,7 +15,7 @@ namespace nebio
 
 SessionSession::SessionSession(const std::string& strSessionId, ev_tstamp dSessionTimeout)
     : AnalyseSession(strSessionId, dSessionTimeout),
-      m_bTourist2User(false)
+      m_bTourist2User(false), m_uiAppId(0)
 {
 }
 
@@ -37,13 +37,24 @@ neb::E_CMD_STATUS SessionSession::Timeout()
 
 void SessionSession::AddEvent(const Event& oEvent)
 {
+    LOG4_DEBUG("%s", oEvent.DebugString().c_str());
     if (m_strUserSessionId.length() == 0)
     {
+        m_uiAppId = oEvent.app_id();
         m_strUserSessionId = oEvent.session_id();
         m_strDeviceId = oEvent.device_id();
         m_strPlat = oEvent.plat();
-        m_strReferer = oEvent.referer();
         m_strExplorer = oEvent.explorer();
+        m_strClientIp = oEvent.client_ip();
+        if (oEvent.referer().length() == 0)
+        {
+            neb::CJsonObject oJsonConf = GetCustomConf();
+            m_strReferer = oJsonConf["analyse"]("direct_access");
+        }
+        else
+        {
+            m_strReferer = oEvent.referer();
+        }
     }
     if (m_strUserId.length() == 0 && oEvent.user_id().length() < 30)    // register user id
     {
@@ -101,6 +112,8 @@ void SessionSession::TransferEvent(int iEventPos)
     oEvent.set_device_id(m_strDeviceId);
     oEvent.set_plat(m_strPlat);
     oEvent.set_explorer(m_strExplorer);
+    oEvent.set_client_ip(m_strClientIp);
+    oEvent.set_app_id(m_uiAppId);
     if (m_bTourist2User)
     {
         oEvent.set_tourist_id(m_strTouristId);
@@ -153,6 +166,8 @@ void SessionSession::TransferPageEvent(int iEventPos)
     oEvent.set_device_id(m_strDeviceId);
     oEvent.set_plat(m_strPlat);
     oEvent.set_explorer(m_strExplorer);
+    oEvent.set_client_ip(m_strClientIp);
+    oEvent.set_app_id(m_uiAppId);
     if (m_bTourist2User)
     {
         oEvent.set_tourist_id(m_strTouristId);

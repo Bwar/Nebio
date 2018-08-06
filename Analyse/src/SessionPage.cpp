@@ -35,6 +35,7 @@ neb::E_CMD_STATUS SessionPage::Timeout()
 
 void SessionPage::AddEvent(const Event& oEvent)
 {
+    LOG4_DEBUG("%s", oEvent.DebugString().c_str());
     if (m_strPage.size() == 0)
     {
         m_uiAppId = oEvent.app_id();
@@ -90,7 +91,7 @@ void SessionPage::Stat()
     oResult.set_bounce_vv(m_uiBounceVv);
     oMsgBody.set_data(oResult.SerializeAsString());
     oMsgBody.mutable_req_target()->set_route(m_strPage);
-    SendOriented("AGGREGATE", CMD_TB_EVENT, GetSequence(), oMsgBody);
+    SendOriented("AGGREGATE", CMD_TB_PAGE, GetSequence(), oMsgBody);
 }
 
 }

@@ -18,7 +18,7 @@ namespace nebio
 
 SessionTbEvent::SessionTbEvent(const std::string& strSessionId, ev_tstamp dSessionTimeout)
     : AggregateSession(strSessionId, dSessionTimeout),
-      m_uiUv(0), m_uiPv(0), m_uiVv(0), m_uiIv(0), m_ullEventLength(0)
+      m_uiAppId(0), m_uiUv(0), m_uiPv(0), m_uiVv(0), m_uiIv(0), m_ullEventLength(0)
 {
 }
 
@@ -34,6 +34,7 @@ neb::E_CMD_STATUS SessionTbEvent::Timeout()
 
 void SessionTbEvent::AddResult(const Result& oResult)
 {
+    LOG4_DEBUG("%s", oResult.DebugString().c_str());
     if (0 == m_uiAppId)
     {
         m_uiAppId = oResult.app_id();
@@ -50,7 +51,7 @@ void SessionTbEvent::AddResult(const Result& oResult)
 
 void SessionTbEvent::FlushOut()
 {
-    neb::DbOperator oDbOper(0, "tb_event", neb::Mydis::DbOperate::REPLACE);
+    neb::DbOperator oDbOper(1, "tb_event", neb::Mydis::DbOperate::REPLACE, 1);
     oDbOper.AddDbField("stat_date", neb::time_t2TimeStr((time_t)GetNowTime(), "%Y-%m-%d"));
     oDbOper.AddDbField("app_id", m_uiAppId);
     oDbOper.AddDbField("channel", m_strChannel);
