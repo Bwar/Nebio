@@ -41,8 +41,8 @@ bool CmdUser::AnyMessage(
     {
         LOG4_DEBUG("%s", oEvent.DebugString().c_str());
         Stat(m_strChannelSummary, m_strTagSummary, oEvent);
-        Stat(oEvent.referer(), oEvent.tag(), oEvent);
         Stat(oEvent.referer(), m_strTagSummary, oEvent);
+        Stat(oEvent.referer(), oEvent.tag(), oEvent);
         return(true);
     }
     else

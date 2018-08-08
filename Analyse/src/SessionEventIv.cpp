@@ -16,7 +16,7 @@ namespace nebio
 SessionEventIv::SessionEventIv(const std::string& strSessionId,
     const std::string& strChannel, const std::string& strTag, ev_tstamp dSessionTimeout)
     : AnalyseSession(strSessionId, dSessionTimeout),
-      m_uiAppId(0), m_strChannel(strChannel), m_strTag(strTag)
+      m_uiAppId(0), m_strChannel(strChannel), m_strTag(strTag), m_iIv(0)
 {
 }
 
@@ -27,12 +27,13 @@ SessionEventIv::~SessionEventIv()
 
 neb::E_CMD_STATUS SessionEventIv::Timeout()
 {
-    SendResult();
+    FlushOut();
     return(neb::CMD_STATUS_RUNNING);
 }
 
 void SessionEventIv::AddEvent(const Event& oEvent)
 {
+    LOG4_TRACE("%s", oEvent.DebugString().c_str());
     if (m_strEventId.size() == 0)
     {
         m_uiAppId = oEvent.app_id();
@@ -43,11 +44,16 @@ void SessionEventIv::AddEvent(const Event& oEvent)
 
     if (oEvent.client_ip().length() > 0)
     {
-        m_setIp.insert(oEvent.client_ip());
+        auto it = m_setIp.find(oEvent.client_ip());
+        if (it == m_setIp.end())
+        {
+            ++m_iIv;
+            m_setIp.insert(oEvent.client_ip());
+        }
     }
 }
 
-void SessionEventIv::SendResult()
+void SessionEventIv::FlushOut()
 {
     MsgBody oMsgBody;
     Result oResult;
@@ -55,10 +61,11 @@ void SessionEventIv::SendResult()
     oResult.set_channel(m_strChannel);
     oResult.set_tag(m_strTag);
     oResult.set_key1(m_strEventId);
-    oResult.set_iv(m_setIp.size());
+    oResult.set_iv(m_iIv);
     oMsgBody.set_data(oResult.SerializeAsString());
     oMsgBody.mutable_req_target()->set_route(m_strEventId);
     SendOriented("AGGREGATE", CMD_TB_EVENT, GetSequence(), oMsgBody);
+    m_iIv = 0;
 }
 
 }

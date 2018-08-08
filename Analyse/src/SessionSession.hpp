@@ -49,6 +49,8 @@ protected:
      */
     void TransferPageEvent(int iEventPos = -2);
 
+    void TransferUserEvent(int iEventPos = -2);
+
 private:
     bool m_bTourist2User;                // 是否从游客转为注册用户
     uint32 m_uiAppId;

@@ -29,7 +29,7 @@ SessionTbPage::~SessionTbPage()
 
 neb::E_CMD_STATUS SessionTbPage::Timeout()
 {
-    FlushOut();
+    WriteResult();
     return(neb::CMD_STATUS_RUNNING);
 }
 
@@ -52,7 +52,7 @@ void SessionTbPage::AddResult(const Result& oResult)
     m_ullOnlineTime += oResult.length();
 }
 
-void SessionTbPage::FlushOut()
+void SessionTbPage::WriteResult()
 {
     neb::DbOperator oDbOper(1, "tb_page", neb::Mydis::DbOperate::REPLACE, 1);
     oDbOper.AddDbField("stat_date", neb::time_t2TimeStr((time_t)GetNowTime(), "%Y-%m-%d"));
@@ -70,13 +70,6 @@ void SessionTbPage::FlushOut()
     LOG4_DEBUG("%s", oDbOper.MakeMemOperate()->DebugString().c_str());
     auto pStep = MakeSharedStep("nebio::StepWriteDb");
     pStep->Emit(neb::ERR_OK, "", (void*)(oDbOper.MakeMemOperate()));
-    m_uiUv = 0;
-    m_uiPv = 0;
-    m_uiVv = 0;
-    m_uiIv = 0;
-    m_uiExitVv = 0;
-    m_uiBounceVv = 0;
-    m_ullOnlineTime = 0;
 }
 
 }

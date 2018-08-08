@@ -31,7 +31,7 @@ public:
     void AddEvent(const Event& oEvent);
 
 protected:
-    void SendResult();
+    void FlushOut();
 
 private:
     uint32 m_uiAppId;
@@ -40,9 +40,10 @@ private:
     std::string m_strEventId;
     std::string m_strEventType;
      
-    uint32 m_uiPv;
-    uint32 m_uiVv;
-    uint64 m_ullEventLength;
+    int32 m_iPv;
+    int32 m_iUv;
+    int32 m_iVv;
+    int64 m_llEventLength;
     std::unordered_set<std::string> m_setUserId;
 };
 

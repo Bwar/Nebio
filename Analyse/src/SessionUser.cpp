@@ -17,28 +17,30 @@ SessionUser::SessionUser(const std::string& strSessionId,
     const std::string& strChannel, const std::string& strTag, uint64 ullStatDate, ev_tstamp dSessionTimeout)
     : AnalyseSession(strSessionId, dSessionTimeout),
       m_ullStatDate(ullStatDate), m_uiAppId(0), m_strChannel(strChannel), m_strTag(strTag),
-      m_uiActivityUserUv(0), m_uiActivityUserPv(0), m_uiActivityUserVv(0), 
-      m_uiNewUserUv(0), m_uiNewUserPv(0), m_uiNewUserVv(0), 
-      m_uiHistoryUserUv(0), m_uiHistoryUserPv(0), m_uiHistoryUserVv(0), 
-      m_uiTouristUv(0), m_uiTouristPv(0), m_uiTouristVv(0), 
-      m_ullActivityUserSessionLength(0), m_ullNewUserSessionLength(0),
-      m_ullHistoryUserSessionLength(0), m_ullTouristSessionLength(0)
+      m_iActivityUserUv(0), m_iActivityUserPv(0), m_iActivityUserVv(0), 
+      m_iNewUserUv(0), m_iNewUserPv(0), m_iNewUserVv(0), 
+      m_iHistoryUserUv(0), m_iHistoryUserPv(0), m_iHistoryUserVv(0), 
+      m_iTouristUv(0), m_iTouristPv(0), m_iTouristVv(0), 
+      m_llActivityUserSessionLength(0), m_llNewUserSessionLength(0),
+      m_llHistoryUserSessionLength(0), m_llTouristSessionLength(0)
 {
 }
 
 SessionUser::~SessionUser()
 {
     m_mapUser.clear();
+    m_setDayUser.clear();
 }
 
 neb::E_CMD_STATUS SessionUser::Timeout()
 {
-    SendResult();
+    FlushOut();
     return(neb::CMD_STATUS_RUNNING);
 }
 
 void SessionUser::AddEvent(const Event& oEvent)
 {
+    LOG4_TRACE("%s", oEvent.DebugString().c_str());
     if (m_uiAppId == 0)
     {
         m_uiAppId = oEvent.app_id();
@@ -63,6 +65,7 @@ void SessionUser::AddEvent(const Event& oEvent)
 
 void SessionUser::AddUser(const Event& oEvent)
 {
+    LOG4_TRACE("%s", oEvent.DebugString().c_str());
     bool bIsNewUser = false;
     auto user_iter = m_mapUser.find(oEvent.user_id());
     if (user_iter == m_mapUser.end())
@@ -78,37 +81,37 @@ void SessionUser::AddUser(const Event& oEvent)
         }
     }
 
-    ++m_uiActivityUserPv;
-    m_uiActivityUserVv += oEvent.vv();
-    m_ullActivityUserSessionLength += oEvent.length();
+    ++m_iActivityUserPv;
+    m_iActivityUserVv += oEvent.vv();
+    m_llActivityUserSessionLength += oEvent.length();
     auto day_user_iter = m_setDayUser.find(oEvent.user_id());
     if (day_user_iter == m_setDayUser.end())
     {
         m_setDayUser.insert(oEvent.user_id());
-        ++m_uiActivityUserUv;
+        ++m_iActivityUserUv;
     }
 
     MsgBody oMsgBody;
     Event oIpEvent = oEvent;
     if (bIsNewUser)
     {
-        ++m_uiNewUserPv;
-        m_uiNewUserVv += oEvent.vv();
-        m_ullNewUserSessionLength += oEvent.length();
+        ++m_iNewUserPv;
+        m_iNewUserVv += oEvent.vv();
+        m_llNewUserSessionLength += oEvent.length();
         if (day_user_iter == m_setDayUser.end())
         {
-            ++m_uiNewUserUv;
+            ++m_iNewUserUv;
         }
         oIpEvent.set_user_type(USER_NEW);
     }
     else
     {
-        ++m_uiHistoryUserPv;
-        m_uiHistoryUserVv += oEvent.vv();
-        m_ullHistoryUserSessionLength += oEvent.length();
+        ++m_iHistoryUserPv;
+        m_iHistoryUserVv += oEvent.vv();
+        m_llHistoryUserSessionLength += oEvent.length();
         if (day_user_iter == m_setDayUser.end())
         {
-            ++m_uiHistoryUserUv;
+            ++m_iHistoryUserUv;
         }
         oIpEvent.set_user_type(USER_HISTORY);
     }
@@ -119,18 +122,19 @@ void SessionUser::AddUser(const Event& oEvent)
 
 void SessionUser::AddTourist(const Event& oEvent)
 {
-    ++m_uiActivityUserPv;
-    m_uiActivityUserVv += oEvent.vv();
-    m_ullActivityUserSessionLength += oEvent.length();
-    ++m_uiTouristPv;
-    m_uiTouristVv += oEvent.vv();
-    m_ullTouristSessionLength += oEvent.length();
+    LOG4_TRACE("%s", oEvent.DebugString().c_str());
+    ++m_iActivityUserPv;
+    m_iActivityUserVv += oEvent.vv();
+    m_llActivityUserSessionLength += oEvent.length();
+    ++m_iTouristPv;
+    m_iTouristVv += oEvent.vv();
+    m_llTouristSessionLength += oEvent.length();
     auto day_user_iter = m_setDayUser.find(oEvent.tourist_id());
     if (day_user_iter == m_setDayUser.end())
     {
         m_setDayUser.insert(oEvent.tourist_id());
-        ++m_uiActivityUserUv;
-        ++m_uiTouristUv;
+        ++m_iActivityUserUv;
+        ++m_iTouristUv;
     }
     MsgBody oMsgBody;
     Event oIpEvent = oEvent;
@@ -142,22 +146,23 @@ void SessionUser::AddTourist(const Event& oEvent)
 
 void SessionUser::DelTourist(const Event& oEvent)
 {
-    --m_uiActivityUserPv;
-    m_uiActivityUserVv -= oEvent.vv();
-    m_ullActivityUserSessionLength -= oEvent.length();
-    --m_uiTouristPv;
-    m_uiTouristVv -= oEvent.vv();
-    m_ullTouristSessionLength -= oEvent.length();
+    LOG4_TRACE("%s", oEvent.DebugString().c_str());
+    --m_iActivityUserPv;
+    m_iActivityUserVv -= oEvent.vv();
+    m_llActivityUserSessionLength -= oEvent.length();
+    --m_iTouristPv;
+    m_iTouristVv -= oEvent.vv();
+    m_llTouristSessionLength -= oEvent.length();
     auto day_user_iter = m_setDayUser.find(oEvent.tourist_id());
     if (day_user_iter != m_setDayUser.end())
     {
         m_setDayUser.erase(day_user_iter);
-        --m_uiActivityUserUv;
-        --m_uiTouristUv;
+        --m_iActivityUserUv;
+        --m_iTouristUv;
     }
 }
 
-void SessionUser::SendResult()
+void SessionUser::FlushOut()
 {
     MsgBody oMsgBody;
     Result oResult;
@@ -168,40 +173,57 @@ void SessionUser::SendResult()
     oResult.set_tag(m_strTag);
 
     oResult.set_key5(USER_ACTIVITY);
-    oResult.set_pv(m_uiActivityUserPv);
-    oResult.set_uv(m_uiActivityUserUv);
-    oResult.set_vv(m_uiActivityUserVv);
-    oResult.set_length(m_ullActivityUserSessionLength);
+    oResult.set_pv(m_iActivityUserPv);
+    oResult.set_uv(m_iActivityUserUv);
+    oResult.set_vv(m_iActivityUserVv);
+    oResult.set_length(m_llActivityUserSessionLength);
     oMsgBody.set_data(oResult.SerializeAsString());
     oMsgBody.mutable_req_target()->set_route_id(m_uiAppId);
     SendOriented("AGGREGATE", CMD_TB_USER, GetSequence(), oMsgBody);
 
     oResult.set_key5(USER_NEW);
-    oResult.set_pv(m_uiNewUserPv);
-    oResult.set_uv(m_uiNewUserUv);
-    oResult.set_vv(m_uiNewUserVv);
-    oResult.set_length(m_ullNewUserSessionLength);
+    oResult.set_pv(m_iNewUserPv);
+    oResult.set_uv(m_iNewUserUv);
+    oResult.set_vv(m_iNewUserVv);
+    oResult.set_length(m_llNewUserSessionLength);
     oMsgBody.set_data(oResult.SerializeAsString());
     oMsgBody.mutable_req_target()->set_route_id(m_uiAppId);
     SendOriented("AGGREGATE", CMD_TB_USER, GetSequence(), oMsgBody);
 
     oResult.set_key5(USER_HISTORY);
-    oResult.set_pv(m_uiHistoryUserPv);
-    oResult.set_uv(m_uiHistoryUserUv);
-    oResult.set_vv(m_uiHistoryUserVv);
-    oResult.set_length(m_ullHistoryUserSessionLength);
+    oResult.set_pv(m_iHistoryUserPv);
+    oResult.set_uv(m_iHistoryUserUv);
+    oResult.set_vv(m_iHistoryUserVv);
+    oResult.set_length(m_llHistoryUserSessionLength);
     oMsgBody.set_data(oResult.SerializeAsString());
     oMsgBody.mutable_req_target()->set_route_id(m_uiAppId);
     SendOriented("AGGREGATE", CMD_TB_USER, GetSequence(), oMsgBody);
 
     oResult.set_key5(USER_TOURIST);
-    oResult.set_pv(m_uiTouristPv);
-    oResult.set_uv(m_uiTouristUv);
-    oResult.set_vv(m_uiTouristVv);
-    oResult.set_length(m_ullTouristSessionLength);
+    oResult.set_pv(m_iTouristPv);
+    oResult.set_uv(m_iTouristUv);
+    oResult.set_vv(m_iTouristVv);
+    oResult.set_length(m_llTouristSessionLength);
     oMsgBody.set_data(oResult.SerializeAsString());
     oMsgBody.mutable_req_target()->set_route_id(m_uiAppId);
     SendOriented("AGGREGATE", CMD_TB_USER, GetSequence(), oMsgBody);
+
+    m_iActivityUserPv = 0;
+    m_iActivityUserUv = 0;
+    m_iActivityUserVv = 0;
+    m_iHistoryUserPv = 0;
+    m_iHistoryUserUv = 0;
+    m_iHistoryUserVv = 0;
+    m_iNewUserPv = 0;
+    m_iNewUserUv = 0;
+    m_iNewUserVv = 0;
+    m_iTouristPv = 0;
+    m_iTouristUv = 0;
+    m_iTouristVv = 0;
+    m_llActivityUserSessionLength = 0;
+    m_llHistoryUserSessionLength = 0;
+    m_llNewUserSessionLength = 0;
+    m_llTouristSessionLength = 0;
 }
 
 }

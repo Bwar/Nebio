@@ -30,7 +30,7 @@ public:
     void AddResult(const Result& oResult);
 
 protected:
-    void FlushOut();
+    void WriteResult();
 
 private:
     uint32 m_uiAppId;

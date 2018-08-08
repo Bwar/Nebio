@@ -35,7 +35,7 @@ protected:
     void AddUser(const Event& oEvent);
     void AddTourist(const Event& oEvent);
     void DelTourist(const Event& oEvent);
-    void SendResult();
+    void FlushOut();
 
 private:
     uint64 m_ullStatDate;
@@ -43,10 +43,10 @@ private:
     std::string m_strChannel;
     std::string m_strTag;
 
-    uint32 m_uiActivityUserIv;
-    uint32 m_uiNewUserIv;
-    uint32 m_uiHistoryUserIv;
-    uint32 m_uiTouristIv;
+    int32 m_iActivityUserIv;
+    int32 m_iNewUserIv;
+    int32 m_iHistoryUserIv;
+    int32 m_iTouristIv;
     std::unordered_set<std::string> m_setIp;
 };
 

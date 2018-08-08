@@ -31,7 +31,7 @@ public:
     void AddEvent(const Event& oEvent);
 
 protected:
-    void SendResult();
+    void FlushOut();
 
 private:
     uint32 m_uiAppId;
@@ -39,11 +39,12 @@ private:
     std::string m_strTag;
     std::string m_strPage;   
      
-    uint32 m_uiPv;
-    uint32 m_uiVv;
-    uint32 m_uiExitVv;
-    uint32 m_uiBounceVv;
-    uint64 m_ullPageLength;
+    int32 m_iPv;
+    int32 m_iUv;
+    int32 m_iVv;
+    int32 m_iExitVv;
+    int32 m_iBounceVv;
+    int64 m_llPageLength;
     std::unordered_set<std::string> m_setUserId;
 };
 

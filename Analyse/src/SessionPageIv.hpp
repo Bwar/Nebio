@@ -31,7 +31,7 @@ public:
     void AddEvent(const Event& oEvent);
 
 protected:
-    void SendResult();
+    void FlushOut();
 
 private:
     uint32 m_uiAppId;
@@ -39,6 +39,7 @@ private:
     std::string m_strTag;
     std::string m_strPage;   
      
+    int32 m_iIv;
     std::unordered_set<std::string> m_setIp;
 };
 

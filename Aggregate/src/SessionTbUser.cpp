@@ -28,7 +28,7 @@ SessionTbUser::~SessionTbUser()
 
 neb::E_CMD_STATUS SessionTbUser::Timeout()
 {
-    FlushOut();
+    WriteResult();
     return(neb::CMD_STATUS_RUNNING);
 }
 
@@ -49,7 +49,7 @@ void SessionTbUser::AddResult(const Result& oResult)
     m_ullSessionLength += oResult.length();
 }
 
-void SessionTbUser::FlushOut()
+void SessionTbUser::WriteResult()
 {
     neb::DbOperator oDbOper(1, "tb_user", neb::Mydis::DbOperate::REPLACE, 1);
     oDbOper.AddDbField("stat_date", neb::time_t2TimeStr((time_t)GetNowTime(), "%Y-%m-%d"));
@@ -65,11 +65,6 @@ void SessionTbUser::FlushOut()
     LOG4_DEBUG("%s", oDbOper.MakeMemOperate()->DebugString().c_str());
     auto pStep = MakeSharedStep("nebio::StepWriteDb");
     pStep->Emit(neb::ERR_OK, "", (void*)(oDbOper.MakeMemOperate()));
-    m_uiUv = 0;
-    m_uiPv = 0;
-    m_uiVv = 0;
-    m_uiIv = 0;
-    m_ullSessionLength = 0;
 }
 
 }

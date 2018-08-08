@@ -44,7 +44,7 @@ protected:
     void AddUser(const Event& oEvent);
     void AddTourist(const Event& oEvent);
     void DelTourist(const Event& oEvent);
-    void SendResult();
+    void FlushOut();
 
 private:
     uint64 m_ullStatDate;
@@ -52,22 +52,22 @@ private:
     std::string m_strChannel;
     std::string m_strTag;
 
-    uint32 m_uiActivityUserUv; 
-    uint32 m_uiActivityUserPv;
-    uint32 m_uiActivityUserVv;
-    uint32 m_uiNewUserUv;
-    uint32 m_uiNewUserPv;
-    uint32 m_uiNewUserVv;
-    uint32 m_uiHistoryUserUv;
-    uint32 m_uiHistoryUserPv;
-    uint32 m_uiHistoryUserVv;
-    uint32 m_uiTouristUv;
-    uint32 m_uiTouristPv;
-    uint32 m_uiTouristVv;
-    uint64 m_ullActivityUserSessionLength;
-    uint64 m_ullNewUserSessionLength;
-    uint64 m_ullHistoryUserSessionLength;
-    uint64 m_ullTouristSessionLength;
+    int32 m_iActivityUserUv; 
+    int32 m_iActivityUserPv;
+    int32 m_iActivityUserVv;
+    int32 m_iNewUserUv;
+    int32 m_iNewUserPv;
+    int32 m_iNewUserVv;
+    int32 m_iHistoryUserUv;
+    int32 m_iHistoryUserPv;
+    int32 m_iHistoryUserVv;
+    int32 m_iTouristUv;
+    int32 m_iTouristPv;
+    int32 m_iTouristVv;
+    int64 m_llActivityUserSessionLength;
+    int64 m_llNewUserSessionLength;
+    int64 m_llHistoryUserSessionLength;
+    int64 m_llTouristSessionLength;
     std::unordered_map<std::string, uint64> m_mapUser;
     std::unordered_set<std::string> m_setDayUser;
 };

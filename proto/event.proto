@@ -22,11 +22,11 @@ message Event
     string tag                  = 14;
     string tourist_id           = 15;
     string next_page            = 16;
-    uint32 vv                   = 17;
-    uint32 exit_vv              = 18;
-    uint32 bounce_vv            = 19;
-    uint64 length               = 20;       // 时长（单位：S）
-    int32  user_type            = 21;       // 用户类型
+    int32 vv                    = 17;
+    int32 exit_vv               = 18;
+    int32 bounce_vv             = 19;
+    int64 length                = 20;       // 时长（单位：S）
+    int32 user_type             = 21;       // 用户类型
 
     enum E_EVENT_OPERATE
     {
@@ -50,12 +50,12 @@ message Result
     uint32 key6                 = 10;
 
     // value
-    uint32 pv                   = 11;
-    uint32 uv                   = 12;
-    uint32 vv                   = 13;
-    uint32 iv                   = 14;
-    uint64 length               = 15;
-    uint32 exit_vv              = 16;
-    uint32 bounce_vv            = 17;
+    int32 pv                   = 11;
+    int32 uv                   = 12;
+    int32 vv                   = 13;
+    int32 iv                   = 14;
+    int64 length               = 15;
+    int32 exit_vv              = 16;
+    int32 bounce_vv            = 17;
 }
 

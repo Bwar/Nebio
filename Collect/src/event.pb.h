@@ -310,29 +310,29 @@ class Event : public ::google::protobuf::Message /* @@protoc_insertion_point(cla
   ::std::string* release_next_page();
   void set_allocated_next_page(::std::string* next_page);
 
-  // optional uint32 vv = 17;
+  // optional int32 vv = 17;
   void clear_vv();
   static const int kVvFieldNumber = 17;
-  ::google::protobuf::uint32 vv() const;
-  void set_vv(::google::protobuf::uint32 value);
+  ::google::protobuf::int32 vv() const;
+  void set_vv(::google::protobuf::int32 value);
 
-  // optional uint32 exit_vv = 18;
+  // optional int32 exit_vv = 18;
   void clear_exit_vv();
   static const int kExitVvFieldNumber = 18;
-  ::google::protobuf::uint32 exit_vv() const;
-  void set_exit_vv(::google::protobuf::uint32 value);
+  ::google::protobuf::int32 exit_vv() const;
+  void set_exit_vv(::google::protobuf::int32 value);
 
-  // optional uint32 bounce_vv = 19;
+  // optional int32 bounce_vv = 19;
   void clear_bounce_vv();
   static const int kBounceVvFieldNumber = 19;
-  ::google::protobuf::uint32 bounce_vv() const;
-  void set_bounce_vv(::google::protobuf::uint32 value);
+  ::google::protobuf::int32 bounce_vv() const;
+  void set_bounce_vv(::google::protobuf::int32 value);
 
-  // optional uint64 length = 20;
+  // optional int64 length = 20;
   void clear_length();
   static const int kLengthFieldNumber = 20;
-  ::google::protobuf::uint64 length() const;
-  void set_length(::google::protobuf::uint64 value);
+  ::google::protobuf::int64 length() const;
+  void set_length(::google::protobuf::int64 value);
 
   // optional int32 user_type = 21;
   void clear_user_type();
@@ -361,10 +361,10 @@ class Event : public ::google::protobuf::Message /* @@protoc_insertion_point(cla
   ::google::protobuf::internal::ArenaStringPtr tag_;
   ::google::protobuf::internal::ArenaStringPtr tourist_id_;
   ::google::protobuf::internal::ArenaStringPtr next_page_;
-  ::google::protobuf::uint32 vv_;
-  ::google::protobuf::uint32 exit_vv_;
-  ::google::protobuf::uint64 length_;
-  ::google::protobuf::uint32 bounce_vv_;
+  ::google::protobuf::int32 vv_;
+  ::google::protobuf::int32 exit_vv_;
+  ::google::protobuf::int64 length_;
+  ::google::protobuf::int32 bounce_vv_;
   ::google::protobuf::int32 user_type_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_event_2eproto();
@@ -531,47 +531,47 @@ class Result : public ::google::protobuf::Message /* @@protoc_insertion_point(cl
   ::google::protobuf::uint32 key6() const;
   void set_key6(::google::protobuf::uint32 value);
 
-  // optional uint32 pv = 11;
+  // optional int32 pv = 11;
   void clear_pv();
   static const int kPvFieldNumber = 11;
-  ::google::protobuf::uint32 pv() const;
-  void set_pv(::google::protobuf::uint32 value);
+  ::google::protobuf::int32 pv() const;
+  void set_pv(::google::protobuf::int32 value);
 
-  // optional uint32 uv = 12;
+  // optional int32 uv = 12;
   void clear_uv();
   static const int kUvFieldNumber = 12;
-  ::google::protobuf::uint32 uv() const;
-  void set_uv(::google::protobuf::uint32 value);
+  ::google::protobuf::int32 uv() const;
+  void set_uv(::google::protobuf::int32 value);
 
-  // optional uint32 vv = 13;
+  // optional int32 vv = 13;
   void clear_vv();
   static const int kVvFieldNumber = 13;
-  ::google::protobuf::uint32 vv() const;
-  void set_vv(::google::protobuf::uint32 value);
+  ::google::protobuf::int32 vv() const;
+  void set_vv(::google::protobuf::int32 value);
 
-  // optional uint32 iv = 14;
+  // optional int32 iv = 14;
   void clear_iv();
   static const int kIvFieldNumber = 14;
-  ::google::protobuf::uint32 iv() const;
-  void set_iv(::google::protobuf::uint32 value);
+  ::google::protobuf::int32 iv() const;
+  void set_iv(::google::protobuf::int32 value);
 
-  // optional uint64 length = 15;
+  // optional int64 length = 15;
   void clear_length();
   static const int kLengthFieldNumber = 15;
-  ::google::protobuf::uint64 length() const;
-  void set_length(::google::protobuf::uint64 value);
+  ::google::protobuf::int64 length() const;
+  void set_length(::google::protobuf::int64 value);
 
-  // optional uint32 exit_vv = 16;
+  // optional int32 exit_vv = 16;
   void clear_exit_vv();
   static const int kExitVvFieldNumber = 16;
-  ::google::protobuf::uint32 exit_vv() const;
-  void set_exit_vv(::google::protobuf::uint32 value);
+  ::google::protobuf::int32 exit_vv() const;
+  void set_exit_vv(::google::protobuf::int32 value);
 
-  // optional uint32 bounce_vv = 17;
+  // optional int32 bounce_vv = 17;
   void clear_bounce_vv();
   static const int kBounceVvFieldNumber = 17;
-  ::google::protobuf::uint32 bounce_vv() const;
-  void set_bounce_vv(::google::protobuf::uint32 value);
+  ::google::protobuf::int32 bounce_vv() const;
+  void set_bounce_vv(::google::protobuf::int32 value);
 
   // @@protoc_insertion_point(class_scope:nebio.Result)
  private:
@@ -588,13 +588,13 @@ class Result : public ::google::protobuf::Message /* @@protoc_insertion_point(cl
   ::google::protobuf::internal::ArenaStringPtr key3_;
   ::google::protobuf::internal::ArenaStringPtr key4_;
   ::google::protobuf::uint32 key6_;
-  ::google::protobuf::uint32 pv_;
-  ::google::protobuf::uint32 uv_;
-  ::google::protobuf::uint32 vv_;
-  ::google::protobuf::uint64 length_;
-  ::google::protobuf::uint32 iv_;
-  ::google::protobuf::uint32 exit_vv_;
-  ::google::protobuf::uint32 bounce_vv_;
+  ::google::protobuf::int32 pv_;
+  ::google::protobuf::int32 uv_;
+  ::google::protobuf::int32 vv_;
+  ::google::protobuf::int64 length_;
+  ::google::protobuf::int32 iv_;
+  ::google::protobuf::int32 exit_vv_;
+  ::google::protobuf::int32 bounce_vv_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_event_2eproto();
   friend void protobuf_AssignDesc_event_2eproto();
@@ -1225,57 +1225,57 @@ inline void Event::set_allocated_next_page(::std::string* next_page) {
   // @@protoc_insertion_point(field_set_allocated:nebio.Event.next_page)
 }
 
-// optional uint32 vv = 17;
+// optional int32 vv = 17;
 inline void Event::clear_vv() {
-  vv_ = 0u;
+  vv_ = 0;
 }
-inline ::google::protobuf::uint32 Event::vv() const {
+inline ::google::protobuf::int32 Event::vv() const {
   // @@protoc_insertion_point(field_get:nebio.Event.vv)
   return vv_;
 }
-inline void Event::set_vv(::google::protobuf::uint32 value) {
+inline void Event::set_vv(::google::protobuf::int32 value) {
   
   vv_ = value;
   // @@protoc_insertion_point(field_set:nebio.Event.vv)
 }
 
-// optional uint32 exit_vv = 18;
+// optional int32 exit_vv = 18;
 inline void Event::clear_exit_vv() {
-  exit_vv_ = 0u;
+  exit_vv_ = 0;
 }
-inline ::google::protobuf::uint32 Event::exit_vv() const {
+inline ::google::protobuf::int32 Event::exit_vv() const {
   // @@protoc_insertion_point(field_get:nebio.Event.exit_vv)
   return exit_vv_;
 }
-inline void Event::set_exit_vv(::google::protobuf::uint32 value) {
+inline void Event::set_exit_vv(::google::protobuf::int32 value) {
   
   exit_vv_ = value;
   // @@protoc_insertion_point(field_set:nebio.Event.exit_vv)
 }
 
-// optional uint32 bounce_vv = 19;
+// optional int32 bounce_vv = 19;
 inline void Event::clear_bounce_vv() {
-  bounce_vv_ = 0u;
+  bounce_vv_ = 0;
 }
-inline ::google::protobuf::uint32 Event::bounce_vv() const {
+inline ::google::protobuf::int32 Event::bounce_vv() const {
   // @@protoc_insertion_point(field_get:nebio.Event.bounce_vv)
   return bounce_vv_;
 }
-inline void Event::set_bounce_vv(::google::protobuf::uint32 value) {
+inline void Event::set_bounce_vv(::google::protobuf::int32 value) {
   
   bounce_vv_ = value;
   // @@protoc_insertion_point(field_set:nebio.Event.bounce_vv)
 }
 
-// optional uint64 length = 20;
+// optional int64 length = 20;
 inline void Event::clear_length() {
-  length_ = GOOGLE_ULONGLONG(0);
+  length_ = GOOGLE_LONGLONG(0);
 }
-inline ::google::protobuf::uint64 Event::length() const {
+inline ::google::protobuf::int64 Event::length() const {
   // @@protoc_insertion_point(field_get:nebio.Event.length)
   return length_;
 }
-inline void Event::set_length(::google::protobuf::uint64 value) {
+inline void Event::set_length(::google::protobuf::int64 value) {
   
   length_ = value;
   // @@protoc_insertion_point(field_set:nebio.Event.length)
@@ -1649,99 +1649,99 @@ inline void Result::set_key6(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:nebio.Result.key6)
 }
 
-// optional uint32 pv = 11;
+// optional int32 pv = 11;
 inline void Result::clear_pv() {
-  pv_ = 0u;
+  pv_ = 0;
 }
-inline ::google::protobuf::uint32 Result::pv() const {
+inline ::google::protobuf::int32 Result::pv() const {
   // @@protoc_insertion_point(field_get:nebio.Result.pv)
   return pv_;
 }
-inline void Result::set_pv(::google::protobuf::uint32 value) {
+inline void Result::set_pv(::google::protobuf::int32 value) {
   
   pv_ = value;
   // @@protoc_insertion_point(field_set:nebio.Result.pv)
 }
 
-// optional uint32 uv = 12;
+// optional int32 uv = 12;
 inline void Result::clear_uv() {
-  uv_ = 0u;
+  uv_ = 0;
 }
-inline ::google::protobuf::uint32 Result::uv() const {
+inline ::google::protobuf::int32 Result::uv() const {
   // @@protoc_insertion_point(field_get:nebio.Result.uv)
   return uv_;
 }
-inline void Result::set_uv(::google::protobuf::uint32 value) {
+inline void Result::set_uv(::google::protobuf::int32 value) {
   
   uv_ = value;
   // @@protoc_insertion_point(field_set:nebio.Result.uv)
 }
 
-// optional uint32 vv = 13;
+// optional int32 vv = 13;
 inline void Result::clear_vv() {
-  vv_ = 0u;
+  vv_ = 0;
 }
-inline ::google::protobuf::uint32 Result::vv() const {
+inline ::google::protobuf::int32 Result::vv() const {
   // @@protoc_insertion_point(field_get:nebio.Result.vv)
   return vv_;
 }
-inline void Result::set_vv(::google::protobuf::uint32 value) {
+inline void Result::set_vv(::google::protobuf::int32 value) {
   
   vv_ = value;
   // @@protoc_insertion_point(field_set:nebio.Result.vv)
 }
 
-// optional uint32 iv = 14;
+// optional int32 iv = 14;
 inline void Result::clear_iv() {
-  iv_ = 0u;
+  iv_ = 0;
 }
-inline ::google::protobuf::uint32 Result::iv() const {
+inline ::google::protobuf::int32 Result::iv() const {
   // @@protoc_insertion_point(field_get:nebio.Result.iv)
   return iv_;
 }
-inline void Result::set_iv(::google::protobuf::uint32 value) {
+inline void Result::set_iv(::google::protobuf::int32 value) {
   
   iv_ = value;
   // @@protoc_insertion_point(field_set:nebio.Result.iv)
 }
 
-// optional uint64 length = 15;
+// optional int64 length = 15;
 inline void Result::clear_length() {
-  length_ = GOOGLE_ULONGLONG(0);
+  length_ = GOOGLE_LONGLONG(0);
 }
-inline ::google::protobuf::uint64 Result::length() const {
+inline ::google::protobuf::int64 Result::length() const {
   // @@protoc_insertion_point(field_get:nebio.Result.length)
   return length_;
 }
-inline void Result::set_length(::google::protobuf::uint64 value) {
+inline void Result::set_length(::google::protobuf::int64 value) {
   
   length_ = value;
   // @@protoc_insertion_point(field_set:nebio.Result.length)
 }
 
-// optional uint32 exit_vv = 16;
+// optional int32 exit_vv = 16;
 inline void Result::clear_exit_vv() {
-  exit_vv_ = 0u;
+  exit_vv_ = 0;
 }
-inline ::google::protobuf::uint32 Result::exit_vv() const {
+inline ::google::protobuf::int32 Result::exit_vv() const {
   // @@protoc_insertion_point(field_get:nebio.Result.exit_vv)
   return exit_vv_;
 }
-inline void Result::set_exit_vv(::google::protobuf::uint32 value) {
+inline void Result::set_exit_vv(::google::protobuf::int32 value) {
   
   exit_vv_ = value;
   // @@protoc_insertion_point(field_set:nebio.Result.exit_vv)
 }
 
-// optional uint32 bounce_vv = 17;
+// optional int32 bounce_vv = 17;
 inline void Result::clear_bounce_vv() {
-  bounce_vv_ = 0u;
+  bounce_vv_ = 0;
 }
-inline ::google::protobuf::uint32 Result::bounce_vv() const {
+inline ::google::protobuf::int32 Result::bounce_vv() const {
   // @@protoc_insertion_point(field_get:nebio.Result.bounce_vv)
   return bounce_vv_;
 }
-inline void Result::set_bounce_vv(::google::protobuf::uint32 value) {
+inline void Result::set_bounce_vv(::google::protobuf::int32 value) {
   
   bounce_vv_ = value;
   // @@protoc_insertion_point(field_set:nebio.Result.bounce_vv)
