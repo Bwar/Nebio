@@ -37,7 +37,6 @@ neb::E_CMD_STATUS SessionSession::Timeout()
 
 void SessionSession::AddEvent(const Event& oEvent)
 {
-    LOG4_DEBUG("%s", oEvent.DebugString().c_str());
     if (m_strUserSessionId.length() == 0)
     {
         m_uiAppId = oEvent.app_id();
@@ -56,10 +55,13 @@ void SessionSession::AddEvent(const Event& oEvent)
             m_strReferer = oEvent.referer();
         }
     }
-    if (m_strUserId.length() == 0 && oEvent.user_id().length() < 30)    // register user id
+    if (m_strUserId.length() == 0 && oEvent.user_id().length() < 30 && oEvent.user_id().length() > 1)    // register user id
     {
         m_strUserId = oEvent.user_id();
-        m_bTourist2User = true;
+        if (m_strTouristId.length() > 0)
+        {
+            m_bTourist2User = true;
+        }
     }
     if (m_strTouristId.length() == 0 && oEvent.user_id().length() >= 30)     // tourist id is a GUID, length 36.
     {
@@ -81,10 +83,13 @@ void SessionSession::AddEvent(const Event& oEvent)
             TransferPageEvent(-2);
         }
     }
+
+    m_bTourist2User = false;
 }
 
 void SessionSession::TransferEvent(int iEventPos)
 {
+    LOG4_TRACE("iEventPos = %d", iEventPos);
     MsgBody oMsgBody;
     Event oEvent;
 
@@ -96,11 +101,11 @@ void SessionSession::TransferEvent(int iEventPos)
         {
             return;
         }
-        oEvent.set_event_length(std::get<2>(m_listEvent.back()) - std::get<2>(*r_iter));
+        oEvent.set_length(std::get<2>(m_listEvent.back()) - std::get<2>(*r_iter));
     }
     if (iEventPos == -1)
     {
-        oEvent.set_session_length(std::get<2>(m_listEvent.back()) - std::get<2>(m_listEvent.front()));
+        oEvent.set_length(std::get<2>(m_listEvent.back()) - std::get<2>(m_listEvent.front()));
     }
     oEvent.set_event_id(std::get<0>(*r_iter));
     oEvent.set_event_type(std::get<1>(*r_iter));
@@ -114,36 +119,46 @@ void SessionSession::TransferEvent(int iEventPos)
     oEvent.set_explorer(m_strExplorer);
     oEvent.set_client_ip(m_strClientIp);
     oEvent.set_app_id(m_uiAppId);
-    if (m_bTourist2User)
-    {
-        oEvent.set_tourist_id(m_strTouristId);
-        m_bTourist2User = false;
-    }
-    else if (m_strUserId.length() == 0)
-    {
-        oEvent.set_tourist_id(m_strTouristId);
-    }
+    oEvent.set_tourist_id(m_strTouristId);
+
     if (m_setEventVv.end() == m_setEventVv.find(oEvent.event_id()))
     {
         oEvent.set_vv(1);
         m_setEventVv.insert(oEvent.event_id());
     }
 
-    oMsgBody.set_data(oEvent.SerializeAsString());
-    if (oEvent.tourist_id().length() > 0)                // 当且仅当游客身份转为注册用户身份时明确以游客id路由
+    if (m_bTourist2User)
     {
+        oEvent.set_event_oper(Event::EVENT_DEL);
+        oMsgBody.set_data(oEvent.SerializeAsString());
         oMsgBody.mutable_req_target()->set_route(m_strTouristId);
+        SendOriented("ANALYSE", CMD_EVENT, GetSequence(), oMsgBody);
+        SendOriented("ANALYSE", CMD_USER, GetSequence(), oMsgBody);
     }
-    else
+
+    oEvent.set_event_oper(Event::EVENT_ADD);
+    oMsgBody.set_data(oEvent.SerializeAsString());
+    if (oEvent.user_id().length() > 0)                // 当且仅当游客身份转为注册用户身份时明确以游客id路由
     {
         oMsgBody.mutable_req_target()->set_route(m_strUserId);
     }
+    else
+    {
+        oMsgBody.mutable_req_target()->set_route(m_strTouristId);
+    }
     SendOriented("ANALYSE", CMD_EVENT, GetSequence(), oMsgBody);
     SendOriented("ANALYSE", CMD_USER, GetSequence(), oMsgBody);
+
+    if (m_listEvent.size() == 1)
+    {
+        oMsgBody.mutable_req_target()->set_route(m_strClientIp);
+        SendOriented("ANALYSE", CMD_EVENT_IV, GetSequence(), oMsgBody);
+    }
 }
 
 void SessionSession::TransferPageEvent(int iEventPos)
 {
+    LOG4_TRACE("iEventPos = %d", iEventPos);
     MsgBody oMsgBody;
     Event oEvent;
 
@@ -156,7 +171,7 @@ void SessionSession::TransferPageEvent(int iEventPos)
             return;
         }
         oEvent.set_next_page(std::get<0>(m_listPage.back()));
-        oEvent.set_page_length(std::get<1>(m_listPage.back()) - std::get<1>(*r_iter));
+        oEvent.set_length(std::get<1>(m_listPage.back()) - std::get<1>(*r_iter));
     }
     oEvent.set_page(std::get<0>(*r_iter));
     oEvent.set_time(std::get<1>(*r_iter));
@@ -168,15 +183,8 @@ void SessionSession::TransferPageEvent(int iEventPos)
     oEvent.set_explorer(m_strExplorer);
     oEvent.set_client_ip(m_strClientIp);
     oEvent.set_app_id(m_uiAppId);
-    if (m_bTourist2User)
-    {
-        oEvent.set_tourist_id(m_strTouristId);
-        m_bTourist2User = false;
-    }
-    else if (m_strUserId.length() == 0)
-    {
-        oEvent.set_tourist_id(m_strTouristId);
-    }
+    oEvent.set_tourist_id(m_strTouristId);
+
     if (m_setPageVv.end() == m_setPageVv.find(oEvent.page()))
     {
         oEvent.set_vv(1);
@@ -191,16 +199,30 @@ void SessionSession::TransferPageEvent(int iEventPos)
         }
     }
 
-    oMsgBody.set_data(oEvent.SerializeAsString());
-    if (m_strTouristId.length() > 0)
+    if (m_bTourist2User)
     {
+        oEvent.set_event_oper(Event::EVENT_DEL);
+        oMsgBody.set_data(oEvent.SerializeAsString());
         oMsgBody.mutable_req_target()->set_route(m_strTouristId);
+        SendOriented("ANALYSE", CMD_PAGE, GetSequence(), oMsgBody);
     }
-    else
+
+    oEvent.set_event_oper(Event::EVENT_ADD);
+    oMsgBody.set_data(oEvent.SerializeAsString());
+    if (m_strUserId.length() > 0)
     {
         oMsgBody.mutable_req_target()->set_route(m_strUserId);
     }
+    else
+    {
+        oMsgBody.mutable_req_target()->set_route(m_strTouristId);
+    }
     SendOriented("ANALYSE", CMD_PAGE, GetSequence(), oMsgBody);
+    if (m_listPage.size() == 1)
+    {
+        oMsgBody.mutable_req_target()->set_route(m_strClientIp);
+        SendOriented("ANALYSE", CMD_PAGE_IV, GetSequence(), oMsgBody);
+    }
 }
 
 }

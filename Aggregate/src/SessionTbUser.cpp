@@ -62,6 +62,7 @@ void SessionTbUser::FlushOut()
     oDbOper.AddDbField("vv", m_uiVv);
     oDbOper.AddDbField("iv", m_uiIv);
     oDbOper.AddDbField("session_len", m_ullSessionLength);
+    LOG4_DEBUG("%s", oDbOper.MakeMemOperate()->DebugString().c_str());
     auto pStep = MakeSharedStep("nebio::StepWriteDb");
     pStep->Emit(neb::ERR_OK, "", (void*)(oDbOper.MakeMemOperate()));
     m_uiUv = 0;

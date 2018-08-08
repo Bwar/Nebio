@@ -31,7 +31,7 @@ public:
     void AddEvent(const Event& oEvent);
 
 protected:
-    void Stat();
+    void SendResult();
 
 private:
     uint32 m_uiAppId;
@@ -39,13 +39,11 @@ private:
     std::string m_strTag;
     std::string m_strEventId;
     std::string m_strEventType;
-    std::string m_strPage;   
      
     uint32 m_uiPv;
     uint32 m_uiVv;
     uint64 m_ullEventLength;
     std::unordered_set<std::string> m_setUserId;
-    std::unordered_set<std::string> m_setIp;
 };
 
 } // namespace nebio

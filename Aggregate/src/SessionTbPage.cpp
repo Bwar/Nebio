@@ -67,6 +67,7 @@ void SessionTbPage::FlushOut()
     oDbOper.AddDbField("online_time", m_ullOnlineTime);
     oDbOper.AddDbField("exit_vv", m_uiExitVv);
     oDbOper.AddDbField("bounce_vv", m_uiBounceVv);
+    LOG4_DEBUG("%s", oDbOper.MakeMemOperate()->DebugString().c_str());
     auto pStep = MakeSharedStep("nebio::StepWriteDb");
     pStep->Emit(neb::ERR_OK, "", (void*)(oDbOper.MakeMemOperate()));
     m_uiUv = 0;

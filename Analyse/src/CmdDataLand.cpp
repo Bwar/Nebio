@@ -20,7 +20,7 @@ namespace nebio
 
 CmdDataLand::CmdDataLand(int32 iCmd)
     : neb::Cmd(iCmd),
-      m_iFileDate(0), m_iLogMaxFileSize(65535)
+      m_iFileDate(0), m_iFileIndex(0), m_iLogMaxFileSize(65535)
 {
 }
 
@@ -94,20 +94,29 @@ bool CmdDataLand::OpenDataFile()
         }
         m_ofs.flush();
         m_ofs.close();
+        if (iFileDate > m_iFileDate)
+        {
+            m_iFileDate = iFileDate;
+            m_iFileIndex = 0;
+        }
+        else if (m_ofs.tellp() < m_iLogMaxFileSize)
+        {
+            ++m_iFileIndex;
+        }
     }
     auto time_now = std::chrono::system_clock::now();
     auto t = std::chrono::system_clock::to_time_t(time_now);
     std::ostringstream osDataFile;
-    osDataFile << m_strLogDataPath << "/" << m_strLogFileName << "." << std::put_time(std::localtime(&t), "%Y%m%d");
-    m_strLogDataFile = osDataFile.str();
-    for (int i = 1; ; ++i)
+    if (m_iFileIndex == 0)
     {
-        if (access(m_strLogDataFile.c_str(), F_OK) != 0)
-        {
-            break;
-        }
-        m_strLogDataFile = osDataFile.str() + std::string(".") + std::to_string(i);
+        osDataFile << m_strLogDataPath << "/" << m_strLogFileName << "." << std::put_time(std::localtime(&t), "%Y%m%d");
     }
+    else
+    {
+        osDataFile << m_strLogDataPath << "/" << m_strLogFileName << "." << std::put_time(std::localtime(&t), "%Y%m%d")
+                   << "." << std::to_string(m_iFileIndex);
+    }
+    m_strLogDataFile = osDataFile.str();
     m_ofs.open(m_strLogDataFile, std::ios::app);
     if (!m_ofs.good())
     {

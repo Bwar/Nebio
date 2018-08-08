@@ -24,6 +24,7 @@ namespace {
 const ::google::protobuf::Descriptor* Event_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   Event_reflection_ = NULL;
+const ::google::protobuf::EnumDescriptor* Event_E_EVENT_OPERATE_descriptor_ = NULL;
 const ::google::protobuf::Descriptor* Result_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   Result_reflection_ = NULL;
@@ -52,15 +53,15 @@ void protobuf_AssignDesc_event_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Event, explorer_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Event, client_ip_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Event, app_id_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Event, event_oper_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Event, tag_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Event, tourist_id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Event, next_page_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Event, vv_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Event, exit_vv_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Event, bounce_vv_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Event, event_length_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Event, page_length_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Event, session_length_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Event, length_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Event, user_type_),
   };
   Event_reflection_ =
     ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
@@ -73,6 +74,7 @@ void protobuf_AssignDesc_event_2eproto() {
       sizeof(Event),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Event, _internal_metadata_),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Event, _is_default_instance_));
+  Event_E_EVENT_OPERATE_descriptor_ = Event_descriptor_->enum_type(0);
   Result_descriptor_ = file->message_type(1);
   static const int Result_offsets_[17] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Result, app_id_),
@@ -140,23 +142,25 @@ void protobuf_AddDesc_event_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\013event.proto\022\005nebio\"\374\002\n\005Event\022\020\n\010event_"
+    "\n\013event.proto\022\005nebio\"\277\003\n\005Event\022\020\n\010event_"
     "id\030\001 \001(\t\022\022\n\nevent_type\030\002 \001(\t\022\014\n\004time\030\003 \001"
     "(\004\022\014\n\004page\030\004 \001(\t\022\017\n\007referer\030\005 \001(\t\022\022\n\nses"
     "sion_id\030\006 \001(\t\022\017\n\007user_id\030\007 \001(\t\022\021\n\tdevice"
     "_id\030\010 \001(\t\022\014\n\004plat\030\t \001(\t\022\020\n\010explorer\030\n \001("
-    "\t\022\021\n\tclient_ip\030\013 \001(\t\022\016\n\006app_id\030\014 \001(\r\022\013\n\003"
-    "tag\030\r \001(\t\022\022\n\ntourist_id\030\016 \001(\t\022\021\n\tnext_pa"
-    "ge\030\017 \001(\t\022\n\n\002vv\030\020 \001(\r\022\017\n\007exit_vv\030\021 \001(\r\022\021\n"
-    "\tbounce_vv\030\022 \001(\r\022\024\n\014event_length\030\023 \001(\004\022\023"
-    "\n\013page_length\030\024 \001(\004\022\026\n\016session_length\030\025 "
-    "\001(\004\"\374\001\n\006Result\022\016\n\006app_id\030\001 \001(\r\022\014\n\004date\030\002"
-    " \001(\t\022\017\n\007channel\030\003 \001(\t\022\013\n\003tag\030\004 \001(\t\022\014\n\004ke"
-    "y1\030\005 \001(\t\022\014\n\004key2\030\006 \001(\t\022\014\n\004key3\030\007 \001(\t\022\014\n\004"
-    "key4\030\010 \001(\t\022\014\n\004key5\030\t \001(\r\022\014\n\004key6\030\n \001(\r\022\n"
-    "\n\002pv\030\013 \001(\r\022\n\n\002uv\030\014 \001(\r\022\n\n\002vv\030\r \001(\r\022\n\n\002iv"
-    "\030\016 \001(\r\022\016\n\006length\030\017 \001(\004\022\017\n\007exit_vv\030\020 \001(\r\022"
-    "\021\n\tbounce_vv\030\021 \001(\rb\006proto3", 666);
+    "\t\022\021\n\tclient_ip\030\013 \001(\t\022\016\n\006app_id\030\014 \001(\r\0220\n\n"
+    "event_oper\030\r \001(\0162\034.nebio.Event.E_EVENT_O"
+    "PERATE\022\013\n\003tag\030\016 \001(\t\022\022\n\ntourist_id\030\017 \001(\t\022"
+    "\021\n\tnext_page\030\020 \001(\t\022\n\n\002vv\030\021 \001(\r\022\017\n\007exit_v"
+    "v\030\022 \001(\r\022\021\n\tbounce_vv\030\023 \001(\r\022\016\n\006length\030\024 \001"
+    "(\004\022\021\n\tuser_type\030\025 \001(\005\"/\n\017E_EVENT_OPERATE"
+    "\022\r\n\tEVENT_ADD\020\000\022\r\n\tEVENT_DEL\020\001\"\374\001\n\006Resul"
+    "t\022\016\n\006app_id\030\001 \001(\r\022\014\n\004date\030\002 \001(\t\022\017\n\007chann"
+    "el\030\003 \001(\t\022\013\n\003tag\030\004 \001(\t\022\014\n\004key1\030\005 \001(\t\022\014\n\004k"
+    "ey2\030\006 \001(\t\022\014\n\004key3\030\007 \001(\t\022\014\n\004key4\030\010 \001(\t\022\014\n"
+    "\004key5\030\t \001(\r\022\014\n\004key6\030\n \001(\r\022\n\n\002pv\030\013 \001(\r\022\n\n"
+    "\002uv\030\014 \001(\r\022\n\n\002vv\030\r \001(\r\022\n\n\002iv\030\016 \001(\r\022\016\n\006len"
+    "gth\030\017 \001(\004\022\017\n\007exit_vv\030\020 \001(\r\022\021\n\tbounce_vv\030"
+    "\021 \001(\rb\006proto3", 733);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "event.proto", &protobuf_RegisterTypes);
   Event::default_instance_ = new Event();
@@ -175,6 +179,27 @@ struct StaticDescriptorInitializer_event_2eproto {
 
 // ===================================================================
 
+const ::google::protobuf::EnumDescriptor* Event_E_EVENT_OPERATE_descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return Event_E_EVENT_OPERATE_descriptor_;
+}
+bool Event_E_EVENT_OPERATE_IsValid(int value) {
+  switch(value) {
+    case 0:
+    case 1:
+      return true;
+    default:
+      return false;
+  }
+}
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const Event_E_EVENT_OPERATE Event::EVENT_ADD;
+const Event_E_EVENT_OPERATE Event::EVENT_DEL;
+const Event_E_EVENT_OPERATE Event::E_EVENT_OPERATE_MIN;
+const Event_E_EVENT_OPERATE Event::E_EVENT_OPERATE_MAX;
+const int Event::E_EVENT_OPERATE_ARRAYSIZE;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int Event::kEventIdFieldNumber;
 const int Event::kEventTypeFieldNumber;
@@ -188,15 +213,15 @@ const int Event::kPlatFieldNumber;
 const int Event::kExplorerFieldNumber;
 const int Event::kClientIpFieldNumber;
 const int Event::kAppIdFieldNumber;
+const int Event::kEventOperFieldNumber;
 const int Event::kTagFieldNumber;
 const int Event::kTouristIdFieldNumber;
 const int Event::kNextPageFieldNumber;
 const int Event::kVvFieldNumber;
 const int Event::kExitVvFieldNumber;
 const int Event::kBounceVvFieldNumber;
-const int Event::kEventLengthFieldNumber;
-const int Event::kPageLengthFieldNumber;
-const int Event::kSessionLengthFieldNumber;
+const int Event::kLengthFieldNumber;
+const int Event::kUserTypeFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 Event::Event()
@@ -233,15 +258,15 @@ void Event::SharedCtor() {
   explorer_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   client_ip_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   app_id_ = 0u;
+  event_oper_ = 0;
   tag_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   tourist_id_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   next_page_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   vv_ = 0u;
   exit_vv_ = 0u;
   bounce_vv_ = 0u;
-  event_length_ = GOOGLE_ULONGLONG(0);
-  page_length_ = GOOGLE_ULONGLONG(0);
-  session_length_ = GOOGLE_ULONGLONG(0);
+  length_ = GOOGLE_ULONGLONG(0);
+  user_type_ = 0;
 }
 
 Event::~Event() {
@@ -318,14 +343,14 @@ void Event::Clear() {
   session_id_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   user_id_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   device_id_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  ZR_(app_id_, vv_);
+  ZR_(app_id_, event_oper_);
   plat_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   explorer_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   client_ip_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   tag_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   tourist_id_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   next_page_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  ZR_(exit_vv_, session_length_);
+  ZR_(vv_, user_type_);
 
 #undef ZR_HELPER_
 #undef ZR_
@@ -537,13 +562,29 @@ bool Event::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(106)) goto parse_tag;
+        if (input->ExpectTag(104)) goto parse_event_oper;
         break;
       }
 
-      // optional string tag = 13;
+      // optional .nebio.Event.E_EVENT_OPERATE event_oper = 13;
       case 13: {
-        if (tag == 106) {
+        if (tag == 104) {
+         parse_event_oper:
+          int value;
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          set_event_oper(static_cast< ::nebio::Event_E_EVENT_OPERATE >(value));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(114)) goto parse_tag;
+        break;
+      }
+
+      // optional string tag = 14;
+      case 14: {
+        if (tag == 114) {
          parse_tag:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_tag()));
@@ -554,13 +595,13 @@ bool Event::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(114)) goto parse_tourist_id;
+        if (input->ExpectTag(122)) goto parse_tourist_id;
         break;
       }
 
-      // optional string tourist_id = 14;
-      case 14: {
-        if (tag == 114) {
+      // optional string tourist_id = 15;
+      case 15: {
+        if (tag == 122) {
          parse_tourist_id:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_tourist_id()));
@@ -571,13 +612,13 @@ bool Event::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(122)) goto parse_next_page;
+        if (input->ExpectTag(130)) goto parse_next_page;
         break;
       }
 
-      // optional string next_page = 15;
-      case 15: {
-        if (tag == 122) {
+      // optional string next_page = 16;
+      case 16: {
+        if (tag == 130) {
          parse_next_page:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_next_page()));
@@ -588,13 +629,13 @@ bool Event::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(128)) goto parse_vv;
+        if (input->ExpectTag(136)) goto parse_vv;
         break;
       }
 
-      // optional uint32 vv = 16;
-      case 16: {
-        if (tag == 128) {
+      // optional uint32 vv = 17;
+      case 17: {
+        if (tag == 136) {
          parse_vv:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
@@ -603,13 +644,13 @@ bool Event::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(136)) goto parse_exit_vv;
+        if (input->ExpectTag(144)) goto parse_exit_vv;
         break;
       }
 
-      // optional uint32 exit_vv = 17;
-      case 17: {
-        if (tag == 136) {
+      // optional uint32 exit_vv = 18;
+      case 18: {
+        if (tag == 144) {
          parse_exit_vv:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
@@ -618,13 +659,13 @@ bool Event::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(144)) goto parse_bounce_vv;
+        if (input->ExpectTag(152)) goto parse_bounce_vv;
         break;
       }
 
-      // optional uint32 bounce_vv = 18;
-      case 18: {
-        if (tag == 144) {
+      // optional uint32 bounce_vv = 19;
+      case 19: {
+        if (tag == 152) {
          parse_bounce_vv:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
@@ -633,47 +674,32 @@ bool Event::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(152)) goto parse_event_length;
+        if (input->ExpectTag(160)) goto parse_length;
         break;
       }
 
-      // optional uint64 event_length = 19;
-      case 19: {
-        if (tag == 152) {
-         parse_event_length:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
-                 input, &event_length_)));
-
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(160)) goto parse_page_length;
-        break;
-      }
-
-      // optional uint64 page_length = 20;
+      // optional uint64 length = 20;
       case 20: {
         if (tag == 160) {
-         parse_page_length:
+         parse_length:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
-                 input, &page_length_)));
+                 input, &length_)));
 
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(168)) goto parse_session_length;
+        if (input->ExpectTag(168)) goto parse_user_type;
         break;
       }
 
-      // optional uint64 session_length = 21;
+      // optional int32 user_type = 21;
       case 21: {
         if (tag == 168) {
-         parse_session_length:
+         parse_user_type:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
-                 input, &session_length_)));
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &user_type_)));
 
         } else {
           goto handle_unusual;
@@ -816,64 +842,65 @@ void Event::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(12, this->app_id(), output);
   }
 
-  // optional string tag = 13;
+  // optional .nebio.Event.E_EVENT_OPERATE event_oper = 13;
+  if (this->event_oper() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      13, this->event_oper(), output);
+  }
+
+  // optional string tag = 14;
   if (this->tag().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->tag().data(), this->tag().length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
       "nebio.Event.tag");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
-      13, this->tag(), output);
+      14, this->tag(), output);
   }
 
-  // optional string tourist_id = 14;
+  // optional string tourist_id = 15;
   if (this->tourist_id().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->tourist_id().data(), this->tourist_id().length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
       "nebio.Event.tourist_id");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
-      14, this->tourist_id(), output);
+      15, this->tourist_id(), output);
   }
 
-  // optional string next_page = 15;
+  // optional string next_page = 16;
   if (this->next_page().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->next_page().data(), this->next_page().length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
       "nebio.Event.next_page");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
-      15, this->next_page(), output);
+      16, this->next_page(), output);
   }
 
-  // optional uint32 vv = 16;
+  // optional uint32 vv = 17;
   if (this->vv() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(16, this->vv(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(17, this->vv(), output);
   }
 
-  // optional uint32 exit_vv = 17;
+  // optional uint32 exit_vv = 18;
   if (this->exit_vv() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(17, this->exit_vv(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(18, this->exit_vv(), output);
   }
 
-  // optional uint32 bounce_vv = 18;
+  // optional uint32 bounce_vv = 19;
   if (this->bounce_vv() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(18, this->bounce_vv(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(19, this->bounce_vv(), output);
   }
 
-  // optional uint64 event_length = 19;
-  if (this->event_length() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt64(19, this->event_length(), output);
+  // optional uint64 length = 20;
+  if (this->length() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(20, this->length(), output);
   }
 
-  // optional uint64 page_length = 20;
-  if (this->page_length() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt64(20, this->page_length(), output);
-  }
-
-  // optional uint64 session_length = 21;
-  if (this->session_length() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt64(21, this->session_length(), output);
+  // optional int32 user_type = 21;
+  if (this->user_type() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(21, this->user_type(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:nebio.Event)
@@ -1002,7 +1029,13 @@ void Event::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(12, this->app_id(), target);
   }
 
-  // optional string tag = 13;
+  // optional .nebio.Event.E_EVENT_OPERATE event_oper = 13;
+  if (this->event_oper() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
+      13, this->event_oper(), target);
+  }
+
+  // optional string tag = 14;
   if (this->tag().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->tag().data(), this->tag().length(),
@@ -1010,10 +1043,10 @@ void Event::SerializeWithCachedSizes(
       "nebio.Event.tag");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        13, this->tag(), target);
+        14, this->tag(), target);
   }
 
-  // optional string tourist_id = 14;
+  // optional string tourist_id = 15;
   if (this->tourist_id().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->tourist_id().data(), this->tourist_id().length(),
@@ -1021,10 +1054,10 @@ void Event::SerializeWithCachedSizes(
       "nebio.Event.tourist_id");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        14, this->tourist_id(), target);
+        15, this->tourist_id(), target);
   }
 
-  // optional string next_page = 15;
+  // optional string next_page = 16;
   if (this->next_page().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->next_page().data(), this->next_page().length(),
@@ -1032,37 +1065,32 @@ void Event::SerializeWithCachedSizes(
       "nebio.Event.next_page");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        15, this->next_page(), target);
+        16, this->next_page(), target);
   }
 
-  // optional uint32 vv = 16;
+  // optional uint32 vv = 17;
   if (this->vv() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(16, this->vv(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(17, this->vv(), target);
   }
 
-  // optional uint32 exit_vv = 17;
+  // optional uint32 exit_vv = 18;
   if (this->exit_vv() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(17, this->exit_vv(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(18, this->exit_vv(), target);
   }
 
-  // optional uint32 bounce_vv = 18;
+  // optional uint32 bounce_vv = 19;
   if (this->bounce_vv() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(18, this->bounce_vv(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(19, this->bounce_vv(), target);
   }
 
-  // optional uint64 event_length = 19;
-  if (this->event_length() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(19, this->event_length(), target);
+  // optional uint64 length = 20;
+  if (this->length() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(20, this->length(), target);
   }
 
-  // optional uint64 page_length = 20;
-  if (this->page_length() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(20, this->page_length(), target);
-  }
-
-  // optional uint64 session_length = 21;
-  if (this->session_length() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(21, this->session_length(), target);
+  // optional int32 user_type = 21;
+  if (this->user_type() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(21, this->user_type(), target);
   }
 
   // @@protoc_insertion_point(serialize_to_array_end:nebio.Event)
@@ -1157,67 +1185,66 @@ int Event::ByteSize() const {
         this->app_id());
   }
 
-  // optional string tag = 13;
+  // optional .nebio.Event.E_EVENT_OPERATE event_oper = 13;
+  if (this->event_oper() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->event_oper());
+  }
+
+  // optional string tag = 14;
   if (this->tag().size() > 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::StringSize(
         this->tag());
   }
 
-  // optional string tourist_id = 14;
+  // optional string tourist_id = 15;
   if (this->tourist_id().size() > 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::StringSize(
         this->tourist_id());
   }
 
-  // optional string next_page = 15;
+  // optional string next_page = 16;
   if (this->next_page().size() > 0) {
-    total_size += 1 +
+    total_size += 2 +
       ::google::protobuf::internal::WireFormatLite::StringSize(
         this->next_page());
   }
 
-  // optional uint32 vv = 16;
+  // optional uint32 vv = 17;
   if (this->vv() != 0) {
     total_size += 2 +
       ::google::protobuf::internal::WireFormatLite::UInt32Size(
         this->vv());
   }
 
-  // optional uint32 exit_vv = 17;
+  // optional uint32 exit_vv = 18;
   if (this->exit_vv() != 0) {
     total_size += 2 +
       ::google::protobuf::internal::WireFormatLite::UInt32Size(
         this->exit_vv());
   }
 
-  // optional uint32 bounce_vv = 18;
+  // optional uint32 bounce_vv = 19;
   if (this->bounce_vv() != 0) {
     total_size += 2 +
       ::google::protobuf::internal::WireFormatLite::UInt32Size(
         this->bounce_vv());
   }
 
-  // optional uint64 event_length = 19;
-  if (this->event_length() != 0) {
+  // optional uint64 length = 20;
+  if (this->length() != 0) {
     total_size += 2 +
       ::google::protobuf::internal::WireFormatLite::UInt64Size(
-        this->event_length());
+        this->length());
   }
 
-  // optional uint64 page_length = 20;
-  if (this->page_length() != 0) {
+  // optional int32 user_type = 21;
+  if (this->user_type() != 0) {
     total_size += 2 +
-      ::google::protobuf::internal::WireFormatLite::UInt64Size(
-        this->page_length());
-  }
-
-  // optional uint64 session_length = 21;
-  if (this->session_length() != 0) {
-    total_size += 2 +
-      ::google::protobuf::internal::WireFormatLite::UInt64Size(
-        this->session_length());
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->user_type());
   }
 
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -1294,6 +1321,9 @@ void Event::MergeFrom(const Event& from) {
   if (from.app_id() != 0) {
     set_app_id(from.app_id());
   }
+  if (from.event_oper() != 0) {
+    set_event_oper(from.event_oper());
+  }
   if (from.tag().size() > 0) {
 
     tag_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.tag_);
@@ -1315,14 +1345,11 @@ void Event::MergeFrom(const Event& from) {
   if (from.bounce_vv() != 0) {
     set_bounce_vv(from.bounce_vv());
   }
-  if (from.event_length() != 0) {
-    set_event_length(from.event_length());
+  if (from.length() != 0) {
+    set_length(from.length());
   }
-  if (from.page_length() != 0) {
-    set_page_length(from.page_length());
-  }
-  if (from.session_length() != 0) {
-    set_session_length(from.session_length());
+  if (from.user_type() != 0) {
+    set_user_type(from.user_type());
   }
 }
 
@@ -1362,15 +1389,15 @@ void Event::InternalSwap(Event* other) {
   explorer_.Swap(&other->explorer_);
   client_ip_.Swap(&other->client_ip_);
   std::swap(app_id_, other->app_id_);
+  std::swap(event_oper_, other->event_oper_);
   tag_.Swap(&other->tag_);
   tourist_id_.Swap(&other->tourist_id_);
   next_page_.Swap(&other->next_page_);
   std::swap(vv_, other->vv_);
   std::swap(exit_vv_, other->exit_vv_);
   std::swap(bounce_vv_, other->bounce_vv_);
-  std::swap(event_length_, other->event_length_);
-  std::swap(page_length_, other->page_length_);
-  std::swap(session_length_, other->session_length_);
+  std::swap(length_, other->length_);
+  std::swap(user_type_, other->user_type_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
 }
@@ -1854,7 +1881,21 @@ void Event::clear_app_id() {
   // @@protoc_insertion_point(field_set:nebio.Event.app_id)
 }
 
-// optional string tag = 13;
+// optional .nebio.Event.E_EVENT_OPERATE event_oper = 13;
+void Event::clear_event_oper() {
+  event_oper_ = 0;
+}
+ ::nebio::Event_E_EVENT_OPERATE Event::event_oper() const {
+  // @@protoc_insertion_point(field_get:nebio.Event.event_oper)
+  return static_cast< ::nebio::Event_E_EVENT_OPERATE >(event_oper_);
+}
+ void Event::set_event_oper(::nebio::Event_E_EVENT_OPERATE value) {
+  
+  event_oper_ = value;
+  // @@protoc_insertion_point(field_set:nebio.Event.event_oper)
+}
+
+// optional string tag = 14;
 void Event::clear_tag() {
   tag_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -1898,7 +1939,7 @@ void Event::clear_tag() {
   // @@protoc_insertion_point(field_set_allocated:nebio.Event.tag)
 }
 
-// optional string tourist_id = 14;
+// optional string tourist_id = 15;
 void Event::clear_tourist_id() {
   tourist_id_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -1942,7 +1983,7 @@ void Event::clear_tourist_id() {
   // @@protoc_insertion_point(field_set_allocated:nebio.Event.tourist_id)
 }
 
-// optional string next_page = 15;
+// optional string next_page = 16;
 void Event::clear_next_page() {
   next_page_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -1986,7 +2027,7 @@ void Event::clear_next_page() {
   // @@protoc_insertion_point(field_set_allocated:nebio.Event.next_page)
 }
 
-// optional uint32 vv = 16;
+// optional uint32 vv = 17;
 void Event::clear_vv() {
   vv_ = 0u;
 }
@@ -2000,7 +2041,7 @@ void Event::clear_vv() {
   // @@protoc_insertion_point(field_set:nebio.Event.vv)
 }
 
-// optional uint32 exit_vv = 17;
+// optional uint32 exit_vv = 18;
 void Event::clear_exit_vv() {
   exit_vv_ = 0u;
 }
@@ -2014,7 +2055,7 @@ void Event::clear_exit_vv() {
   // @@protoc_insertion_point(field_set:nebio.Event.exit_vv)
 }
 
-// optional uint32 bounce_vv = 18;
+// optional uint32 bounce_vv = 19;
 void Event::clear_bounce_vv() {
   bounce_vv_ = 0u;
 }
@@ -2028,46 +2069,32 @@ void Event::clear_bounce_vv() {
   // @@protoc_insertion_point(field_set:nebio.Event.bounce_vv)
 }
 
-// optional uint64 event_length = 19;
-void Event::clear_event_length() {
-  event_length_ = GOOGLE_ULONGLONG(0);
+// optional uint64 length = 20;
+void Event::clear_length() {
+  length_ = GOOGLE_ULONGLONG(0);
 }
- ::google::protobuf::uint64 Event::event_length() const {
-  // @@protoc_insertion_point(field_get:nebio.Event.event_length)
-  return event_length_;
+ ::google::protobuf::uint64 Event::length() const {
+  // @@protoc_insertion_point(field_get:nebio.Event.length)
+  return length_;
 }
- void Event::set_event_length(::google::protobuf::uint64 value) {
+ void Event::set_length(::google::protobuf::uint64 value) {
   
-  event_length_ = value;
-  // @@protoc_insertion_point(field_set:nebio.Event.event_length)
+  length_ = value;
+  // @@protoc_insertion_point(field_set:nebio.Event.length)
 }
 
-// optional uint64 page_length = 20;
-void Event::clear_page_length() {
-  page_length_ = GOOGLE_ULONGLONG(0);
+// optional int32 user_type = 21;
+void Event::clear_user_type() {
+  user_type_ = 0;
 }
- ::google::protobuf::uint64 Event::page_length() const {
-  // @@protoc_insertion_point(field_get:nebio.Event.page_length)
-  return page_length_;
+ ::google::protobuf::int32 Event::user_type() const {
+  // @@protoc_insertion_point(field_get:nebio.Event.user_type)
+  return user_type_;
 }
- void Event::set_page_length(::google::protobuf::uint64 value) {
+ void Event::set_user_type(::google::protobuf::int32 value) {
   
-  page_length_ = value;
-  // @@protoc_insertion_point(field_set:nebio.Event.page_length)
-}
-
-// optional uint64 session_length = 21;
-void Event::clear_session_length() {
-  session_length_ = GOOGLE_ULONGLONG(0);
-}
- ::google::protobuf::uint64 Event::session_length() const {
-  // @@protoc_insertion_point(field_get:nebio.Event.session_length)
-  return session_length_;
-}
- void Event::set_session_length(::google::protobuf::uint64 value) {
-  
-  session_length_ = value;
-  // @@protoc_insertion_point(field_set:nebio.Event.session_length)
+  user_type_ = value;
+  // @@protoc_insertion_point(field_set:nebio.Event.user_type)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS

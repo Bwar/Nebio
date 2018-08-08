@@ -38,6 +38,7 @@ bool CmdPage::AnyMessage(
     Event oEvent;
     if (oEvent.ParseFromString(oMsgBody.data()))
     {
+        LOG4_DEBUG("%s", oEvent.DebugString().c_str());
         Stat(m_strChannelSummary, m_strTagSummary, oEvent);
         Stat(oEvent.referer(), oEvent.tag(), oEvent);
         Stat(oEvent.referer(), m_strTagSummary, oEvent);
@@ -58,7 +59,7 @@ bool CmdPage::Stat(const std::string& strChannel, const std::string& strTag, con
     }
     
     std::ostringstream oss;
-    oss << "SessionPage-" + oEvent.app_id() << "-" << strChannel << "-" << strTag << "-" << oEvent.event_id();
+    oss << "SessionPage-" + oEvent.app_id() << "-" << strChannel << "-" << strTag << "-" << oEvent.page();
     std::string strSessionId = oss.str();
     auto pSession = GetSession(strSessionId);
     if (pSession == nullptr)

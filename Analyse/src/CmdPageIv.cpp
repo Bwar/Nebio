@@ -1,7 +1,7 @@
 /*******************************************************************************
  * Project:  Nebio
- * @file     CmdUser.cpp
- * @brief    事件入口
+ * @file     CmdPageIv.cpp
+ * @brief    页面入口
  * @author   Bwar
  * @date:    2018年4月21日
  * @note     
@@ -9,22 +9,21 @@
  ******************************************************************************/
 
 #include <sstream>
-#include "UnixTime.hpp"
-#include "CmdUser.hpp"
+#include "CmdPageIv.hpp"
 
 namespace nebio
 {
 
-CmdUser::CmdUser(int32 iCmd)
+CmdPageIv::CmdPageIv(int32 iCmd)
    : neb::Cmd(iCmd)
 {
 }
 
-CmdUser::~CmdUser()
+CmdPageIv::~CmdPageIv()
 {
 }
 
-bool CmdUser::Init()
+bool CmdPageIv::Init()
 {
     neb::CJsonObject oJsonConf = GetCustomConf();
     m_strChannelSummary = oJsonConf["analyse"]("channel_summary");
@@ -32,7 +31,7 @@ bool CmdUser::Init()
     return(true);
 }
 
-bool CmdUser::AnyMessage(
+bool CmdPageIv::AnyMessage(
         std::shared_ptr<neb::SocketChannel> pChannel, 
         const MsgHead& oMsgHead, const MsgBody& oMsgBody)
 {
@@ -52,7 +51,7 @@ bool CmdUser::AnyMessage(
     }
 }
 
-bool CmdUser::Stat(const std::string& strChannel, const std::string& strTag, const Event& oEvent)
+bool CmdPageIv::Stat(const std::string& strChannel, const std::string& strTag, const Event& oEvent)
 {
     if (strChannel.length() == 0 || strTag.length() == 0)
     {
@@ -60,20 +59,19 @@ bool CmdUser::Stat(const std::string& strChannel, const std::string& strTag, con
     }
     
     std::ostringstream oss;
-    oss << "SessionUser-" + oEvent.app_id() << "-" << strChannel << "-" << strTag;
+    oss << "SessionPageIv-" + oEvent.app_id() << "-" << strChannel << "-" << strTag << "-" << oEvent.page();
     std::string strSessionId = oss.str();
     auto pSession = GetSession(strSessionId);
     if (pSession == nullptr)
     {
-        uint64 ullStatDate = neb::GetBeginTimeOfTheDay(time(NULL));
-        pSession = MakeSharedSession("nebio::SessionUser", strSessionId, strChannel, strTag, ullStatDate, 10.0);
+        pSession = MakeSharedSession("nebio::SessionPageIv", strSessionId, strChannel, strTag, 10.0);
     }
     if (pSession == nullptr)
     {
         return(false);
     }
 
-    (std::dynamic_pointer_cast<SessionUser>(pSession))->AddEvent(oEvent);
+    (std::dynamic_pointer_cast<SessionPageIv>(pSession))->AddEvent(oEvent);
     return(true);
 }
 

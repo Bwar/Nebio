@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Project:  Nebio
- * @file     SessionPage.hpp
- * @brief    页面统计
+ * @file     SessionEventIv.hpp
+ * @brief    事件IP数统计
  * @author   bwar
- * @date:    2018年4月22日
+ * @date:    2018年4月21日
  * @note     
  * Modify history:
  ******************************************************************************/
-#ifndef SESSIONPAGE_HPP_
-#define SESSIONPAGE_HPP_
+#ifndef SESSIONEVENTIV_HPP_
+#define SESSIONEVENTIV_HPP_
 
 #include <string>
 #include <unordered_set>
@@ -18,13 +18,13 @@
 namespace nebio
 {
 
-class SessionPage : public AnalyseSession,
-    public neb::DynamicCreator<SessionPage, std::string, std::string, std::string, ev_tstamp>
+class SessionEventIv : public AnalyseSession,
+    public neb::DynamicCreator<SessionEventIv, std::string, std::string, std::string, ev_tstamp>
 {
 public:
-    SessionPage(const std::string& strSessionId, const std::string& strChannel, const std::string& strTag,
+    SessionEventIv(const std::string& strSessionId, const std::string& strChannel, const std::string& strTag,
         ev_tstamp dSessionTimeout = 10.0);
-    virtual ~SessionPage();
+    virtual ~SessionEventIv();
 
     virtual neb::E_CMD_STATUS Timeout();
 
@@ -37,17 +37,14 @@ private:
     uint32 m_uiAppId;
     std::string m_strChannel;
     std::string m_strTag;
+    std::string m_strEventId;
+    std::string m_strEventType;
     std::string m_strPage;   
      
-    uint32 m_uiPv;
-    uint32 m_uiVv;
-    uint32 m_uiExitVv;
-    uint32 m_uiBounceVv;
-    uint64 m_ullPageLength;
-    std::unordered_set<std::string> m_setUserId;
+    std::unordered_set<std::string> m_setIp;
 };
 
 } // namespace nebio
 
-#endif // SESSIONEVNET_HPP_
+#endif // SESSIONEVNETIV_HPP_
 

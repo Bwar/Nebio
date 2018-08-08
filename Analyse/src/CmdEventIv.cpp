@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Project:  Nebio
- * @file     CmdUser.cpp
+ * @file     CmdEventIv.cpp
  * @brief    事件入口
  * @author   Bwar
  * @date:    2018年4月21日
@@ -9,22 +9,21 @@
  ******************************************************************************/
 
 #include <sstream>
-#include "UnixTime.hpp"
-#include "CmdUser.hpp"
+#include "CmdEventIv.hpp"
 
 namespace nebio
 {
 
-CmdUser::CmdUser(int32 iCmd)
+CmdEventIv::CmdEventIv(int32 iCmd)
    : neb::Cmd(iCmd)
 {
 }
 
-CmdUser::~CmdUser()
+CmdEventIv::~CmdEventIv()
 {
 }
 
-bool CmdUser::Init()
+bool CmdEventIv::Init()
 {
     neb::CJsonObject oJsonConf = GetCustomConf();
     m_strChannelSummary = oJsonConf["analyse"]("channel_summary");
@@ -32,7 +31,7 @@ bool CmdUser::Init()
     return(true);
 }
 
-bool CmdUser::AnyMessage(
+bool CmdEventIv::AnyMessage(
         std::shared_ptr<neb::SocketChannel> pChannel, 
         const MsgHead& oMsgHead, const MsgBody& oMsgBody)
 {
@@ -52,7 +51,7 @@ bool CmdUser::AnyMessage(
     }
 }
 
-bool CmdUser::Stat(const std::string& strChannel, const std::string& strTag, const Event& oEvent)
+bool CmdEventIv::Stat(const std::string& strChannel, const std::string& strTag, const Event& oEvent)
 {
     if (strChannel.length() == 0 || strTag.length() == 0)
     {
@@ -60,20 +59,20 @@ bool CmdUser::Stat(const std::string& strChannel, const std::string& strTag, con
     }
     
     std::ostringstream oss;
-    oss << "SessionUser-" + oEvent.app_id() << "-" << strChannel << "-" << strTag;
+    oss << "SessionEventIv-" + oEvent.app_id() << "-" << strChannel << "-" << strTag << "-" << oEvent.event_id();
     std::string strSessionId = oss.str();
     auto pSession = GetSession(strSessionId);
     if (pSession == nullptr)
     {
-        uint64 ullStatDate = neb::GetBeginTimeOfTheDay(time(NULL));
-        pSession = MakeSharedSession("nebio::SessionUser", strSessionId, strChannel, strTag, ullStatDate, 10.0);
+        pSession = MakeSharedSession("nebio::SessionEventIv", strSessionId, strChannel, strTag, 10.0);
     }
     if (pSession == nullptr)
     {
         return(false);
     }
 
-    (std::dynamic_pointer_cast<SessionUser>(pSession))->AddEvent(oEvent);
+    std::shared_ptr<SessionEventIv> pSessionSession = std::dynamic_pointer_cast<SessionEventIv>(pSession);
+    pSessionSession->AddEvent(oEvent);
     return(true);
 }
 

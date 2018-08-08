@@ -26,6 +26,7 @@
 #include <google/protobuf/message.h>
 #include <google/protobuf/repeated_field.h>
 #include <google/protobuf/extension_set.h>
+#include <google/protobuf/generated_enum_reflection.h>
 #include <google/protobuf/unknown_field_set.h>
 // @@protoc_insertion_point(includes)
 
@@ -39,6 +40,27 @@ void protobuf_ShutdownFile_event_2eproto();
 class Event;
 class Result;
 
+enum Event_E_EVENT_OPERATE {
+  Event_E_EVENT_OPERATE_EVENT_ADD = 0,
+  Event_E_EVENT_OPERATE_EVENT_DEL = 1,
+  Event_E_EVENT_OPERATE_Event_E_EVENT_OPERATE_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+  Event_E_EVENT_OPERATE_Event_E_EVENT_OPERATE_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+};
+bool Event_E_EVENT_OPERATE_IsValid(int value);
+const Event_E_EVENT_OPERATE Event_E_EVENT_OPERATE_E_EVENT_OPERATE_MIN = Event_E_EVENT_OPERATE_EVENT_ADD;
+const Event_E_EVENT_OPERATE Event_E_EVENT_OPERATE_E_EVENT_OPERATE_MAX = Event_E_EVENT_OPERATE_EVENT_DEL;
+const int Event_E_EVENT_OPERATE_E_EVENT_OPERATE_ARRAYSIZE = Event_E_EVENT_OPERATE_E_EVENT_OPERATE_MAX + 1;
+
+const ::google::protobuf::EnumDescriptor* Event_E_EVENT_OPERATE_descriptor();
+inline const ::std::string& Event_E_EVENT_OPERATE_Name(Event_E_EVENT_OPERATE value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    Event_E_EVENT_OPERATE_descriptor(), value);
+}
+inline bool Event_E_EVENT_OPERATE_Parse(
+    const ::std::string& name, Event_E_EVENT_OPERATE* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<Event_E_EVENT_OPERATE>(
+    Event_E_EVENT_OPERATE_descriptor(), name, value);
+}
 // ===================================================================
 
 class Event : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:nebio.Event) */ {
@@ -98,6 +120,32 @@ class Event : public ::google::protobuf::Message /* @@protoc_insertion_point(cla
   ::google::protobuf::Metadata GetMetadata() const;
 
   // nested types ----------------------------------------------------
+
+  typedef Event_E_EVENT_OPERATE E_EVENT_OPERATE;
+  static const E_EVENT_OPERATE EVENT_ADD =
+    Event_E_EVENT_OPERATE_EVENT_ADD;
+  static const E_EVENT_OPERATE EVENT_DEL =
+    Event_E_EVENT_OPERATE_EVENT_DEL;
+  static inline bool E_EVENT_OPERATE_IsValid(int value) {
+    return Event_E_EVENT_OPERATE_IsValid(value);
+  }
+  static const E_EVENT_OPERATE E_EVENT_OPERATE_MIN =
+    Event_E_EVENT_OPERATE_E_EVENT_OPERATE_MIN;
+  static const E_EVENT_OPERATE E_EVENT_OPERATE_MAX =
+    Event_E_EVENT_OPERATE_E_EVENT_OPERATE_MAX;
+  static const int E_EVENT_OPERATE_ARRAYSIZE =
+    Event_E_EVENT_OPERATE_E_EVENT_OPERATE_ARRAYSIZE;
+  static inline const ::google::protobuf::EnumDescriptor*
+  E_EVENT_OPERATE_descriptor() {
+    return Event_E_EVENT_OPERATE_descriptor();
+  }
+  static inline const ::std::string& E_EVENT_OPERATE_Name(E_EVENT_OPERATE value) {
+    return Event_E_EVENT_OPERATE_Name(value);
+  }
+  static inline bool E_EVENT_OPERATE_Parse(const ::std::string& name,
+      E_EVENT_OPERATE* value) {
+    return Event_E_EVENT_OPERATE_Parse(name, value);
+  }
 
   // accessors -------------------------------------------------------
 
@@ -223,9 +271,15 @@ class Event : public ::google::protobuf::Message /* @@protoc_insertion_point(cla
   ::google::protobuf::uint32 app_id() const;
   void set_app_id(::google::protobuf::uint32 value);
 
-  // optional string tag = 13;
+  // optional .nebio.Event.E_EVENT_OPERATE event_oper = 13;
+  void clear_event_oper();
+  static const int kEventOperFieldNumber = 13;
+  ::nebio::Event_E_EVENT_OPERATE event_oper() const;
+  void set_event_oper(::nebio::Event_E_EVENT_OPERATE value);
+
+  // optional string tag = 14;
   void clear_tag();
-  static const int kTagFieldNumber = 13;
+  static const int kTagFieldNumber = 14;
   const ::std::string& tag() const;
   void set_tag(const ::std::string& value);
   void set_tag(const char* value);
@@ -234,9 +288,9 @@ class Event : public ::google::protobuf::Message /* @@protoc_insertion_point(cla
   ::std::string* release_tag();
   void set_allocated_tag(::std::string* tag);
 
-  // optional string tourist_id = 14;
+  // optional string tourist_id = 15;
   void clear_tourist_id();
-  static const int kTouristIdFieldNumber = 14;
+  static const int kTouristIdFieldNumber = 15;
   const ::std::string& tourist_id() const;
   void set_tourist_id(const ::std::string& value);
   void set_tourist_id(const char* value);
@@ -245,9 +299,9 @@ class Event : public ::google::protobuf::Message /* @@protoc_insertion_point(cla
   ::std::string* release_tourist_id();
   void set_allocated_tourist_id(::std::string* tourist_id);
 
-  // optional string next_page = 15;
+  // optional string next_page = 16;
   void clear_next_page();
-  static const int kNextPageFieldNumber = 15;
+  static const int kNextPageFieldNumber = 16;
   const ::std::string& next_page() const;
   void set_next_page(const ::std::string& value);
   void set_next_page(const char* value);
@@ -256,41 +310,35 @@ class Event : public ::google::protobuf::Message /* @@protoc_insertion_point(cla
   ::std::string* release_next_page();
   void set_allocated_next_page(::std::string* next_page);
 
-  // optional uint32 vv = 16;
+  // optional uint32 vv = 17;
   void clear_vv();
-  static const int kVvFieldNumber = 16;
+  static const int kVvFieldNumber = 17;
   ::google::protobuf::uint32 vv() const;
   void set_vv(::google::protobuf::uint32 value);
 
-  // optional uint32 exit_vv = 17;
+  // optional uint32 exit_vv = 18;
   void clear_exit_vv();
-  static const int kExitVvFieldNumber = 17;
+  static const int kExitVvFieldNumber = 18;
   ::google::protobuf::uint32 exit_vv() const;
   void set_exit_vv(::google::protobuf::uint32 value);
 
-  // optional uint32 bounce_vv = 18;
+  // optional uint32 bounce_vv = 19;
   void clear_bounce_vv();
-  static const int kBounceVvFieldNumber = 18;
+  static const int kBounceVvFieldNumber = 19;
   ::google::protobuf::uint32 bounce_vv() const;
   void set_bounce_vv(::google::protobuf::uint32 value);
 
-  // optional uint64 event_length = 19;
-  void clear_event_length();
-  static const int kEventLengthFieldNumber = 19;
-  ::google::protobuf::uint64 event_length() const;
-  void set_event_length(::google::protobuf::uint64 value);
+  // optional uint64 length = 20;
+  void clear_length();
+  static const int kLengthFieldNumber = 20;
+  ::google::protobuf::uint64 length() const;
+  void set_length(::google::protobuf::uint64 value);
 
-  // optional uint64 page_length = 20;
-  void clear_page_length();
-  static const int kPageLengthFieldNumber = 20;
-  ::google::protobuf::uint64 page_length() const;
-  void set_page_length(::google::protobuf::uint64 value);
-
-  // optional uint64 session_length = 21;
-  void clear_session_length();
-  static const int kSessionLengthFieldNumber = 21;
-  ::google::protobuf::uint64 session_length() const;
-  void set_session_length(::google::protobuf::uint64 value);
+  // optional int32 user_type = 21;
+  void clear_user_type();
+  static const int kUserTypeFieldNumber = 21;
+  ::google::protobuf::int32 user_type() const;
+  void set_user_type(::google::protobuf::int32 value);
 
   // @@protoc_insertion_point(class_scope:nebio.Event)
  private:
@@ -308,16 +356,16 @@ class Event : public ::google::protobuf::Message /* @@protoc_insertion_point(cla
   ::google::protobuf::internal::ArenaStringPtr plat_;
   ::google::protobuf::internal::ArenaStringPtr explorer_;
   ::google::protobuf::internal::ArenaStringPtr client_ip_;
+  ::google::protobuf::uint32 app_id_;
+  int event_oper_;
   ::google::protobuf::internal::ArenaStringPtr tag_;
   ::google::protobuf::internal::ArenaStringPtr tourist_id_;
-  ::google::protobuf::uint32 app_id_;
-  ::google::protobuf::uint32 vv_;
   ::google::protobuf::internal::ArenaStringPtr next_page_;
+  ::google::protobuf::uint32 vv_;
   ::google::protobuf::uint32 exit_vv_;
+  ::google::protobuf::uint64 length_;
   ::google::protobuf::uint32 bounce_vv_;
-  ::google::protobuf::uint64 event_length_;
-  ::google::protobuf::uint64 page_length_;
-  ::google::protobuf::uint64 session_length_;
+  ::google::protobuf::int32 user_type_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_event_2eproto();
   friend void protobuf_AssignDesc_event_2eproto();
@@ -1031,7 +1079,21 @@ inline void Event::set_app_id(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:nebio.Event.app_id)
 }
 
-// optional string tag = 13;
+// optional .nebio.Event.E_EVENT_OPERATE event_oper = 13;
+inline void Event::clear_event_oper() {
+  event_oper_ = 0;
+}
+inline ::nebio::Event_E_EVENT_OPERATE Event::event_oper() const {
+  // @@protoc_insertion_point(field_get:nebio.Event.event_oper)
+  return static_cast< ::nebio::Event_E_EVENT_OPERATE >(event_oper_);
+}
+inline void Event::set_event_oper(::nebio::Event_E_EVENT_OPERATE value) {
+  
+  event_oper_ = value;
+  // @@protoc_insertion_point(field_set:nebio.Event.event_oper)
+}
+
+// optional string tag = 14;
 inline void Event::clear_tag() {
   tag_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -1075,7 +1137,7 @@ inline void Event::set_allocated_tag(::std::string* tag) {
   // @@protoc_insertion_point(field_set_allocated:nebio.Event.tag)
 }
 
-// optional string tourist_id = 14;
+// optional string tourist_id = 15;
 inline void Event::clear_tourist_id() {
   tourist_id_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -1119,7 +1181,7 @@ inline void Event::set_allocated_tourist_id(::std::string* tourist_id) {
   // @@protoc_insertion_point(field_set_allocated:nebio.Event.tourist_id)
 }
 
-// optional string next_page = 15;
+// optional string next_page = 16;
 inline void Event::clear_next_page() {
   next_page_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -1163,7 +1225,7 @@ inline void Event::set_allocated_next_page(::std::string* next_page) {
   // @@protoc_insertion_point(field_set_allocated:nebio.Event.next_page)
 }
 
-// optional uint32 vv = 16;
+// optional uint32 vv = 17;
 inline void Event::clear_vv() {
   vv_ = 0u;
 }
@@ -1177,7 +1239,7 @@ inline void Event::set_vv(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:nebio.Event.vv)
 }
 
-// optional uint32 exit_vv = 17;
+// optional uint32 exit_vv = 18;
 inline void Event::clear_exit_vv() {
   exit_vv_ = 0u;
 }
@@ -1191,7 +1253,7 @@ inline void Event::set_exit_vv(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:nebio.Event.exit_vv)
 }
 
-// optional uint32 bounce_vv = 18;
+// optional uint32 bounce_vv = 19;
 inline void Event::clear_bounce_vv() {
   bounce_vv_ = 0u;
 }
@@ -1205,46 +1267,32 @@ inline void Event::set_bounce_vv(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:nebio.Event.bounce_vv)
 }
 
-// optional uint64 event_length = 19;
-inline void Event::clear_event_length() {
-  event_length_ = GOOGLE_ULONGLONG(0);
+// optional uint64 length = 20;
+inline void Event::clear_length() {
+  length_ = GOOGLE_ULONGLONG(0);
 }
-inline ::google::protobuf::uint64 Event::event_length() const {
-  // @@protoc_insertion_point(field_get:nebio.Event.event_length)
-  return event_length_;
+inline ::google::protobuf::uint64 Event::length() const {
+  // @@protoc_insertion_point(field_get:nebio.Event.length)
+  return length_;
 }
-inline void Event::set_event_length(::google::protobuf::uint64 value) {
+inline void Event::set_length(::google::protobuf::uint64 value) {
   
-  event_length_ = value;
-  // @@protoc_insertion_point(field_set:nebio.Event.event_length)
+  length_ = value;
+  // @@protoc_insertion_point(field_set:nebio.Event.length)
 }
 
-// optional uint64 page_length = 20;
-inline void Event::clear_page_length() {
-  page_length_ = GOOGLE_ULONGLONG(0);
+// optional int32 user_type = 21;
+inline void Event::clear_user_type() {
+  user_type_ = 0;
 }
-inline ::google::protobuf::uint64 Event::page_length() const {
-  // @@protoc_insertion_point(field_get:nebio.Event.page_length)
-  return page_length_;
+inline ::google::protobuf::int32 Event::user_type() const {
+  // @@protoc_insertion_point(field_get:nebio.Event.user_type)
+  return user_type_;
 }
-inline void Event::set_page_length(::google::protobuf::uint64 value) {
+inline void Event::set_user_type(::google::protobuf::int32 value) {
   
-  page_length_ = value;
-  // @@protoc_insertion_point(field_set:nebio.Event.page_length)
-}
-
-// optional uint64 session_length = 21;
-inline void Event::clear_session_length() {
-  session_length_ = GOOGLE_ULONGLONG(0);
-}
-inline ::google::protobuf::uint64 Event::session_length() const {
-  // @@protoc_insertion_point(field_get:nebio.Event.session_length)
-  return session_length_;
-}
-inline void Event::set_session_length(::google::protobuf::uint64 value) {
-  
-  session_length_ = value;
-  // @@protoc_insertion_point(field_set:nebio.Event.session_length)
+  user_type_ = value;
+  // @@protoc_insertion_point(field_set:nebio.Event.user_type)
 }
 
 // -------------------------------------------------------------------
@@ -1706,6 +1754,20 @@ inline void Result::set_bounce_vv(::google::protobuf::uint32 value) {
 // @@protoc_insertion_point(namespace_scope)
 
 }  // namespace nebio
+
+#ifndef SWIG
+namespace google {
+namespace protobuf {
+
+template <> struct is_proto_enum< ::nebio::Event_E_EVENT_OPERATE> : ::google::protobuf::internal::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::nebio::Event_E_EVENT_OPERATE>() {
+  return ::nebio::Event_E_EVENT_OPERATE_descriptor();
+}
+
+}  // namespace protobuf
+}  // namespace google
+#endif  // SWIG
 
 // @@protoc_insertion_point(global_scope)
 

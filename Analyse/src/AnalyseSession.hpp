@@ -7,6 +7,9 @@
  * @note     
  * Modify history:
  ******************************************************************************/
+#ifndef NEBIO_ANALYSESESSION_HPP
+#define NEBIO_ANALYSESESSION_HPP
+
 #include <actor/session/Session.hpp>
 #include "event.pb.h"
 #include "AnalyseCmd.hpp"
@@ -30,3 +33,6 @@ public:
 };
 
 }
+
+#endif
+

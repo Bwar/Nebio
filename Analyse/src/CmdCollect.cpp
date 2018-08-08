@@ -38,6 +38,7 @@ bool CmdCollect::AnyMessage(
     Event oEvent;
     if (oEvent.ParseFromString(oMsgBody.data()))
     {
+        LOG4_DEBUG("%s", oEvent.DebugString().c_str());
         std::string strSessionId = std::string("SessionSession-") + std::to_string(oEvent.app_id()) + "-" + oEvent.session_id();
         auto pSession = GetSession(strSessionId);
         if (pSession == nullptr)

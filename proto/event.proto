@@ -18,15 +18,21 @@ message Event
     uint32 app_id               = 12;
 
     // add by analyse
-    string tag                  = 13;
-    string tourist_id           = 14;
-    string next_page            = 15;
-    uint32 vv                   = 16;
-    uint32 exit_vv              = 17;
-    uint32 bounce_vv            = 18;
-    uint64 event_length         = 19;       // 事件时长（单位：S）
-    uint64 page_length          = 20;
-    uint64 session_length       = 21;
+    E_EVENT_OPERATE event_oper  = 13;
+    string tag                  = 14;
+    string tourist_id           = 15;
+    string next_page            = 16;
+    uint32 vv                   = 17;
+    uint32 exit_vv              = 18;
+    uint32 bounce_vv            = 19;
+    uint64 length               = 20;       // 时长（单位：S）
+    int32  user_type            = 21;       // 用户类型
+
+    enum E_EVENT_OPERATE
+    {
+        EVENT_ADD               = 0;        // 新增事件
+        EVENT_DEL               = 1;        // 删除事件
+    }
 }
 
 message Result

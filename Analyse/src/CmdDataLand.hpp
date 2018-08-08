@@ -40,6 +40,7 @@ protected:
 
 private:
     int32 m_iFileDate;        // YYYYMMDD
+    int32 m_iFileIndex;
     int32 m_iLogMaxFileSize;
     std::string m_strLogDataPath;
     std::string m_strLogFileName;

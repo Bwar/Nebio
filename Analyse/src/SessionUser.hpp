@@ -44,8 +44,7 @@ protected:
     void AddUser(const Event& oEvent);
     void AddTourist(const Event& oEvent);
     void DelTourist(const Event& oEvent);
-    void TransferUser(const Event& oEvent);
-    void Stat();
+    void SendResult();
 
 private:
     uint64 m_ullStatDate;
@@ -56,26 +55,21 @@ private:
     uint32 m_uiActivityUserUv; 
     uint32 m_uiActivityUserPv;
     uint32 m_uiActivityUserVv;
-    uint32 m_uiActivityUserIv;
     uint32 m_uiNewUserUv;
     uint32 m_uiNewUserPv;
     uint32 m_uiNewUserVv;
-    uint32 m_uiNewUserIv;
     uint32 m_uiHistoryUserUv;
     uint32 m_uiHistoryUserPv;
     uint32 m_uiHistoryUserVv;
-    uint32 m_uiHistoryUserIv;
     uint32 m_uiTouristUv;
     uint32 m_uiTouristPv;
     uint32 m_uiTouristVv;
-    uint32 m_uiTouristIv;
     uint64 m_ullActivityUserSessionLength;
     uint64 m_ullNewUserSessionLength;
     uint64 m_ullHistoryUserSessionLength;
     uint64 m_ullTouristSessionLength;
     std::unordered_map<std::string, uint64> m_mapUser;
     std::unordered_set<std::string> m_setDayUser;
-    std::unordered_set<std::string> m_setIp;
 };
 
 } // namespace nebio
