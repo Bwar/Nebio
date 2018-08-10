@@ -51,70 +51,37 @@ bool ModuleCollect::AnyMessage(
         neb::CJsonObject oJsonEvent;
         if (oJsonEvent.Parse(oHttpMsg.body()) && oJsonEvent.ToString().length() > 2) // there is a bug in cJSON_Parse(), we have to add "&& oJson.ToString().length() > 2" in order to avoid this bug.
         {
-            MsgBody oMsgBody;
             std::string strAppKey = "";     // TODO fill with params
-            std::string strUrl = "";
             uint32 uiAppId = 1;
+            std::string strClientIp = pChannel->GetRemoteAddr();
+
+            auto app_iter = m_mapApp.find(strAppKey);
+            if (app_iter != m_mapApp.end())
+            {
+                uiAppId = app_iter->second;
+            }
+            for (int j = 0; j < oHttpMsg.headers().size(); ++j)
+            {
+                std::string strHeadName = oHttpMsg.headers(j).header_name();
+                std::transform(strHeadName.begin(), strHeadName.end(), strHeadName.begin(),
+                        [](unsigned char c) -> unsigned char { return std::tolower(c); });
+                if ("x-forwarded-for" == strHeadName)
+                {
+                    strClientIp = oHttpMsg.headers(j).header_value().substr(0, oHttpMsg.headers(j).header_value().find_first_of(','));
+                    break;
+                }
+            }
+
+            if (oJsonEvent.GetArraySize() == 0)
+            {
+                TransferEvent(uiAppId, strClientIp, oJsonEvent);
+            }
             for (int i = 0; i < oJsonEvent.GetArraySize(); ++i)
             {
-                nebio::Event oEvent;
-                oEvent.set_event_id(oJsonEvent[i]("event_id"));
-                oEvent.set_event_type(oJsonEvent[i]("event_type"));
-                strUrl = std::move(oJsonEvent[i]("page").substr(0, oJsonEvent[i]("page").find_first_of('?')));
-                strUrl = std::move(strUrl.substr(0, strUrl.find_last_not_of('/')+ 1));
-                oEvent.set_page(strUrl);
-                strUrl = std::move(oJsonEvent[i]("referer").substr(0, oJsonEvent[i]("referer").find_first_of('?')));
-                strUrl = std::move(strUrl.substr(0, strUrl.find_last_not_of('/')+ 1));
-                oEvent.set_referer(strUrl);
-                oEvent.set_session_id(oJsonEvent[i]("session_id"));
-                oEvent.set_user_id(oJsonEvent[i]("user_id"));
-                oEvent.set_device_id(oJsonEvent[i]("device_id"));
-                oEvent.set_plat(oJsonEvent[i]("plat"));
-                oEvent.set_explorer(oJsonEvent[i]("explorer"));
-
-                std::tm tm = {};
-                std::time_t event_time;
-                std::istringstream ss(oJsonEvent[i]("time"));
-                ss >> std::get_time(&tm, "%Y-%m-%d %H:%M:%S");
-                if (ss.fail()) 
-                {
-                    event_time = time(NULL);
-                } 
-                else 
-                {
-                    event_time = std::mktime(&tm);
-                }
-                oEvent.set_time((uint64)event_time);
-
-                for (int j = 0; j < oHttpMsg.headers().size(); ++j)
-                {
-                    std::string strHeadName = oHttpMsg.headers(j).header_name();
-                    std::transform(strHeadName.begin(), strHeadName.end(), strHeadName.begin(),
-                            [](unsigned char c) -> unsigned char { return std::tolower(c); });
-                    if ("x-forwarded-for" == strHeadName)
-                    {
-                        std::string strClientIp = oHttpMsg.headers(j).header_value().substr(0, oHttpMsg.headers(j).header_value().find_first_of(','));
-                        oEvent.set_client_ip(strClientIp);
-                        break;
-                    }
-                }
-                if (oEvent.client_ip().size() == 0)
-                {
-                    oEvent.set_client_ip(pChannel->GetRemoteAddr());
-                }
-                auto app_iter = m_mapApp.find(strAppKey);
-                if (app_iter != m_mapApp.end())
-                {
-                    uiAppId = app_iter->second;
-                }
-                oEvent.set_app_id(uiAppId);
-
-                oMsgBody.set_data(oEvent.SerializeAsString());
-                oMsgBody.mutable_req_target()->set_route(oEvent.session_id());
-                SendOriented("ANALYSE", 1001, GetSequence(), oMsgBody);
-                SendOriented("ANALYSE", 1003, GetSequence(), oMsgBody);
-                Response(pChannel, oHttpMsg, neb::ERR_OK, "success");
+                TransferEvent(uiAppId, strClientIp, oJsonEvent[i]);
             }
+
+            Response(pChannel, oHttpMsg, neb::ERR_OK, "success");
         }
         else
         {
@@ -127,6 +94,48 @@ bool ModuleCollect::AnyMessage(
         Response(pChannel, oHttpMsg, 10001, "only accept POST!");
     }
     return(true);
+}
+
+void ModuleCollect::TransferEvent(uint32 uiAppId, const std::string& strClientIp, const neb::CJsonObject& oJsonEvent)
+{
+    MsgBody oMsgBody;
+    std::string strUrl = "";
+    nebio::Event oEvent;
+    oEvent.set_event_id(oJsonEvent("event_id"));
+    oEvent.set_event_type(oJsonEvent("event_type"));
+    strUrl = std::move(oJsonEvent("page").substr(0, oJsonEvent("page").find_first_of('?')));
+    strUrl = std::move(strUrl.substr(0, strUrl.find_last_not_of('/')+ 1));
+    oEvent.set_page(strUrl);
+    strUrl = std::move(oJsonEvent("referer").substr(0, oJsonEvent("referer").find_first_of('?')));
+    strUrl = std::move(strUrl.substr(0, strUrl.find_last_not_of('/')+ 1));
+    oEvent.set_referer(strUrl);
+    oEvent.set_session_id(oJsonEvent("session_id"));
+    oEvent.set_user_id(oJsonEvent("user_id"));
+    oEvent.set_device_id(oJsonEvent("device_id"));
+    oEvent.set_plat(oJsonEvent("plat"));
+    oEvent.set_explorer(oJsonEvent("explorer"));
+
+    std::tm tm = {};
+    std::time_t event_time;
+    std::istringstream ss(oJsonEvent("time"));
+    ss >> std::get_time(&tm, "%Y-%m-%d %H:%M:%S");
+    if (ss.fail()) 
+    {
+        event_time = time(NULL);
+    } 
+    else 
+    {
+        event_time = std::mktime(&tm);
+    }
+    oEvent.set_time((uint64)event_time);
+
+    oEvent.set_client_ip(strClientIp);
+    oEvent.set_app_id(uiAppId);
+
+    oMsgBody.set_data(oEvent.SerializeAsString());
+    oMsgBody.mutable_req_target()->set_route(oEvent.session_id());
+    SendOriented("ANALYSE", 1001, GetSequence(), oMsgBody);
+    SendOriented("ANALYSE", 1003, GetSequence(), oMsgBody);
 }
 
 void ModuleCollect::Response(

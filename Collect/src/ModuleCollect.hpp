@@ -30,6 +30,7 @@ public:
                     std::shared_ptr<neb::SocketChannel> pChannel,
                     const HttpMsg& oHttpMsg);
 protected:
+    void TransferEvent(uint32 uiAppId, const std::string& strClientIp, const neb::CJsonObject& oJsonEvent);
     void Response(
             std::shared_ptr<neb::SocketChannel> pChannel,
             const HttpMsg& oHttpMsg, int iErrno, const std::string& strErrMsg);
