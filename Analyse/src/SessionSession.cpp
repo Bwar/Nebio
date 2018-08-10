@@ -37,6 +37,7 @@ neb::E_CMD_STATUS SessionSession::Timeout()
 
 void SessionSession::AddEvent(const Event& oEvent)
 {
+    LOG4_TRACE("%s", oEvent.DebugString().c_str());
     if (m_strUserSessionId.length() == 0)
     {
         m_uiAppId = oEvent.app_id();
@@ -134,7 +135,7 @@ void SessionSession::TransferEvent(int iEventPos)
 
     oEvent.set_event_oper(Event::EVENT_ADD);
     oMsgBody.set_data(oEvent.SerializeAsString());
-    if (oEvent.user_id().length() > 0)                // 当且仅当游客身份转为注册用户身份时明确以游客id路由
+    if (oEvent.user_id().length() > 0)      
     {
         oMsgBody.mutable_req_target()->set_route(m_strUserId);
     }

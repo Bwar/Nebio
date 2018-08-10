@@ -50,7 +50,12 @@
         "analyse":{
             "channel_summary":"all_channel",
             "tag_summary":"all_tag",
-            "direct_access":"direct"
+            "direct_access":"direct",
+            "session_timeout":{
+                "session_tb_event":2.0,
+                "session_tb_page":2.0,
+                "session_tb_user":2.0
+            }
         }
     }
 }

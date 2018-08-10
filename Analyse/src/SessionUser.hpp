@@ -14,7 +14,7 @@
 #include <unordered_set>
 #include <unordered_map>
 #include "AnalyseCmd.hpp"
-#include "AnalyseSession.hpp"
+#include "AnalyseTimer.hpp"
 
 namespace nebio
 {
@@ -28,7 +28,7 @@ enum E_USER_TYPE
     USER_TOURIST            = 4,
 };
 
-class SessionUser : public AnalyseSession,
+class SessionUser : public AnalyseTimer,
     public neb::DynamicCreator<SessionUser, std::string, std::string, std::string, uint64, ev_tstamp>
 {
 public:

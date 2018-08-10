@@ -33,6 +33,8 @@ public:
                     std::shared_ptr<neb::SocketChannel> pChannel, 
                     const MsgHead& oMsgHead,
                     const MsgBody& oMsgBody);
+private:
+    double m_dSessionTimeout;
 };
 
 }

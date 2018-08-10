@@ -17,7 +17,7 @@ namespace nebio
 {
 
 SessionTbEvent::SessionTbEvent(const std::string& strSessionId, ev_tstamp dSessionTimeout)
-    : AggregateSession(strSessionId, dSessionTimeout),
+    : AggregateTimer(strSessionId, dSessionTimeout),
       m_uiAppId(0), m_uiUv(0), m_uiPv(0), m_uiVv(0), m_uiIv(0), m_ullEventLength(0)
 {
 }

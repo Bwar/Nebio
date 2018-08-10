@@ -15,7 +15,7 @@ namespace nebio
 
 SessionPageIv::SessionPageIv(const std::string& strSessionId,
     const std::string& strChannel, const std::string& strTag, ev_tstamp dSessionTimeout)
-    : AnalyseSession(strSessionId, dSessionTimeout),
+    : AnalyseTimer(strSessionId, dSessionTimeout),
       m_uiAppId(0), m_strChannel(strChannel), m_strTag(strTag), m_iIv(0)
 {
 }
@@ -33,6 +33,7 @@ neb::E_CMD_STATUS SessionPageIv::Timeout()
 
 void SessionPageIv::AddEvent(const Event& oEvent)
 {
+    LOG4_TRACE("%s", oEvent.DebugString().c_str());
     if (m_strPage.size() == 0)
     {
         m_uiAppId = oEvent.app_id();

@@ -15,7 +15,7 @@ namespace nebio
 {
 
 CmdEventIv::CmdEventIv(int32 iCmd)
-   : neb::Cmd(iCmd)
+   : neb::Cmd(iCmd), m_dSessionTimeout(10.0)
 {
 }
 
@@ -28,6 +28,7 @@ bool CmdEventIv::Init()
     neb::CJsonObject oJsonConf = GetCustomConf();
     m_strChannelSummary = oJsonConf["analyse"]("channel_summary");
     m_strTagSummary = oJsonConf["analyse"]("tag_summary");
+    oJsonConf["analyse"]["session_timeout"].Get("session_event_iv", m_dSessionTimeout);
     return(true);
 }
 
@@ -59,12 +60,12 @@ bool CmdEventIv::Stat(const std::string& strChannel, const std::string& strTag, 
     }
     
     std::ostringstream oss;
-    oss << "SessionEventIv-" + oEvent.app_id() << "-" << strChannel << "-" << strTag << "-" << oEvent.event_id();
+    oss << "SessionEventIv-" << oEvent.app_id() << "-" << strChannel << "-" << strTag << "-" << oEvent.event_id();
     std::string strSessionId = oss.str();
     auto pSession = GetSession(strSessionId);
     if (pSession == nullptr)
     {
-        pSession = MakeSharedSession("nebio::SessionEventIv", strSessionId, strChannel, strTag, 10.0);
+        pSession = MakeSharedSession("nebio::SessionEventIv", strSessionId, strChannel, strTag, m_dSessionTimeout);
     }
     if (pSession == nullptr)
     {

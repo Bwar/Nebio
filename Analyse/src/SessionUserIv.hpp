@@ -14,12 +14,12 @@
 #include <unordered_set>
 #include <unordered_map>
 #include "AnalyseCmd.hpp"
-#include "AnalyseSession.hpp"
+#include "AnalyseTimer.hpp"
 
 namespace nebio
 {
 
-class SessionUserIv : public AnalyseSession,
+class SessionUserIv : public AnalyseTimer,
     public neb::DynamicCreator<SessionUserIv, std::string, std::string, std::string, uint64, ev_tstamp>
 {
 public:

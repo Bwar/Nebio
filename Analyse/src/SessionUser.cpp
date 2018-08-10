@@ -15,7 +15,7 @@ namespace nebio
 
 SessionUser::SessionUser(const std::string& strSessionId,
     const std::string& strChannel, const std::string& strTag, uint64 ullStatDate, ev_tstamp dSessionTimeout)
-    : AnalyseSession(strSessionId, dSessionTimeout),
+    : AnalyseTimer(strSessionId, dSessionTimeout),
       m_ullStatDate(ullStatDate), m_uiAppId(0), m_strChannel(strChannel), m_strTag(strTag),
       m_iActivityUserUv(0), m_iActivityUserPv(0), m_iActivityUserVv(0), 
       m_iNewUserUv(0), m_iNewUserPv(0), m_iNewUserVv(0), 

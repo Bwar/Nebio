@@ -17,7 +17,7 @@ namespace nebio
 {
 
 SessionTbPage::SessionTbPage(const std::string& strSessionId, ev_tstamp dSessionTimeout)
-    : AggregateSession(strSessionId, dSessionTimeout),
+    : AggregateTimer(strSessionId, dSessionTimeout),
       m_uiAppId(0), m_uiUv(0), m_uiPv(0), m_uiVv(0), m_uiIv(0),
       m_uiExitVv(0), m_uiBounceVv(0), m_ullOnlineTime(0)
 {

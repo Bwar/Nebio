@@ -53,7 +53,16 @@
         "analyse":{
             "channel_summary":"all_channel",
             "tag_summary":"all_tag",
-            "direct_access":"direct"
+            "direct_access":"direct",
+            "session_timeout":{
+                "session_session":1200.0,
+                "session_event":2.0,
+                "session_event_iv":2.0,
+                "session_page":2.0,
+                "session_page_iv":2.0,
+                "session_user":2.0,
+                "session_user_iv":2.0
+            }
         }
     }
 }

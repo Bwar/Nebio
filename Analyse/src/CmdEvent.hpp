@@ -38,6 +38,7 @@ protected:
     bool Stat(const std::string& strChannel, const std::string& strTag, const Event& oEvent);
 
 private:
+    double m_dSessionTimeout;
     std::string m_strChannelSummary;
     std::string m_strTagSummary;
 };

@@ -88,7 +88,7 @@ bool ModuleCollect::AnyMessage(
                             [](unsigned char c) -> unsigned char { return std::tolower(c); });
                     if ("x-forwarded-for" == strHeadName)
                     {
-                        std::string strClientIp = oHttpMsg.params(j).name().substr(0, oHttpMsg.params(j).name().find_first_of(','));
+                        std::string strClientIp = oHttpMsg.params(j).value().substr(0, oHttpMsg.params(j).value().find_first_of(','));
                         oEvent.set_client_ip(strClientIp);
                         break;
                     }

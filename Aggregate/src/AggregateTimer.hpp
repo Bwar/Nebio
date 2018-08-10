@@ -1,27 +1,30 @@
 /*******************************************************************************
  * Project:  Nebio
- * @file     AggregateSession.hpp
+ * @file     AggregateTimer.hpp
  * @brief    会话统计
  * @author   Bwar
  * @date:    2018年4月21日
  * @note     
  * Modify history:
  ******************************************************************************/
-#include <actor/session/Session.hpp>
+#ifndef NEBIO_AGGREGATETIMER_HPP
+#define NEBIO_AGGREGATETIMER_HPP
+
+#include <actor/session/Timer.hpp>
 #include "event.pb.h"
 
 namespace nebio
 {
 
-class AggregateSession : public neb::Session
+class AggregateTimer : public neb::Timer
 {
 public:
-    AggregateSession(const std::string& strSessionId, ev_tstamp dSessionTimeout)
-        : neb::Session(strSessionId, dSessionTimeout)
+    AggregateTimer(const std::string& strSessionId, ev_tstamp dSessionTimeout)
+        : neb::Timer(strSessionId, dSessionTimeout)
     {        
     }
 
-    virtual ~AggregateSession(){}
+    virtual ~AggregateTimer(){}
 
     virtual neb::E_CMD_STATUS Timeout() = 0;
 
@@ -29,3 +32,7 @@ public:
 };
 
 }
+
+#endif
+
+

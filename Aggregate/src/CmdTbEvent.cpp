@@ -15,7 +15,7 @@ namespace nebio
 {
 
 CmdTbEvent::CmdTbEvent(int32 iCmd)
-   : neb::Cmd(iCmd)
+   : neb::Cmd(iCmd), m_dSessionTimeout(10.0)
 {
 }
 
@@ -25,6 +25,8 @@ CmdTbEvent::~CmdTbEvent()
 
 bool CmdTbEvent::Init()
 {
+    neb::CJsonObject oJsonConf = GetCustomConf();
+    oJsonConf["analyse"]["session_timeout"].Get("session_tb_event", m_dSessionTimeout);
     return(true);
 }
 
@@ -36,12 +38,12 @@ bool CmdTbEvent::AnyMessage(
     if (oResult.ParseFromString(oMsgBody.data()))
     {
         std::ostringstream oss;
-        oss << "SessionTbEvent-" + oResult.app_id() << "-" << oResult.channel() << "-" << oResult.tag() << "-" << oResult.key1();
+        oss << "SessionTbEvent-" << oResult.app_id() << "-" << oResult.channel() << "-" << oResult.tag() << "-" << oResult.key1();
         std::string strSessionId = oss.str();
         auto pSession = GetSession(strSessionId);
         if (pSession == nullptr)
         {
-            pSession = MakeSharedSession("nebio::SessionTbEvent", strSessionId, 10.0);
+            pSession = MakeSharedSession("nebio::SessionTbEvent", strSessionId, m_dSessionTimeout);
         }
         if (pSession == nullptr)
         {

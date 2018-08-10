@@ -14,7 +14,7 @@ namespace nebio
 {
 
 CmdCollect::CmdCollect(int32 iCmd)
-   : neb::Cmd(iCmd)
+   : neb::Cmd(iCmd), m_dSessionTimeout(1200.0)
 {
 }
 
@@ -28,6 +28,7 @@ bool CmdCollect::Init()
     m_strChannelSummary = oJsonConf["analyse"]("channel_summary");
     m_strTagSummary = oJsonConf["analyse"]("tag_summary");
     m_strDirectAccess = oJsonConf["analyse"]("direct_access"); 
+    oJsonConf["analyse"]["session_timeout"].Get("session_session", m_dSessionTimeout);
     return(true);
 }
 
@@ -43,7 +44,7 @@ bool CmdCollect::AnyMessage(
         auto pSession = GetSession(strSessionId);
         if (pSession == nullptr)
         {
-            pSession = MakeSharedSession("nebio::SessionSession", strSessionId, (ev_tstamp)1200.0);
+            pSession = MakeSharedSession("nebio::SessionSession", strSessionId, m_dSessionTimeout);
         }
         if (pSession == nullptr)
         {

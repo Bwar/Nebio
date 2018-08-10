@@ -34,6 +34,7 @@ public:
                     const MsgHead& oMsgHead,
                     const MsgBody& oMsgBody);
 private:
+    double m_dSessionTimeout;
     std::string m_strChannelSummary;
     std::string m_strTagSummary;
     std::string m_strDirectAccess;

@@ -13,12 +13,12 @@
 #include <string>
 #include <unordered_set>
 #include <unordered_map>
-#include "AggregateSession.hpp"
+#include "AggregateTimer.hpp"
 
 namespace nebio
 {
 
-class SessionTbEvent : public AggregateSession,
+class SessionTbEvent : public AggregateTimer,
     public neb::DynamicCreator<SessionTbEvent, std::string, ev_tstamp>
 {
 public:

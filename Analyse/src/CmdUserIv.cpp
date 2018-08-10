@@ -16,7 +16,7 @@ namespace nebio
 {
 
 CmdUserIv::CmdUserIv(int32 iCmd)
-   : neb::Cmd(iCmd)
+   : neb::Cmd(iCmd), m_dSessionTimeout(10.0)
 {
 }
 
@@ -29,6 +29,7 @@ bool CmdUserIv::Init()
     neb::CJsonObject oJsonConf = GetCustomConf();
     m_strChannelSummary = oJsonConf["analyse"]("channel_summary");
     m_strTagSummary = oJsonConf["analyse"]("tag_summary");
+    oJsonConf["analyse"]["session_timeout"].Get("session_user_iv", m_dSessionTimeout);
     return(true);
 }
 
@@ -60,13 +61,13 @@ bool CmdUserIv::Stat(const std::string& strChannel, const std::string& strTag, c
     }
     
     std::ostringstream oss;
-    oss << "SessionUserIv-" + oEvent.app_id() << "-" << strChannel << "-" << strTag;
+    oss << "SessionUserIv-" << oEvent.app_id() << "-" << strChannel << "-" << strTag;
     std::string strSessionId = oss.str();
     auto pSession = GetSession(strSessionId);
     if (pSession == nullptr)
     {
         uint64 ullStatDate = neb::GetBeginTimeOfTheDay(time(NULL));
-        pSession = MakeSharedSession("nebio::SessionUserIv", strSessionId, strChannel, strTag, ullStatDate, 10.0);
+        pSession = MakeSharedSession("nebio::SessionUserIv", strSessionId, strChannel, strTag, ullStatDate, m_dSessionTimeout);
     }
     if (pSession == nullptr)
     {
