@@ -81,14 +81,14 @@ bool ModuleCollect::AnyMessage(
                 }
                 oEvent.set_time((uint64)event_time);
 
-                for (int j = 0; j < oHttpMsg.params_size(); ++j)
+                for (int j = 0; j < oHttpMsg.headers().size(); ++j)
                 {
-                    std::string strHeadName = oHttpMsg.params(j).name();
+                    std::string strHeadName = oHttpMsg.headers(j).header_name();
                     std::transform(strHeadName.begin(), strHeadName.end(), strHeadName.begin(),
                             [](unsigned char c) -> unsigned char { return std::tolower(c); });
                     if ("x-forwarded-for" == strHeadName)
                     {
-                        std::string strClientIp = oHttpMsg.params(j).value().substr(0, oHttpMsg.params(j).value().find_first_of(','));
+                        std::string strClientIp = oHttpMsg.headers(j).header_value().substr(0, oHttpMsg.headers(j).header_value().find_first_of(','));
                         oEvent.set_client_ip(strClientIp);
                         break;
                     }
