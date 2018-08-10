@@ -53,14 +53,19 @@ bool ModuleCollect::AnyMessage(
         {
             MsgBody oMsgBody;
             std::string strAppKey = "";     // TODO fill with params
+            std::string strUrl = "";
             uint32 uiAppId = 1;
             for (int i = 0; i < oJsonEvent.GetArraySize(); ++i)
             {
                 nebio::Event oEvent;
                 oEvent.set_event_id(oJsonEvent[i]("event_id"));
                 oEvent.set_event_type(oJsonEvent[i]("event_type"));
-                oEvent.set_page(oJsonEvent[i]("page").substr(0, oJsonEvent[i]("page").find_first_of('?')));
-                oEvent.set_referer(oJsonEvent[i]("referer").substr(0, oJsonEvent[i]("referer").find_first_of('?')));
+                strUrl = std::move(oJsonEvent[i]("page").substr(0, oJsonEvent[i]("page").find_first_of('?')));
+                strUrl = std::move(strUrl.substr(0, strUrl.find_last_not_of('/')+ 1));
+                oEvent.set_page(strUrl);
+                strUrl = std::move(oJsonEvent[i]("referer").substr(0, oJsonEvent[i]("referer").find_first_of('?')));
+                strUrl = std::move(strUrl.substr(0, strUrl.find_last_not_of('/')+ 1));
+                oEvent.set_referer(strUrl);
                 oEvent.set_session_id(oJsonEvent[i]("session_id"));
                 oEvent.set_user_id(oJsonEvent[i]("user_id"));
                 oEvent.set_device_id(oJsonEvent[i]("device_id"));
