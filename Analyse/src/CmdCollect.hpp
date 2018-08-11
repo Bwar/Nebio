@@ -34,6 +34,7 @@ public:
                     const MsgHead& oMsgHead,
                     const MsgBody& oMsgBody);
 private:
+    uint32 m_uiDate;        // YYYYMMDD
     double m_dSessionTimeout;
     std::string m_strChannelSummary;
     std::string m_strTagSummary;

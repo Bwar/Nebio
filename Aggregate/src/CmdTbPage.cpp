@@ -10,12 +10,14 @@
 
 #include <sstream>
 #include "CmdTbPage.hpp"
+#include "UnixTime.hpp"
 
 namespace nebio
 {
 
 CmdTbPage::CmdTbPage(int32 iCmd)
-   : neb::Cmd(iCmd), m_dSessionTimeout(10.0)
+   : neb::Cmd(iCmd),
+     m_uiDate(0), m_dSessionTimeout(10.0)
 {
 }
 
@@ -27,6 +29,8 @@ bool CmdTbPage::Init()
 {
     neb::CJsonObject oJsonConf = GetCustomConf();
     oJsonConf["analyse"]["session_timeout"].Get("session_tb_page", m_dSessionTimeout);
+    m_uiDate = std::stoul(neb::time_t2TimeStr((time_t)GetNowTime(), "%Y%m%d"));
+    m_strDate = neb::time_t2TimeStr((time_t)GetNowTime(), "%Y-%m-%d");
     return(true);
 }
 
@@ -43,7 +47,7 @@ bool CmdTbPage::AnyMessage(
         auto pSession = GetSession(strSessionId);
         if (pSession == nullptr)
         {
-            pSession = MakeSharedSession("nebio::SessionTbPage", strSessionId, m_dSessionTimeout);
+            pSession = MakeSharedSession("nebio::SessionTbPage", strSessionId, m_uiDate, m_strDate, m_dSessionTimeout);
         }
         if (pSession == nullptr)
         {

@@ -9,12 +9,13 @@
  ******************************************************************************/
 
 #include "CmdCollect.hpp"
+#include "UnixTime.hpp"
 
 namespace nebio
 {
 
 CmdCollect::CmdCollect(int32 iCmd)
-   : neb::Cmd(iCmd), m_dSessionTimeout(1200.0)
+   : neb::Cmd(iCmd), m_uiDate(0), m_dSessionTimeout(1200.0)
 {
 }
 
@@ -29,6 +30,7 @@ bool CmdCollect::Init()
     m_strTagSummary = oJsonConf["analyse"]("tag_summary");
     m_strDirectAccess = oJsonConf["analyse"]("direct_access"); 
     oJsonConf["analyse"]["session_timeout"].Get("session_session", m_dSessionTimeout);
+    m_uiDate = std::stoul(neb::time_t2TimeStr((time_t)GetNowTime(), "%Y%m%d"));
     return(true);
 }
 
@@ -44,7 +46,7 @@ bool CmdCollect::AnyMessage(
         auto pSession = GetSession(strSessionId);
         if (pSession == nullptr)
         {
-            pSession = MakeSharedSession("nebio::SessionSession", strSessionId, m_dSessionTimeout);
+            pSession = MakeSharedSession("nebio::SessionSession", strSessionId, m_uiDate, m_dSessionTimeout);
         }
         if (pSession == nullptr)
         {

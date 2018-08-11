@@ -19,11 +19,11 @@ namespace nebio
 {
 
 class SessionPage : public AnalyseTimer,
-    public neb::DynamicCreator<SessionPage, std::string, std::string, std::string, ev_tstamp>
+    public neb::DynamicCreator<SessionPage, std::string, std::string, std::string, uint32, ev_tstamp>
 {
 public:
     SessionPage(const std::string& strSessionId, const std::string& strChannel, const std::string& strTag,
-        ev_tstamp dSessionTimeout = 10.0);
+        uint32 uiDate, ev_tstamp dSessionTimeout = 10.0);
     virtual ~SessionPage();
 
     virtual neb::E_CMD_STATUS Timeout();
@@ -34,6 +34,7 @@ protected:
     void FlushOut();
 
 private:
+    uint32 m_uiDate;        // YYYYMMDD
     uint32 m_uiAppId;
     std::string m_strChannel;
     std::string m_strTag;

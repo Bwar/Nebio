@@ -9,14 +9,15 @@
  ******************************************************************************/
 
 #include "SessionPageIv.hpp"
+#include "UnixTime.hpp"
 
 namespace nebio
 {
 
 SessionPageIv::SessionPageIv(const std::string& strSessionId,
-    const std::string& strChannel, const std::string& strTag, ev_tstamp dSessionTimeout)
+    const std::string& strChannel, const std::string& strTag, uint32 uiDate, ev_tstamp dSessionTimeout)
     : AnalyseTimer(strSessionId, dSessionTimeout),
-      m_uiAppId(0), m_strChannel(strChannel), m_strTag(strTag), m_iIv(0)
+      m_uiDate(uiDate), m_uiAppId(0), m_strChannel(strChannel), m_strTag(strTag), m_iIv(0)
 {
 }
 
@@ -28,6 +29,12 @@ SessionPageIv::~SessionPageIv()
 neb::E_CMD_STATUS SessionPageIv::Timeout()
 {
     FlushOut();
+    uint32 uiDate = std::stoul(neb::time_t2TimeStr((time_t)GetNowTime(), "%Y%m%d"));
+    if (uiDate > m_uiDate)
+    {
+        m_uiDate = uiDate;
+        m_setIp.clear();
+    }
     return(neb::CMD_STATUS_RUNNING);
 }
 

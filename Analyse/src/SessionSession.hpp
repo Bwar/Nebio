@@ -26,10 +26,10 @@ typedef std::tuple<std::string, std::string, uint64, std::string> T_EVENT;
 typedef std::tuple<std::string, uint64> T_PAGE;
 
 class SessionSession: public AnalyseSession,
-    public neb::DynamicCreator<SessionSession, std::string, ev_tstamp>
+    public neb::DynamicCreator<SessionSession, std::string, uint32, ev_tstamp>
 {
 public:
-    SessionSession(const std::string& strSessionId, ev_tstamp dSessionTimeout = 1800.0);
+    SessionSession(const std::string& strSessionId, uint32 uiDate, ev_tstamp dSessionTimeout = 1800.0);
     virtual ~SessionSession();
 
     virtual neb::E_CMD_STATUS Timeout();
@@ -52,6 +52,7 @@ protected:
     void TransferUserEvent(int iEventPos = -2);
 
 private:
+    uint32 m_uiDate;        // YYYYMMDD
     bool m_bTourist2User;                // 是否从游客转为注册用户
     uint32 m_uiAppId;
     std::string m_strUserSessionId;      // GetSessionId()获得的是 appid-session_id的组合

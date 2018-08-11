@@ -9,14 +9,15 @@
  ******************************************************************************/
 
 #include "SessionUser.hpp"
+#include "UnixTime.hpp"
 
 namespace nebio
 {
 
 SessionUser::SessionUser(const std::string& strSessionId,
-    const std::string& strChannel, const std::string& strTag, uint64 ullStatDate, ev_tstamp dSessionTimeout)
+    const std::string& strChannel, const std::string& strTag, uint32 uiDate, ev_tstamp dSessionTimeout)
     : AnalyseTimer(strSessionId, dSessionTimeout),
-      m_ullStatDate(ullStatDate), m_uiAppId(0), m_strChannel(strChannel), m_strTag(strTag),
+      m_uiDate(uiDate), m_ullStatDate(0), m_uiAppId(0), m_strChannel(strChannel), m_strTag(strTag),
       m_iActivityUserUv(0), m_iActivityUserPv(0), m_iActivityUserVv(0), 
       m_iNewUserUv(0), m_iNewUserPv(0), m_iNewUserVv(0), 
       m_iHistoryUserUv(0), m_iHistoryUserPv(0), m_iHistoryUserVv(0), 
@@ -24,6 +25,7 @@ SessionUser::SessionUser(const std::string& strSessionId,
       m_llActivityUserSessionLength(0), m_llNewUserSessionLength(0),
       m_llHistoryUserSessionLength(0), m_llTouristSessionLength(0)
 {
+    m_ullStatDate =  neb::GetBeginTimeOfTheDay(time(NULL));
 }
 
 SessionUser::~SessionUser()
@@ -35,6 +37,13 @@ SessionUser::~SessionUser()
 neb::E_CMD_STATUS SessionUser::Timeout()
 {
     FlushOut();
+    uint32 uiDate = std::stoul(neb::time_t2TimeStr((time_t)GetNowTime(), "%Y%m%d"));
+    if (uiDate > m_uiDate)
+    {
+        m_uiDate = uiDate;
+        m_ullStatDate = neb::GetBeginTimeOfTheDay((time_t)GetNowTime());
+        m_setDayUser.clear();
+    }
     return(neb::CMD_STATUS_RUNNING);
 }
 

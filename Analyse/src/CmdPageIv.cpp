@@ -10,6 +10,7 @@
 
 #include <sstream>
 #include "CmdPageIv.hpp"
+#include "UnixTime.hpp"
 
 namespace nebio
 {
@@ -29,6 +30,7 @@ bool CmdPageIv::Init()
     m_strChannelSummary = oJsonConf["analyse"]("channel_summary");
     m_strTagSummary = oJsonConf["analyse"]("tag_summary");
     oJsonConf["analyse"]["session_timeout"].Get("session_page_iv", m_dSessionTimeout);
+    m_uiDate = std::stoul(neb::time_t2TimeStr((time_t)GetNowTime(), "%Y%m%d"));
     return(true);
 }
 
@@ -65,7 +67,7 @@ bool CmdPageIv::Stat(const std::string& strChannel, const std::string& strTag, c
     auto pSession = GetSession(strSessionId);
     if (pSession == nullptr)
     {
-        pSession = MakeSharedSession("nebio::SessionPageIv", strSessionId, strChannel, strTag, m_dSessionTimeout);
+        pSession = MakeSharedSession("nebio::SessionPageIv", strSessionId, strChannel, strTag, m_uiDate, m_dSessionTimeout);
     }
     if (pSession == nullptr)
     {

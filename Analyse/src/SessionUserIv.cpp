@@ -10,14 +10,15 @@
 
 #include "SessionUser.hpp"
 #include "SessionUserIv.hpp"
+#include "UnixTime.hpp"
 
 namespace nebio
 {
 
 SessionUserIv::SessionUserIv(const std::string& strSessionId,
-    const std::string& strChannel, const std::string& strTag, uint64 ullStatDate, ev_tstamp dSessionTimeout)
+    const std::string& strChannel, const std::string& strTag, uint32 uiDate, ev_tstamp dSessionTimeout)
     : AnalyseTimer(strSessionId, dSessionTimeout),
-      m_ullStatDate(ullStatDate), m_uiAppId(0), m_strChannel(strChannel), m_strTag(strTag),
+      m_uiDate(uiDate), m_uiAppId(0), m_strChannel(strChannel), m_strTag(strTag),
       m_iActivityUserIv(0), m_iNewUserIv(0), m_iHistoryUserIv(0), m_iTouristIv(0)
 {
 }
@@ -30,6 +31,12 @@ SessionUserIv::~SessionUserIv()
 neb::E_CMD_STATUS SessionUserIv::Timeout()
 {
     FlushOut();
+    uint32 uiDate = std::stoul(neb::time_t2TimeStr((time_t)GetNowTime(), "%Y%m%d"));
+    if (uiDate > m_uiDate)
+    {
+        m_uiDate = uiDate;
+        m_setIp.clear();
+    }
     return(neb::CMD_STATUS_RUNNING);
 }
 

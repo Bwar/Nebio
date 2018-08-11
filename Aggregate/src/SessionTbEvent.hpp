@@ -19,10 +19,11 @@ namespace nebio
 {
 
 class SessionTbEvent : public AggregateTimer,
-    public neb::DynamicCreator<SessionTbEvent, std::string, ev_tstamp>
+    public neb::DynamicCreator<SessionTbEvent, std::string, uint32, std::string, ev_tstamp>
 {
 public:
-    SessionTbEvent(const std::string& strSessionId, ev_tstamp dSessionTimeout = 10.0);
+    SessionTbEvent(const std::string& strSessionId,
+            uint32 uiDate, const std::string& strDate, ev_tstamp dSessionTimeout = 10.0);
     virtual ~SessionTbEvent();
 
     virtual neb::E_CMD_STATUS Timeout();
@@ -33,16 +34,18 @@ protected:
     void WriteResult();
 
 private:
+    uint32 m_uiDate;        // YYYYMMDD
+    std::string m_strDate;  // YYYY-MM-DD
     uint32 m_uiAppId;
     std::string m_strChannel;
     std::string m_strTag;
     std::string m_strEventId;
      
-    uint32 m_uiUv;
-    uint32 m_uiPv;
-    uint32 m_uiVv;
-    uint32 m_uiIv;
-    uint64 m_ullEventLength;
+    int32 m_iUv;
+    int32 m_iPv;
+    int32 m_iVv;
+    int32 m_iIv;
+    int64 m_llEventLength;
 };
 
 } // namespace nebio

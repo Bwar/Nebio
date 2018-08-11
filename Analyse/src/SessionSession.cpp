@@ -9,13 +9,14 @@
  ******************************************************************************/
 
 #include "SessionSession.hpp"
+#include "UnixTime.hpp"
 
 namespace nebio
 {
 
-SessionSession::SessionSession(const std::string& strSessionId, ev_tstamp dSessionTimeout)
+SessionSession::SessionSession(const std::string& strSessionId, uint32 uiDate, ev_tstamp dSessionTimeout)
     : AnalyseSession(strSessionId, dSessionTimeout),
-      m_bTourist2User(false), m_uiAppId(0)
+      m_uiDate(uiDate), m_bTourist2User(false), m_uiAppId(0)
 {
 }
 
@@ -32,6 +33,11 @@ neb::E_CMD_STATUS SessionSession::Timeout()
     // TODO add session stat
     TransferEvent(-1);
     TransferPageEvent(-1);
+    uint32 uiDate = std::stoul(neb::time_t2TimeStr((time_t)GetNowTime(), "%Y%m%d"));
+    if (uiDate > m_uiDate)
+    {
+        m_uiDate = uiDate;
+    }
     return(neb::CMD_STATUS_COMPLETED);
 }
 

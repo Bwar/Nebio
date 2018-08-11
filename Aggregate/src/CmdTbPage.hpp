@@ -34,6 +34,8 @@ public:
                     const MsgHead& oMsgHead,
                     const MsgBody& oMsgBody);
 private:
+    uint32 m_uiDate;        // YYYYMMDD
+    std::string m_strDate;  // YYYY-MM-DD
     double m_dSessionTimeout;
 };
 
