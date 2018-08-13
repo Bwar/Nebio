@@ -33,6 +33,7 @@ neb::E_CMD_STATUS SessionSession::Timeout()
     // TODO add session stat
     TransferEvent(-1);
     TransferPageEvent(-1);
+    TransferUserEvent(-1);
     uint32 uiDate = std::stoul(neb::time_t2TimeStr((time_t)GetNowTime(), "%Y%m%d"));
     if (uiDate > m_uiDate)
     {

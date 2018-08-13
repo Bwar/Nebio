@@ -56,7 +56,7 @@ bool CmdPage::AnyMessage(
 
 bool CmdPage::Stat(const std::string& strChannel, const std::string& strTag, const Event& oEvent)
 {
-    if (strChannel.length() == 0 || strTag.length() == 0)
+    if (strChannel.length() == 0 || strTag.length() == 0 || oEvent.page().length() == 0)
     {
         return(true);
     }

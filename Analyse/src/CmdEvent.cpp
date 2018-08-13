@@ -56,7 +56,7 @@ bool CmdEvent::AnyMessage(
 
 bool CmdEvent::Stat(const std::string& strChannel, const std::string& strTag, const Event& oEvent)
 {
-    if (strChannel.length() == 0 || strTag.length() == 0)
+    if (strChannel.length() == 0 || strTag.length() == 0 || oEvent.event_id().length() == 0)
     {
         return(true);
     }
