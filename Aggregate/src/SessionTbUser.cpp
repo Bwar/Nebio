@@ -34,6 +34,7 @@ neb::E_CMD_STATUS SessionTbUser::Timeout()
     uint32 uiDate = std::stoul(neb::time_t2TimeStr((time_t)GetNowTime(), "%Y%m%d"));
     if (uiDate > m_uiDate)
     {
+        /*
         m_uiDate = uiDate;
         m_strDate = neb::time_t2TimeStr((time_t)GetNowTime(), "%Y-%m-%d");
         m_iUv = 0;
@@ -41,6 +42,8 @@ neb::E_CMD_STATUS SessionTbUser::Timeout()
         m_iVv = 0;
         m_iIv = 0;
         m_llSessionLength = 0;
+        */
+        return(neb::CMD_STATUS_COMPLETED);
     }
     return(neb::CMD_STATUS_RUNNING);
 }

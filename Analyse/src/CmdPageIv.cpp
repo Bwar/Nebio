@@ -30,7 +30,6 @@ bool CmdPageIv::Init()
     m_strChannelSummary = oJsonConf["analyse"]("channel_summary");
     m_strTagSummary = oJsonConf["analyse"]("tag_summary");
     oJsonConf["analyse"]["session_timeout"].Get("session_page_iv", m_dSessionTimeout);
-    m_uiDate = std::stoul(neb::time_t2TimeStr((time_t)GetNowTime(), "%Y%m%d"));
     return(true);
 }
 
@@ -56,7 +55,7 @@ bool CmdPageIv::AnyMessage(
 
 bool CmdPageIv::Stat(const std::string& strChannel, const std::string& strTag, const Event& oEvent)
 {
-    if (strChannel.length() == 0 || strTag.length() == 0)
+    if (strChannel.length() == 0 || strTag.length() == 0 || oEvent.page().length() == 0)
     {
         return(true);
     }
@@ -67,6 +66,7 @@ bool CmdPageIv::Stat(const std::string& strChannel, const std::string& strTag, c
     auto pSession = GetSession(strSessionId);
     if (pSession == nullptr)
     {
+        m_uiDate = std::stoul(neb::time_t2TimeStr((time_t)GetNowTime(), "%Y%m%d"));
         pSession = MakeSharedSession("nebio::SessionPageIv", strSessionId, strChannel, strTag, m_uiDate, m_dSessionTimeout);
     }
     if (pSession == nullptr)

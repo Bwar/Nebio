@@ -33,8 +33,11 @@ neb::E_CMD_STATUS SessionPage::Timeout()
     uint32 uiDate = std::stoul(neb::time_t2TimeStr((time_t)GetNowTime(), "%Y%m%d"));
     if (uiDate > m_uiDate)
     {
+        /*
         m_uiDate = uiDate;
         m_setUserId.clear();
+        */
+        return(neb::CMD_STATUS_COMPLETED);
     }
     return(neb::CMD_STATUS_RUNNING);
 }

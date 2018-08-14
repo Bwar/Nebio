@@ -15,6 +15,7 @@
 #include <algorithm>
 #include <util/json/CJsonObject.hpp>
 #include <util/http/http_parser.h>
+#include <util/StringCoder.hpp>
 #include "event.pb.h"
 #include "ModuleCollect.hpp"
 
@@ -99,16 +100,10 @@ bool ModuleCollect::AnyMessage(
 void ModuleCollect::TransferEvent(uint32 uiAppId, const std::string& strClientIp, const neb::CJsonObject& oJsonEvent)
 {
     MsgBody oMsgBody;
-    std::string strUrl = "";
     nebio::Event oEvent;
     oEvent.set_event_id(oJsonEvent("event_id"));
     oEvent.set_event_type(oJsonEvent("event_type"));
-    strUrl = std::move(oJsonEvent("page").substr(0, oJsonEvent("page").find_first_of('?')));
-    strUrl = std::move(strUrl.substr(0, strUrl.find_last_not_of('/')+ 1));
-    oEvent.set_page(strUrl);
-    strUrl = std::move(oJsonEvent("referer").substr(0, oJsonEvent("referer").find_first_of('?')));
-    strUrl = std::move(strUrl.substr(0, strUrl.find_last_not_of('/')+ 1));
-    oEvent.set_referer(strUrl);
+    oEvent.set_page(oJsonEvent("page"));
     oEvent.set_session_id(oJsonEvent("session_id"));
     oEvent.set_user_id(oJsonEvent("user_id"));
     oEvent.set_device_id(oJsonEvent("device_id"));
