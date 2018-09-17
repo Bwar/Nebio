@@ -177,24 +177,24 @@ class Event : public ::google::protobuf::Message /* @@protoc_insertion_point(cla
   ::google::protobuf::uint64 time() const;
   void set_time(::google::protobuf::uint64 value);
 
-  // optional string page = 4;
+  // optional bytes page = 4;
   void clear_page();
   static const int kPageFieldNumber = 4;
   const ::std::string& page() const;
   void set_page(const ::std::string& value);
   void set_page(const char* value);
-  void set_page(const char* value, size_t size);
+  void set_page(const void* value, size_t size);
   ::std::string* mutable_page();
   ::std::string* release_page();
   void set_allocated_page(::std::string* page);
 
-  // optional string referer = 5;
+  // optional bytes referer = 5;
   void clear_referer();
   static const int kRefererFieldNumber = 5;
   const ::std::string& referer() const;
   void set_referer(const ::std::string& value);
   void set_referer(const char* value);
-  void set_referer(const char* value, size_t size);
+  void set_referer(const void* value, size_t size);
   ::std::string* mutable_referer();
   ::std::string* release_referer();
   void set_allocated_referer(::std::string* referer);
@@ -475,46 +475,46 @@ class Result : public ::google::protobuf::Message /* @@protoc_insertion_point(cl
   ::std::string* release_tag();
   void set_allocated_tag(::std::string* tag);
 
-  // optional string key1 = 5;
+  // optional bytes key1 = 5;
   void clear_key1();
   static const int kKey1FieldNumber = 5;
   const ::std::string& key1() const;
   void set_key1(const ::std::string& value);
   void set_key1(const char* value);
-  void set_key1(const char* value, size_t size);
+  void set_key1(const void* value, size_t size);
   ::std::string* mutable_key1();
   ::std::string* release_key1();
   void set_allocated_key1(::std::string* key1);
 
-  // optional string key2 = 6;
+  // optional bytes key2 = 6;
   void clear_key2();
   static const int kKey2FieldNumber = 6;
   const ::std::string& key2() const;
   void set_key2(const ::std::string& value);
   void set_key2(const char* value);
-  void set_key2(const char* value, size_t size);
+  void set_key2(const void* value, size_t size);
   ::std::string* mutable_key2();
   ::std::string* release_key2();
   void set_allocated_key2(::std::string* key2);
 
-  // optional string key3 = 7;
+  // optional bytes key3 = 7;
   void clear_key3();
   static const int kKey3FieldNumber = 7;
   const ::std::string& key3() const;
   void set_key3(const ::std::string& value);
   void set_key3(const char* value);
-  void set_key3(const char* value, size_t size);
+  void set_key3(const void* value, size_t size);
   ::std::string* mutable_key3();
   ::std::string* release_key3();
   void set_allocated_key3(::std::string* key3);
 
-  // optional string key4 = 8;
+  // optional bytes key4 = 8;
   void clear_key4();
   static const int kKey4FieldNumber = 8;
   const ::std::string& key4() const;
   void set_key4(const ::std::string& value);
   void set_key4(const char* value);
-  void set_key4(const char* value, size_t size);
+  void set_key4(const void* value, size_t size);
   ::std::string* mutable_key4();
   ::std::string* release_key4();
   void set_allocated_key4(::std::string* key4);
@@ -713,7 +713,7 @@ inline void Event::set_time(::google::protobuf::uint64 value) {
   // @@protoc_insertion_point(field_set:nebio.Event.time)
 }
 
-// optional string page = 4;
+// optional bytes page = 4;
 inline void Event::clear_page() {
   page_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -731,7 +731,7 @@ inline void Event::set_page(const char* value) {
   page_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:nebio.Event.page)
 }
-inline void Event::set_page(const char* value, size_t size) {
+inline void Event::set_page(const void* value, size_t size) {
   
   page_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
@@ -757,7 +757,7 @@ inline void Event::set_allocated_page(::std::string* page) {
   // @@protoc_insertion_point(field_set_allocated:nebio.Event.page)
 }
 
-// optional string referer = 5;
+// optional bytes referer = 5;
 inline void Event::clear_referer() {
   referer_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -775,7 +775,7 @@ inline void Event::set_referer(const char* value) {
   referer_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:nebio.Event.referer)
 }
-inline void Event::set_referer(const char* value, size_t size) {
+inline void Event::set_referer(const void* value, size_t size) {
   
   referer_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
@@ -1445,7 +1445,7 @@ inline void Result::set_allocated_tag(::std::string* tag) {
   // @@protoc_insertion_point(field_set_allocated:nebio.Result.tag)
 }
 
-// optional string key1 = 5;
+// optional bytes key1 = 5;
 inline void Result::clear_key1() {
   key1_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -1463,7 +1463,7 @@ inline void Result::set_key1(const char* value) {
   key1_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:nebio.Result.key1)
 }
-inline void Result::set_key1(const char* value, size_t size) {
+inline void Result::set_key1(const void* value, size_t size) {
   
   key1_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
@@ -1489,7 +1489,7 @@ inline void Result::set_allocated_key1(::std::string* key1) {
   // @@protoc_insertion_point(field_set_allocated:nebio.Result.key1)
 }
 
-// optional string key2 = 6;
+// optional bytes key2 = 6;
 inline void Result::clear_key2() {
   key2_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -1507,7 +1507,7 @@ inline void Result::set_key2(const char* value) {
   key2_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:nebio.Result.key2)
 }
-inline void Result::set_key2(const char* value, size_t size) {
+inline void Result::set_key2(const void* value, size_t size) {
   
   key2_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
@@ -1533,7 +1533,7 @@ inline void Result::set_allocated_key2(::std::string* key2) {
   // @@protoc_insertion_point(field_set_allocated:nebio.Result.key2)
 }
 
-// optional string key3 = 7;
+// optional bytes key3 = 7;
 inline void Result::clear_key3() {
   key3_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -1551,7 +1551,7 @@ inline void Result::set_key3(const char* value) {
   key3_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:nebio.Result.key3)
 }
-inline void Result::set_key3(const char* value, size_t size) {
+inline void Result::set_key3(const void* value, size_t size) {
   
   key3_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
@@ -1577,7 +1577,7 @@ inline void Result::set_allocated_key3(::std::string* key3) {
   // @@protoc_insertion_point(field_set_allocated:nebio.Result.key3)
 }
 
-// optional string key4 = 8;
+// optional bytes key4 = 8;
 inline void Result::clear_key4() {
   key4_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -1595,7 +1595,7 @@ inline void Result::set_key4(const char* value) {
   key4_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:nebio.Result.key4)
 }
-inline void Result::set_key4(const char* value, size_t size) {
+inline void Result::set_key4(const void* value, size_t size) {
   
   key4_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));

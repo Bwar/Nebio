@@ -59,9 +59,11 @@ bool CmdCollect::AnyMessage(
             }
         }
         strUrl = std::move(oEvent.page().substr(0, oEvent.page().find_first_of('?')));
+        strUrl = std::move(strUrl.substr(0, strUrl.find_first_of('#')));
         strUrl = std::move(strUrl.substr(0, strUrl.find_last_not_of('/')+ 1));
         oEvent.set_page(strUrl);
         strUrl = std::move(oEvent.referer().substr(0, oEvent.referer().find_first_of('?')));
+        strUrl = std::move(strUrl.substr(0, strUrl.find_first_of('#')));
         strUrl = std::move(strUrl.substr(0, strUrl.find_last_not_of('/')+ 1));
         if (strUrl == oEvent.page())
         {

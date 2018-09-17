@@ -144,7 +144,7 @@ void protobuf_AddDesc_event_2eproto() {
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\013event.proto\022\005nebio\"\277\003\n\005Event\022\020\n\010event_"
     "id\030\001 \001(\t\022\022\n\nevent_type\030\002 \001(\t\022\014\n\004time\030\003 \001"
-    "(\004\022\014\n\004page\030\004 \001(\t\022\017\n\007referer\030\005 \001(\t\022\022\n\nses"
+    "(\004\022\014\n\004page\030\004 \001(\014\022\017\n\007referer\030\005 \001(\014\022\022\n\nses"
     "sion_id\030\006 \001(\t\022\017\n\007user_id\030\007 \001(\t\022\021\n\tdevice"
     "_id\030\010 \001(\t\022\014\n\004plat\030\t \001(\t\022\020\n\010explorer\030\n \001("
     "\t\022\021\n\tclient_ip\030\013 \001(\t\022\016\n\006app_id\030\014 \001(\r\0220\n\n"
@@ -155,8 +155,8 @@ void protobuf_AddDesc_event_2eproto() {
     "(\003\022\021\n\tuser_type\030\025 \001(\005\"/\n\017E_EVENT_OPERATE"
     "\022\r\n\tEVENT_ADD\020\000\022\r\n\tEVENT_DEL\020\001\"\374\001\n\006Resul"
     "t\022\016\n\006app_id\030\001 \001(\r\022\014\n\004date\030\002 \001(\t\022\017\n\007chann"
-    "el\030\003 \001(\t\022\013\n\003tag\030\004 \001(\t\022\014\n\004key1\030\005 \001(\t\022\014\n\004k"
-    "ey2\030\006 \001(\t\022\014\n\004key3\030\007 \001(\t\022\014\n\004key4\030\010 \001(\t\022\014\n"
+    "el\030\003 \001(\t\022\013\n\003tag\030\004 \001(\t\022\014\n\004key1\030\005 \001(\014\022\014\n\004k"
+    "ey2\030\006 \001(\014\022\014\n\004key3\030\007 \001(\014\022\014\n\004key4\030\010 \001(\014\022\014\n"
     "\004key5\030\t \001(\r\022\014\n\004key6\030\n \001(\r\022\n\n\002pv\030\013 \001(\005\022\n\n"
     "\002uv\030\014 \001(\005\022\n\n\002vv\030\r \001(\005\022\n\n\002iv\030\016 \001(\005\022\016\n\006len"
     "gth\030\017 \001(\003\022\017\n\007exit_vv\030\020 \001(\005\022\021\n\tbounce_vv\030"
@@ -415,16 +415,12 @@ bool Event::MergePartialFromCodedStream(
         break;
       }
 
-      // optional string page = 4;
+      // optional bytes page = 4;
       case 4: {
         if (tag == 34) {
          parse_page:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
                 input, this->mutable_page()));
-          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-            this->page().data(), this->page().length(),
-            ::google::protobuf::internal::WireFormatLite::PARSE,
-            "nebio.Event.page"));
         } else {
           goto handle_unusual;
         }
@@ -432,16 +428,12 @@ bool Event::MergePartialFromCodedStream(
         break;
       }
 
-      // optional string referer = 5;
+      // optional bytes referer = 5;
       case 5: {
         if (tag == 42) {
          parse_referer:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
                 input, this->mutable_referer()));
-          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-            this->referer().data(), this->referer().length(),
-            ::google::protobuf::internal::WireFormatLite::PARSE,
-            "nebio.Event.referer"));
         } else {
           goto handle_unusual;
         }
@@ -757,23 +749,15 @@ void Event::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt64(3, this->time(), output);
   }
 
-  // optional string page = 4;
+  // optional bytes page = 4;
   if (this->page().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-      this->page().data(), this->page().length(),
-      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "nebio.Event.page");
-    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
       4, this->page(), output);
   }
 
-  // optional string referer = 5;
+  // optional bytes referer = 5;
   if (this->referer().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-      this->referer().data(), this->referer().length(),
-      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "nebio.Event.referer");
-    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
       5, this->referer(), output);
   }
 
@@ -936,25 +920,17 @@ void Event::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(3, this->time(), target);
   }
 
-  // optional string page = 4;
+  // optional bytes page = 4;
   if (this->page().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-      this->page().data(), this->page().length(),
-      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "nebio.Event.page");
     target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
         4, this->page(), target);
   }
 
-  // optional string referer = 5;
+  // optional bytes referer = 5;
   if (this->referer().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-      this->referer().data(), this->referer().length(),
-      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "nebio.Event.referer");
     target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
         5, this->referer(), target);
   }
 
@@ -1122,17 +1098,17 @@ int Event::ByteSize() const {
         this->time());
   }
 
-  // optional string page = 4;
+  // optional bytes page = 4;
   if (this->page().size() > 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::StringSize(
+      ::google::protobuf::internal::WireFormatLite::BytesSize(
         this->page());
   }
 
-  // optional string referer = 5;
+  // optional bytes referer = 5;
   if (this->referer().size() > 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::StringSize(
+      ::google::protobuf::internal::WireFormatLite::BytesSize(
         this->referer());
   }
 
@@ -1515,7 +1491,7 @@ void Event::clear_time() {
   // @@protoc_insertion_point(field_set:nebio.Event.time)
 }
 
-// optional string page = 4;
+// optional bytes page = 4;
 void Event::clear_page() {
   page_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -1533,7 +1509,7 @@ void Event::clear_page() {
   page_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:nebio.Event.page)
 }
- void Event::set_page(const char* value, size_t size) {
+ void Event::set_page(const void* value, size_t size) {
   
   page_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
@@ -1559,7 +1535,7 @@ void Event::clear_page() {
   // @@protoc_insertion_point(field_set_allocated:nebio.Event.page)
 }
 
-// optional string referer = 5;
+// optional bytes referer = 5;
 void Event::clear_referer() {
   referer_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -1577,7 +1553,7 @@ void Event::clear_referer() {
   referer_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:nebio.Event.referer)
 }
- void Event::set_referer(const char* value, size_t size) {
+ void Event::set_referer(const void* value, size_t size) {
   
   referer_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
@@ -2314,16 +2290,12 @@ bool Result::MergePartialFromCodedStream(
         break;
       }
 
-      // optional string key1 = 5;
+      // optional bytes key1 = 5;
       case 5: {
         if (tag == 42) {
          parse_key1:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
                 input, this->mutable_key1()));
-          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-            this->key1().data(), this->key1().length(),
-            ::google::protobuf::internal::WireFormatLite::PARSE,
-            "nebio.Result.key1"));
         } else {
           goto handle_unusual;
         }
@@ -2331,16 +2303,12 @@ bool Result::MergePartialFromCodedStream(
         break;
       }
 
-      // optional string key2 = 6;
+      // optional bytes key2 = 6;
       case 6: {
         if (tag == 50) {
          parse_key2:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
                 input, this->mutable_key2()));
-          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-            this->key2().data(), this->key2().length(),
-            ::google::protobuf::internal::WireFormatLite::PARSE,
-            "nebio.Result.key2"));
         } else {
           goto handle_unusual;
         }
@@ -2348,16 +2316,12 @@ bool Result::MergePartialFromCodedStream(
         break;
       }
 
-      // optional string key3 = 7;
+      // optional bytes key3 = 7;
       case 7: {
         if (tag == 58) {
          parse_key3:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
                 input, this->mutable_key3()));
-          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-            this->key3().data(), this->key3().length(),
-            ::google::protobuf::internal::WireFormatLite::PARSE,
-            "nebio.Result.key3"));
         } else {
           goto handle_unusual;
         }
@@ -2365,16 +2329,12 @@ bool Result::MergePartialFromCodedStream(
         break;
       }
 
-      // optional string key4 = 8;
+      // optional bytes key4 = 8;
       case 8: {
         if (tag == 66) {
          parse_key4:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
                 input, this->mutable_key4()));
-          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-            this->key4().data(), this->key4().length(),
-            ::google::protobuf::internal::WireFormatLite::PARSE,
-            "nebio.Result.key4"));
         } else {
           goto handle_unusual;
         }
@@ -2576,43 +2536,27 @@ void Result::SerializeWithCachedSizes(
       4, this->tag(), output);
   }
 
-  // optional string key1 = 5;
+  // optional bytes key1 = 5;
   if (this->key1().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-      this->key1().data(), this->key1().length(),
-      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "nebio.Result.key1");
-    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
       5, this->key1(), output);
   }
 
-  // optional string key2 = 6;
+  // optional bytes key2 = 6;
   if (this->key2().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-      this->key2().data(), this->key2().length(),
-      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "nebio.Result.key2");
-    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
       6, this->key2(), output);
   }
 
-  // optional string key3 = 7;
+  // optional bytes key3 = 7;
   if (this->key3().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-      this->key3().data(), this->key3().length(),
-      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "nebio.Result.key3");
-    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
       7, this->key3(), output);
   }
 
-  // optional string key4 = 8;
+  // optional bytes key4 = 8;
   if (this->key4().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-      this->key4().data(), this->key4().length(),
-      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "nebio.Result.key4");
-    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
       8, this->key4(), output);
   }
 
@@ -2705,47 +2649,31 @@ void Result::SerializeWithCachedSizes(
         4, this->tag(), target);
   }
 
-  // optional string key1 = 5;
+  // optional bytes key1 = 5;
   if (this->key1().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-      this->key1().data(), this->key1().length(),
-      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "nebio.Result.key1");
     target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
         5, this->key1(), target);
   }
 
-  // optional string key2 = 6;
+  // optional bytes key2 = 6;
   if (this->key2().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-      this->key2().data(), this->key2().length(),
-      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "nebio.Result.key2");
     target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
         6, this->key2(), target);
   }
 
-  // optional string key3 = 7;
+  // optional bytes key3 = 7;
   if (this->key3().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-      this->key3().data(), this->key3().length(),
-      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "nebio.Result.key3");
     target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
         7, this->key3(), target);
   }
 
-  // optional string key4 = 8;
+  // optional bytes key4 = 8;
   if (this->key4().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-      this->key4().data(), this->key4().length(),
-      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "nebio.Result.key4");
     target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
         8, this->key4(), target);
   }
 
@@ -2830,31 +2758,31 @@ int Result::ByteSize() const {
         this->tag());
   }
 
-  // optional string key1 = 5;
+  // optional bytes key1 = 5;
   if (this->key1().size() > 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::StringSize(
+      ::google::protobuf::internal::WireFormatLite::BytesSize(
         this->key1());
   }
 
-  // optional string key2 = 6;
+  // optional bytes key2 = 6;
   if (this->key2().size() > 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::StringSize(
+      ::google::protobuf::internal::WireFormatLite::BytesSize(
         this->key2());
   }
 
-  // optional string key3 = 7;
+  // optional bytes key3 = 7;
   if (this->key3().size() > 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::StringSize(
+      ::google::protobuf::internal::WireFormatLite::BytesSize(
         this->key3());
   }
 
-  // optional string key4 = 8;
+  // optional bytes key4 = 8;
   if (this->key4().size() > 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::StringSize(
+      ::google::protobuf::internal::WireFormatLite::BytesSize(
         this->key4());
   }
 
@@ -3211,7 +3139,7 @@ void Result::clear_tag() {
   // @@protoc_insertion_point(field_set_allocated:nebio.Result.tag)
 }
 
-// optional string key1 = 5;
+// optional bytes key1 = 5;
 void Result::clear_key1() {
   key1_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -3229,7 +3157,7 @@ void Result::clear_key1() {
   key1_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:nebio.Result.key1)
 }
- void Result::set_key1(const char* value, size_t size) {
+ void Result::set_key1(const void* value, size_t size) {
   
   key1_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
@@ -3255,7 +3183,7 @@ void Result::clear_key1() {
   // @@protoc_insertion_point(field_set_allocated:nebio.Result.key1)
 }
 
-// optional string key2 = 6;
+// optional bytes key2 = 6;
 void Result::clear_key2() {
   key2_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -3273,7 +3201,7 @@ void Result::clear_key2() {
   key2_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:nebio.Result.key2)
 }
- void Result::set_key2(const char* value, size_t size) {
+ void Result::set_key2(const void* value, size_t size) {
   
   key2_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
@@ -3299,7 +3227,7 @@ void Result::clear_key2() {
   // @@protoc_insertion_point(field_set_allocated:nebio.Result.key2)
 }
 
-// optional string key3 = 7;
+// optional bytes key3 = 7;
 void Result::clear_key3() {
   key3_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -3317,7 +3245,7 @@ void Result::clear_key3() {
   key3_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:nebio.Result.key3)
 }
- void Result::set_key3(const char* value, size_t size) {
+ void Result::set_key3(const void* value, size_t size) {
   
   key3_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
@@ -3343,7 +3271,7 @@ void Result::clear_key3() {
   // @@protoc_insertion_point(field_set_allocated:nebio.Result.key3)
 }
 
-// optional string key4 = 8;
+// optional bytes key4 = 8;
 void Result::clear_key4() {
   key4_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -3361,7 +3289,7 @@ void Result::clear_key4() {
   key4_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:nebio.Result.key4)
 }
- void Result::set_key4(const char* value, size_t size) {
+ void Result::set_key4(const void* value, size_t size) {
   
   key4_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));

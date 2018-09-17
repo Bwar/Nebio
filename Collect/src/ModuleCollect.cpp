@@ -61,14 +61,14 @@ bool ModuleCollect::AnyMessage(
             {
                 uiAppId = app_iter->second;
             }
-            for (int j = 0; j < oHttpMsg.headers().size(); ++j)
+            for (auto it = oHttpMsg.headers().begin(); it != oHttpMsg.headers().end(); ++it)
             {
-                std::string strHeadName = oHttpMsg.headers(j).header_name();
+                std::string strHeadName = it->first;
                 std::transform(strHeadName.begin(), strHeadName.end(), strHeadName.begin(),
                         [](unsigned char c) -> unsigned char { return std::tolower(c); });
                 if ("x-forwarded-for" == strHeadName)
                 {
-                    strClientIp = oHttpMsg.headers(j).header_value().substr(0, oHttpMsg.headers(j).header_value().find_first_of(','));
+                    strClientIp = it->second.substr(0, it->second.find_first_of(','));
                     break;
                 }
             }
@@ -103,7 +103,8 @@ void ModuleCollect::TransferEvent(uint32 uiAppId, const std::string& strClientIp
     nebio::Event oEvent;
     oEvent.set_event_id(oJsonEvent("event_id"));
     oEvent.set_event_type(oJsonEvent("event_type"));
-    oEvent.set_page(oJsonEvent("page"));
+    oEvent.set_page(neb::UrlDecode(oJsonEvent("page")));
+    oEvent.set_page(neb::UrlDecode(oJsonEvent("referer")));
     oEvent.set_session_id(oJsonEvent("session_id"));
     oEvent.set_user_id(oJsonEvent("user_id"));
     oEvent.set_device_id(oJsonEvent("device_id"));
@@ -146,6 +147,11 @@ void ModuleCollect::Response(
     oHttpOutMsg.set_http_minor(oHttpMsg.http_minor());
     oResponseData.Add("code", iErrno);
     oResponseData.Add("msg", strErrMsg);
+    oHttpOutMsg.mutable_headers()->insert(google::protobuf::MapPair<std::string, std::string>("Connection", "keep-alive"));
+    oHttpOutMsg.mutable_headers()->insert(google::protobuf::MapPair<std::string, std::string>("Access-Control-Allow-Origin", "*"));
+    oHttpOutMsg.mutable_headers()->insert(google::protobuf::MapPair<std::string, std::string>("Access-Control-Allow-Headers", "Origin, Content-Type, Cookie, Accept"));
+    oHttpOutMsg.mutable_headers()->insert(google::protobuf::MapPair<std::string, std::string>("Access-Control-Allow-Methods", "GET, POST"));
+    oHttpOutMsg.mutable_headers()->insert(google::protobuf::MapPair<std::string, std::string>("Access-Control-Allow-Credentials", "true"));
     oHttpOutMsg.set_body(oResponseData.ToFormattedString());
     SendTo(pChannel, oHttpOutMsg);
 }
@@ -160,18 +166,11 @@ void ModuleCollect::ResponseOptions(
     oHttpOutMsg.set_status_code(200);
     oHttpOutMsg.set_http_major(oHttpMsg.http_major());
     oHttpOutMsg.set_http_minor(oHttpMsg.http_minor());
-    HttpMsg::Header* pHeader = oHttpOutMsg.add_headers();
-    pHeader->set_header_name("Access-Control-Allow-Origin");
-    pHeader->set_header_value("*");
-    pHeader = oHttpOutMsg.add_headers();
-    pHeader->set_header_name("Access-Control-Allow-Headers");
-    pHeader->set_header_value("Origin, Content-Type, Cookie, Accept");
-    pHeader = oHttpOutMsg.add_headers();
-    pHeader->set_header_name("Access-Control-Allow-Methods");
-    pHeader->set_header_value("GET, POST");
-    pHeader = oHttpOutMsg.add_headers();
-    pHeader->set_header_name("Access-Control-Allow-Credentials");
-    pHeader->set_header_value("true");
+    oHttpOutMsg.mutable_headers()->insert(google::protobuf::MapPair<std::string, std::string>("Connection", "keep-alive"));
+    oHttpOutMsg.mutable_headers()->insert(google::protobuf::MapPair<std::string, std::string>("Access-Control-Allow-Origin", "*"));
+    oHttpOutMsg.mutable_headers()->insert(google::protobuf::MapPair<std::string, std::string>("Access-Control-Allow-Headers", "Origin, Content-Type, Cookie, Accept"));
+    oHttpOutMsg.mutable_headers()->insert(google::protobuf::MapPair<std::string, std::string>("Access-Control-Allow-Methods", "GET, POST"));
+    oHttpOutMsg.mutable_headers()->insert(google::protobuf::MapPair<std::string, std::string>("Access-Control-Allow-Credentials", "true"));
     SendTo(pChannel, oHttpOutMsg);
 }
 
