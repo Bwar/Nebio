@@ -35,7 +35,7 @@ public:
                     const MsgBody& oMsgBody);
 
 protected:
-    bool Stat(const std::string& strChannel, const std::string& strTag, const Event& oEvent);
+    bool Stat(const std::string& strChannel, const std::string& strTag, const Event& oEvent, bool bAlwaysOnline = false);
 
 private:
     uint32 m_uiDate;        // YYYYMMDD

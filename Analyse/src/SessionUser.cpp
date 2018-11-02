@@ -15,9 +15,11 @@ namespace nebio
 {
 
 SessionUser::SessionUser(const std::string& strSessionId,
-    const std::string& strChannel, const std::string& strTag, uint32 uiDate, ev_tstamp dSessionTimeout)
+    const std::string& strChannel, const std::string& strTag, uint32 uiDate,
+    ev_tstamp dSessionTimeout, bool bAlwaysOnline)
     : AnalyseTimer(strSessionId, dSessionTimeout),
-      m_uiDate(uiDate), m_ullStatDate(0), m_uiAppId(0), m_strChannel(strChannel), m_strTag(strTag),
+      m_uiDate(uiDate), m_ullStatDate(0), m_uiAppId(0), m_bAlwaysOnline(bAlwaysOnline),
+      m_strChannel(strChannel), m_strTag(strTag),
       m_iActivityUserUv(0), m_iActivityUserPv(0), m_iActivityUserVv(0), 
       m_iNewUserUv(0), m_iNewUserPv(0), m_iNewUserVv(0), 
       m_iHistoryUserUv(0), m_iHistoryUserPv(0), m_iHistoryUserVv(0), 
@@ -40,6 +42,10 @@ neb::E_CMD_STATUS SessionUser::Timeout()
     uint32 uiDate = std::stoul(neb::time_t2TimeStr((time_t)GetNowTime(), "%Y%m%d"));
     if (uiDate > m_uiDate)
     {
+        if (!m_bAlwaysOnline)
+        {
+            return(neb::CMD_STATUS_COMPLETED);
+        }
         m_uiDate = uiDate;
         m_ullStatDate = neb::GetBeginTimeOfTheDay((time_t)GetNowTime());
         m_setDayUser.clear();

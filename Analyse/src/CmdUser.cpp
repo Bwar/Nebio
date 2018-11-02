@@ -41,7 +41,7 @@ bool CmdUser::AnyMessage(
     if (oEvent.ParseFromString(oMsgBody.data()))
     {
         LOG4_DEBUG("%s", oEvent.DebugString().c_str());
-        Stat(m_strChannelSummary, m_strTagSummary, oEvent);
+        Stat(m_strChannelSummary, m_strTagSummary, oEvent, true);
         Stat(oEvent.referer(), m_strTagSummary, oEvent);
         Stat(oEvent.referer(), oEvent.tag(), oEvent);
         return(true);
@@ -53,7 +53,7 @@ bool CmdUser::AnyMessage(
     }
 }
 
-bool CmdUser::Stat(const std::string& strChannel, const std::string& strTag, const Event& oEvent)
+bool CmdUser::Stat(const std::string& strChannel, const std::string& strTag, const Event& oEvent, bool bAlwaysOnline)
 {
     if (strChannel.length() == 0 || strTag.length() == 0)
     {
@@ -67,7 +67,7 @@ bool CmdUser::Stat(const std::string& strChannel, const std::string& strTag, con
     if (pSession == nullptr)
     {
         m_uiDate = std::stoul(neb::time_t2TimeStr((time_t)GetNowTime(), "%Y%m%d"));
-        pSession = MakeSharedSession("nebio::SessionUser", strSessionId, strChannel, strTag, m_uiDate, m_dSessionTimeout);
+        pSession = MakeSharedSession("nebio::SessionUser", strSessionId, strChannel, strTag, m_uiDate, m_dSessionTimeout, bAlwaysOnline);
     }
     if (pSession == nullptr)
     {

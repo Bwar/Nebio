@@ -29,11 +29,11 @@ enum E_USER_TYPE
 };
 
 class SessionUser : public AnalyseTimer,
-    public neb::DynamicCreator<SessionUser, std::string, std::string, std::string, uint32, ev_tstamp>
+    public neb::DynamicCreator<SessionUser, std::string, std::string, std::string, uint32, ev_tstamp, bool>
 {
 public:
     SessionUser(const std::string& strSessionId, const std::string& strChannel, const std::string& strTag,
-        uint32 uiDate, ev_tstamp dSessionTimeout = 10.0);
+        uint32 uiDate, ev_tstamp dSessionTimeout = 10.0, bool bAlwaysOnline = false);
     virtual ~SessionUser();
 
     virtual neb::E_CMD_STATUS Timeout();
@@ -50,6 +50,7 @@ private:
     uint32 m_uiDate;        // YYYYMMDD
     uint64 m_ullStatDate;
     uint32 m_uiAppId;
+    bool m_bAlwaysOnline;
     std::string m_strChannel;
     std::string m_strTag;
 

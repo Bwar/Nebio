@@ -103,8 +103,8 @@ void ModuleCollect::TransferEvent(uint32 uiAppId, const std::string& strClientIp
     nebio::Event oEvent;
     oEvent.set_event_id(oJsonEvent("event_id"));
     oEvent.set_event_type(oJsonEvent("event_type"));
-    oEvent.set_page(neb::UrlDecode(oJsonEvent("page")));
-    oEvent.set_referer(neb::UrlDecode(oJsonEvent("referer")));
+    oEvent.set_page(neb::UrlEncode(oJsonEvent("page")));
+    oEvent.set_referer(neb::UrlEncode(oJsonEvent("referer")));
     oEvent.set_session_id(oJsonEvent("session_id"));
     oEvent.set_user_id(oJsonEvent("user_id"));
     oEvent.set_device_id(oJsonEvent("device_id"));
