@@ -12,6 +12,7 @@
 #include <chrono>
 #include <iomanip>
 #include <sstream>
+#include <util/StringCoder.hpp>
 #include "UnixTime.hpp"
 #include "CmdDataLand.hpp"
 
@@ -76,8 +77,24 @@ bool CmdDataLand::WriteData(Event& oEvent)
         return(false);
     }
     
+    std::string strPage = oEvent.page();
+    std::string strReferer = oEvent.referer();
+    /*
+    if (strPage.find_first_of('?')  != std::string::npos)
+    {
+        std::string strParam = std::move(strPage.substr(strPage.find_first_of('?') + 1, std::string::npos));
+        std::string strUrl = std::move(strPage.substr(0, strPage.find_first_of('?')));
+        strPage = strUrl + std::string("?") + neb::UrlEncode(strParam);
+    }
+    if (strReferer.find_first_of('?') != std::string::npos)
+    {
+        std::string strParam = std::move(strReferer.substr(strReferer.find_first_of('?') + 1, std::string::npos));
+        std::string strUrl = std::move(strReferer.substr(0, strReferer.find_first_of('?')));
+        strReferer = strUrl + std::string("?") + neb::UrlEncode(strParam);
+    }
+    */
     m_ofs << oEvent.event_id() << "|" << oEvent.event_type() << "|" << oEvent.time() << "|"
-            << oEvent.page() << "|" << oEvent.referer() << "|" << oEvent.session_id() << "|" 
+            << strPage << "|" << strReferer << "|" << oEvent.session_id() << "|" 
             << oEvent.user_id() << "|" << oEvent.device_id() << "|" << oEvent.plat() << "|"
             << oEvent.explorer() << "|" << oEvent.client_ip() << "|" << oEvent.app_id() << std::endl;
     return(true);
