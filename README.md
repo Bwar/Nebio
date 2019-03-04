@@ -5,8 +5,9 @@ nebio是一个基于nebula网络框架的数据实时统计分析应用。nebio�
 架构图
 ![nebio](images/Nebio.png)
 
+
 数据流和统计活动图
-![nebio](images/Nebio_analyse_flow.png.png)
+![nebio](images/Nebio_analyse_flow.png)
 
 Getting Start
 ``` bash
