@@ -11,6 +11,9 @@ nebio是一个基于nebula网络框架的数据实时统计分析应用。nebio�
 
 ![nebio](images/Nebio_analyse_flow.png)
 
+[埋点数据上报协议](https://www.bwar.tech/2018/02/28/Collect.html)
+
+
 Getting Start
 ``` bash
 wget https://github.com/Bwar/NebulaBootstrap/archive/master.zip
